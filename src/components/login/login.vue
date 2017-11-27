@@ -2,14 +2,14 @@
   <div class="login">
     <h2>手机号密码登录</h2>
     <div class="input">
-      <input type="number" placeholder="输入手机号">
+      <input type="number" v-model="phone" @input="isInput" placeholder="输入手机号">
     </div>
     <div class="input">
-      <input type="password" placeholder="输入密码">
+      <input type="password" v-model="password" @input="isInput" placeholder="输入密码">
     </div>
     <div class="goIn">
-      <span class="btn btn-gray">登录</span>
-      <p>忘记密码</p>
+      <span class="btn" :class="{'btn-gray': !canLogin}" @click="login">登录</span>
+      <p @click="$router.push({name: 'forget'})">忘记密码</p>
     </div>
   </div>
 </template>
@@ -18,6 +18,24 @@ export default {
   name: 'login',
   data () {
     return {
+      canLogin: false,
+      phone: '',
+      password: ''
+    }
+  },
+  methods: {
+    login () {
+      if (this.canLogin) {
+        this.$router.push({ name: 'myTask' })
+      }
+    },
+    isInput () {
+      let reg = /^1[34578]\d{9}$/
+      if (reg.test(this.phone) && this.password.length >= 6) {
+        this.canLogin = true
+      } else {
+        this.canLogin = false
+      }
     }
   }
 }
@@ -28,9 +46,10 @@ export default {
   height 100%
   box-sizing border-box
   background #ffffff
-  overflow auto
+  overflow hidden
   padding-left 1.6rem
   padding-right 1.6rem
+  color #08090A
   h2
     font-size 2rem
     margin-top 5.2rem
@@ -46,4 +65,12 @@ export default {
       height 1.4rem
       width 100%
       outline none
+  .goIn
+    margin-top 2rem
+    p
+      color #08090A
+      font-size 1.4rem
+      line-height 1
+      margin-top 1.6rem
+      text-align center
 </style>
