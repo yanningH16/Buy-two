@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-@import './assets/stylus/reset.styl'
+@import './assets/stylus/index.styl'
 #app
   width 100%
   height 100%
