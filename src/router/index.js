@@ -12,7 +12,7 @@ Vue.use(Router)
 const defaultRouter = [{
   path: '/',
   redirect: {
-    name: 'myTask'
+    name: 'login'
   }
 }]
 const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter]
