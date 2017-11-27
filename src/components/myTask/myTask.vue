@@ -1,11 +1,11 @@
 <template>
-  <div class="login">
-    login cont 11
+  <div class="myTask">
+    myTask
   </div>
 </template>
 <script type="text/ecmascript-6">
 export default {
-  name: 'login',
+  name: 'myTask',
   data () {
     return {
     }
