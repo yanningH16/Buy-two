@@ -2,16 +2,16 @@
   <div class="forget">
     <div class="group border">
       <div class="input border">
-        <input type="number" v-model="phone" placeholder="输入手机号" @input="input" @blur="blur">
+        <input type="number" v-model="phone" placeholder="输入手机号" @input="input">
       </div>
       <div class="input haveButton">
-        <input type="number" v-model="keyNum" placeholder="输入验证码" @input="input" @blur="blur">
+        <input type="number" v-model="keyNum" placeholder="输入验证码" @input="input">
         <span @click="getkey">{{ timeout }}</span>
       </div>
     </div>
     <div class="group border">
       <div class="input border">
-        <input type="password" v-model="pass1" placeholder="输入新密码" @input="input" @blur="blur">
+        <input type="password" v-model="pass1" placeholder="输入新密码" @input="input">
       </div>
       <div class="input">
         <input type="password" v-model="pass2" placeholder="再次输入新密码" @input="input" @blur="blur">
@@ -62,10 +62,37 @@ export default {
     input () {
       if ((/^1[34578]\d{9}$/).test(this.phone) && this.keyNum !== '' && this.pass1 !== '' && this.pass2 !== '' && this.pass1 === this.pass2) {
         this.isOk = true
+      } else {
+        this.isOk = false
       }
     },
     blur () {
-
+      if (!(/^1[34578]\d{9}$/).test(this.phone)) {
+        Toast({
+          message: '请输入手机号码',
+          position: 'bottom'
+        })
+      } else if (this.keyNum === '') {
+        Toast({
+          message: '请输入验证码',
+          position: 'bottom'
+        })
+      } else if (this.pass1 === '') {
+        Toast({
+          message: '请输入新密码',
+          position: 'bottom'
+        })
+      } else if (this.pass2 === '') {
+        Toast({
+          message: '请再次输入新密码',
+          position: 'bottom'
+        })
+      } else if (this.pass1 !== this.pass2) {
+        Toast({
+          message: '密码不一致',
+          position: 'bottom'
+        })
+      }
     },
     sure () {
       if (this.isOk) {
@@ -112,6 +139,9 @@ export default {
         text-align center
         color #999999
         font-size 1.4rem
+      .active
+        border 0.5px solid #B7B9BF
+        color #000000
   .buttons
     margin-top 0.4rem
     padding 1.6rem
