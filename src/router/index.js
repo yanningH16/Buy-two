@@ -6,16 +6,17 @@ import Login from './login/login'
 import MyTask from './myTask/myTask'
 import OperateTask from './operateTask/operateTask'
 import UserCenter from './userCenter/userCenter'
+import MoneyAdmin from './moneyAdmin/moneyAdmin'
 
 Vue.use(Router)
 
 const defaultRouter = [{
   path: '/',
   redirect: {
-    name: 'login'
+    name: 'moneybank'
   }
 }]
-const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter]
+const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter, ...MoneyAdmin]
 let router = new Router({
   routes,
   mode: 'history'
