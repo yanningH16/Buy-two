@@ -4,14 +4,11 @@
       <div class="conten" v-for="item in 3" :key="item">
         <div>
           <p v-if="shopState===1" class="top">
-            <span>本金返款</span>-
+            <span>佣金返款</span>-
             <span class="overflow">夏季新款男士家乐福Joe</span>
           </p>
           <p v-if="shopState===2" class="top">
-            <span>备用金支取</span>
-          </p>
-          <p v-if="shopState===3" class="top">
-            <span>提现</span>
+            <span>转成本金</span>
           </p>
           <p v-if="state===1" class="font">
             <em>+</em>
@@ -38,8 +35,8 @@ export default {
   name: 'userCenter',
   data () {
     return {
-      state: 2,
-      shopState: 2
+      state: 1,
+      shopState: 1
     }
   }
 }

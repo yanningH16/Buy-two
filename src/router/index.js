@@ -7,21 +7,21 @@ import MyTask from './myTask/myTask'
 import OperateTask from './operateTask/operateTask'
 import UserCenter from './userCenter/userCenter'
 import MoneyAdmin from './moneyAdmin/moneyAdmin'
+import YongMoney from './yongMoney/yongMoney'
 
 Vue.use(Router)
 
 const defaultRouter = [{
   path: '/',
   redirect: {
-    name: 'personMoney'
+    name: 'yongMoney'
   }
 }]
-const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter, ...MoneyAdmin]
+const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter, ...MoneyAdmin, ...YongMoney]
 let router = new Router({
   routes,
   mode: 'history'
 })
-
 // 设置title
 router.beforeEach((to, from, next) => {
   if (to.meta.title || to.params.message) {

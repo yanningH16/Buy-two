@@ -3,22 +3,22 @@
     <!-- 上部分 -->
     <header>
       <div>
-        <p class="availab">可提现本金 (单位:元)</p>
-        <p class="detail" :class="{'isactive':click}" @click="btn">本金明细</p>
+        <p class="availab">可提现拥金 (单位:元)</p>
+        <p class="detail" :class="{'isactive':click}" @click="btn">佣金明细</p>
       </div>
       <div class="money">
-        <h2>100.00</h2>
-        <span @click="takeMoney">提现</span>
+        <h2>10.00</h2>
+        <span @click="takeMoney">佣金转本金</span>
       </div>
     </header>
-    <p class="title">提现明细</p>
+    <p class="title">转本金明细</p>
     <div class="content border-bottom-1px" v-for="item in 10" :key="item">
       <div>
         <p class="first">tx444644</p>
         <p class="first_1" v-if="state===1">处理中</p>
         <p class="first_1 green" v-else-if="state===2">到账成功</p>
-        <p class="first_1 red" v-else>提现失败
-          <span>银行卡有误</span>
+        <p class="first_1 red" v-else>转本金失败
+          <span>网络错误</span>
         </p>
       </div>
       <div class="numbers">
@@ -52,12 +52,12 @@ export default {
           alert(111)
         })
       } else {
-        this.$router.push({ name: 'moneybank' })
+        this.$router.push({ name: 'yongBank' })
       }
     },
     btn () {
       this.click = true
-      this.$router.push({ name: 'personMoney' })
+      this.$router.push({ name: 'yongDetail' })
     }
   }
 }
@@ -89,14 +89,15 @@ export default {
         font-size 6rem
       span
         display inline-block
-        width 4.7rem
+        width 8.3rem
         height 2.7rem
-        border 0.5px solid #ffffff
+        border 0.5px solid #666666
         font-size 1.2rem
         line-height 2.7rem
         text-align center
         border-radius 3px
         margin-top 1.8rem
+        color #666666
   .title
     color #08090a
     margin-top 1.6rem

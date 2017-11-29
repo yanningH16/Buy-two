@@ -1,12 +1,12 @@
 <template>
   <div class="wrap">
     <div class="moneyBank">
-      <div class="flex first">
+      <div class="flex first border-bottom-1px">
         <p class="bankName">提现到银行卡</p>
-        <p class="right">中信银行 姓名** 6223****3215</p>
+        <p class="right">中信银行 {{personName | name}} {{bankCard | phonePwd}}</p>
       </div>
-      <div class="flex two">
-        <mt-field label="" placeholder="输入可提现金额" type="tel" v-model="moneyNum" style="width:12rem;padding-left:0.8rem"></mt-field>
+      <div class="flex two border-bottom-1px">
+        <mt-field label="" placeholder="输入可提现金额" type="tel" v-model="moneyNum" style="width:15rem;padding-left:0.8rem"></mt-field>
         <p class="benjin">
           <span>可提现本金(元):</span>
           <span>421.23</span>
@@ -18,11 +18,13 @@
         </p>
         <p class="top">当前提现手续费为:
           <span>30</span>%</p>
-        <mt-field label="" placeholder="请输入密码" type="password" v-model="password"></mt-field>
+          <p class="border-bottom-1px">
+        <mt-field label="" placeholder="请输入密码" type="password" v-model="password"></mt-field></p>
       </div>
       <div class="flex yanpass">
         <mt-field label="" placeholder="输入手机验证码" type="tel" v-model="phone"></mt-field>
-        <span>获取</span>
+        <span class="get" @click="get" v-show="show">获取</span>
+        <span class="get gray" v-show="hidden">{{time}}</span>
       </div>
     </div>
     <mt-button size="large" type="danger" style="margin-top:2rem" @click="tixian">提现</mt-button>
@@ -49,13 +51,33 @@ export default {
       phone: '',
       password: '',
       moneyNum: '',
-      cover: false
+      cover: false,
+      show: true,
+      hidden: false,
+      time: 60,
+      bankCard: '45446145631655686856654654654654654656',
+      personName: '张三啊'
     }
+  },
+  created () {
   },
   methods: {
     tixian () {
       // this.cover = true
       this.$router.push({ name: 'submit' })
+    },
+    get () {
+      this.show = false
+      this.hidden = true
+      let timeset = setInterval(() => {
+        this.time--
+        if (this.time === 0) {
+          clearInterval(timeset)
+          this.time = 60
+          this.show = true
+          this.hidden = false
+        }
+      }, 1000)
     }
   }
 }
@@ -82,15 +104,13 @@ export default {
       .right
         padding-right 1.6rem
     .first
-      border-bottom 1px solid #D4D5D8
       padding-bottom 1.75rem
     .flex .benjin
       margin-top 1.5rem
       padding-right 1.6rem
     .two
-      margin-top 2rem
-      border-bottom 1px solid #d4d5d8
-      padding-bottom 1rem
+      margin-top 0.4rem
+      padding-left 0.8rem
     .money
       margin-top 1.2rem
       padding-left 1.6rem
@@ -102,7 +122,7 @@ export default {
       padding-left 1.6rem
       margin-top 0.5rem
       border-bottom 1px solid #d4d5d8
-      span
+      .get
         width 4.8rem
         height 3.4rem
         border 1px solid #08090A
@@ -111,6 +131,9 @@ export default {
         border-radius 3px
         margin-right 1.6rem
         text-align center
+      .gray
+        border 1px solid #d4d5d8
+        color #d4d5d8
   .cover
     width 100%
     height 100%

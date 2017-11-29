@@ -9,7 +9,21 @@ import 'mint-ui/lib/style.css'
 
 Vue.use(MintUI)
 Vue.config.productionTip = false
+Vue.filter('phonePwd', function (value) {
+  if (!value) {
+    return false
+  }
+  let reg = /^(\d{4})[\d]*(\d{4})$/
+  return value.replace(reg, '$1****$2')
+})
 
+Vue.filter('name', function (value) {
+  if (!value) {
+    return false
+  }
+  let reg = /^([\u4e00-\u9fa5]{1})[\u4e00-\u9fa5]*([\u4e00-\u9fa5]{0})$/
+  return value.replace(reg, '$1**')
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
