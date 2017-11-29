@@ -134,8 +134,10 @@ export default {
     margin-right 1.2rem
     margin-top 1.2rem
     position relative
+    border-radius 2px
     /* overflow: hidden; */
   .finish_room2 .room_img img
+    border-radius 2px
     width 100%
     height 100%
   .finish_room2 > .room_img span
@@ -147,6 +149,7 @@ export default {
   .room_add_img
     width 5.8rem
     height 5.8rem
+    border-radius 2px
     margin-right 1.2rem
     margin-top 1.2rem
     border 1px solid #e1e1e1

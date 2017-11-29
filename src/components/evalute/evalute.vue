@@ -1,16 +1,102 @@
 <template>
   <div class="evalute">
-    evalute
+    <div class="reject" v-if="$route.query.rb">
+      <p>驳回原因：截图有误</p>
+      <p>修改方案：上传正确截图</p>
+    </div>
+    <ul class="cont">
+      <li>
+        <taskListSmall :infoArr="evaluateObj.infoArr"></taskListSmall>
+      </li>
+      <li>
+        <check :title="evaluateObj.step1Title" :infoArr="evaluateObj.step1Arr"></check>
+      </li>
+      <li>
+        <upload :title="evaluateObj.step2Title" :myImgs="evaluateObj.step2Arr" :max="1" :isShow="false"></upload>
+      </li>
+      <li>
+        <findGoods :title="evaluateObj.step3Title" :onlyTitle="true"></findGoods>
+      </li>
+      <li>
+        <inputArea :title="evaluateObj.step4Title" :text="evaluateObj.step4Text"></inputArea>
+      </li>
+      <li>
+        <upImgs :title="evaluateObj.step5Title" :imgsArr="evaluateObj.step5Arr"></upImgs>
+      </li>
+      <li>
+        <upload :title="evaluateObj.step6Title" :myImgs="evaluateObj.step6Arr" :max="1" :isShow="false"></upload>
+      </li>
+    </ul>
+    <div class="footer">
+      <p>若京东快递未签收，就提前在平台或京东店铺确认好 评，平台将扣除本次任务本金作为处罚</p>
+      <span class="btn hand">提交并返回我的任务</span>
+      <p>如遇问题，请联系在线客服QQ: 2256825635</p>
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import TaskListSmall from '../../base/taskList/taskListSmall'
+import Check from '../../base/taskStep/check'
+import Upload from '../../base/taskStep/upload'
+import FindGoods from '../../base/taskStep/findGoods'
+import InputArea from '../../base/taskStep/inputArea'
+import UpImgs from '../../base/taskStep/upImgs'
+
 export default {
   name: 'evalute',
+  components: {
+    TaskListSmall,
+    Check,
+    Upload,
+    FindGoods,
+    InputArea,
+    UpImgs
+  },
   data () {
     return {
+      evaluateObj: {
+        infoArr: ['RKHL小温 秋冬新款韩版RKHL小温 秋冬新款韩版', '10.00', '100.00', '9823786563387066-f07750'],
+        step1Title: '一、核对商品参数',
+        step1Arr: ['RKHL小温 秋冬新RKHL小温 秋冬新', '紫*儿*饰紫*儿*饰', '1件', '任意规格', '49.00'],
+        step2Title: '二、上传物流截图',
+        step2Arr: [],
+        step3Title: '三、五星好评',
+        step4Title: '四、将以下评价内容打字到手机京东',
+        step4Text: '商品很好的',
+        step5Title: '五、将以下图片上传到手机京东',
+        step5Arr: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511875719755&di=ab6dcb955b793b77820db79130a2f05d&imgtype=0&src=http%3A%2F%2Fdiy.qqjay.com%2Fu2%2F2014%2F0721%2F31d87362da0efcf126a487a049b1576e.jpg'],
+        step6Title: '六、上传评价页面截图',
+        step6Arr: []
+      }
     }
   }
 }
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+.evalute
+  background #EFF0F2
+  width 100%
+  height 100%
+  overflow auto
+  .reject
+    padding 1.2rem 1.6rem
+    background #FFEAEB
+    >p
+      font-size 1.2rem
+      line-height 1.6rem
+      color #FF3341
+      vertical-align top
+  .cont
+    li
+      padding 2rem 1.6rem
+      background #ffffff
+      margin-bottom 1.2rem
+  .footer
+    padding 0 1.6rem 2rem
+    p
+      font-size 1.2rem
+      line-height 2rem
+      color #666666
+    .hand
+      margin 2rem 0
 </style>
