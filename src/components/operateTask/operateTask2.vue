@@ -21,6 +21,7 @@
     <div class="footer">
       <p>提示：<br />商家将在72小时内操作发货，请耐心等待，不要找客 服催商家</p>
       <span class="btn">提交</span>
+      <span class="rb btn border-1px" v-if="$route.query.rb">返回货比三家</span>
       <p>如遇问题，请联系在线客服QQ: 2256825635</p>
     </div>
   </div>
@@ -81,4 +82,9 @@ export default {
       line-height 2rem
     .btn
       margin-top 2rem
+    .rb
+      margin-top 1.2rem
+      background #ffffff
+      color #000000
+      display inline-block
 </style>
