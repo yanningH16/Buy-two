@@ -13,7 +13,7 @@ Vue.use(Router)
 const defaultRouter = [{
   path: '/',
   redirect: {
-    name: 'moneybank'
+    name: 'personMoney'
   }
 }]
 const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter, ...MoneyAdmin]

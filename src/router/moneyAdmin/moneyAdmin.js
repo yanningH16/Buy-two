@@ -13,6 +13,11 @@ const Submit = (resolve) => {
     resolve(module)
   })
 }
+const PersonMoney = (resolve) => {
+  import('@/components/moneyAdmin/personMoney').then((module) => {
+    resolve(module)
+  })
+}
 
 const moneyAdmin = [{
   path: '/moneyAdmin',
@@ -29,6 +34,11 @@ const moneyAdmin = [{
   component: Submit,
   name: 'submit',
   meta: { title: '提示信息' }
+}, {
+  path: '/personMoney',
+  component: PersonMoney,
+  name: 'personMoney',
+  meta: { title: '本金明细' }
 }
 ]
 
