@@ -18,6 +18,11 @@ const PersonMoney = (resolve) => {
     resolve(module)
   })
 }
+const YongText = (resolve) => {
+  import('@/components/moneyAdmin/yongText').then((module) => {
+    resolve(module)
+  })
+}
 
 const moneyAdmin = [{
   path: '/moneyAdmin',
@@ -39,6 +44,12 @@ const moneyAdmin = [{
   component: PersonMoney,
   name: 'personMoney',
   meta: { title: '本金明细' }
+},
+{
+  path: '/yongText',
+  component: YongText,
+  name: 'yongText',
+  meta: { title: '佣金提现规则' }
 }
 ]
 

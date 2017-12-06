@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrap" v-for="(item,index) in datas" :key="index" >
+    <div class="wrap" v-for="(item,index) in datas" :key="index">
       <div class="header">
         <p>
           <em class="img"></em>
@@ -33,7 +33,7 @@
             <span v-if="item.task===0">子</span>任务编号
             <span>{{item.taskNumber}}</span>
           </p>
-          <p class="copy">复制</p>
+          <p class="copy" @click="doCopy" :data-clipboard-text='item.content'>复制</p>
         </div>
         <p class="detail_two" v-if="item.prom===0">请一定要签收后再评价哦~</p>
         <p class="detail_two red" v-else-if="item.prom===1">驳回原因：
@@ -52,6 +52,8 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+import Clipboard from 'clipboard'
+import { Toast } from 'mint-ui'
 export default {
   name: 'taskList',
   props: {
@@ -67,6 +69,12 @@ export default {
   methods: {
     goTask (index) {
       this.$emit('myrouter', index)
+    },
+    doCopy () {
+      var clipboard = new Clipboard('.copy')
+      clipboard.on('success', (e) => {
+        Toast('复制成功')
+      })
     }
   }
 }
@@ -75,7 +83,8 @@ export default {
 .wrap
   background white
   padding-left 1.6rem
-  margin-bottom 1.2rem
+  // margin-bottom 1.2rem
+  margin-top 1.2rem
   .header
     display flex
     justify-content space-between

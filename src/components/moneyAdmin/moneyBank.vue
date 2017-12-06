@@ -18,8 +18,9 @@
         </p>
         <p class="top">当前提现手续费为:
           <span>30</span>%</p>
-          <p class="border-bottom-1px">
-        <mt-field label="" placeholder="请输入密码" type="password" v-model="password"></mt-field></p>
+        <p class="border-bottom-1px">
+          <mt-field label="" placeholder="请输入密码" type="password" v-model="password"></mt-field>
+        </p>
       </div>
       <div class="flex yanpass">
         <mt-field label="" placeholder="输入手机验证码" type="tel" v-model="phone"></mt-field>
@@ -28,6 +29,11 @@
       </div>
     </div>
     <mt-button size="large" type="danger" style="margin-top:2rem" @click="tixian">提现</mt-button>
+    <router-link :to="{name:'yongText'}">
+      <div class="guize">
+        <p>本金提现规则</p>
+      </div>
+    </router-link>
     <div class="cover" v-show="cover">
       <div class="content">
         <h3>核对金额</h3>
@@ -168,4 +174,10 @@ export default {
         .work_2
           margin-left 4rem
           color #ff3341
+  .guize
+    margin-top 1.6rem
+    text-align center
+    color #000000
+    font-size 1.2rem
+    text-decoration underline
 </style>

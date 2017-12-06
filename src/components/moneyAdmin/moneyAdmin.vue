@@ -12,31 +12,39 @@
       </div>
     </header>
     <p class="title">提现明细</p>
-    <div class="content border-bottom-1px" v-for="item in 10" :key="item">
-      <div>
-        <p class="first">tx444644</p>
-        <p class="first_1" v-if="state===1">处理中</p>
-        <p class="first_1 green" v-else-if="state===2">到账成功</p>
-        <p class="first_1 red" v-else>提现失败
-          <span>银行卡有误</span>
-        </p>
+    <mt-loadmore :bottom-method="loadTop" @bottom-status-change="handleTopChange">
+      <div class="content border-bottom-1px" v-for="item in 10" :key="item">
+        <div>
+          <p class="first">tx444644</p>
+          <p class="first_1" v-if="state===1">处理中</p>
+          <p class="first_1 green" v-else-if="state===2">到账成功</p>
+          <p class="first_1 red" v-else>提现失败
+            <span>银行卡有误</span>
+          </p>
+        </div>
+        <div class="numbers">
+          <p class="data">2017-09-10 21:30</p>
+          <p class="money">
+            <span>310.00</span> 元</p>
+        </div>
       </div>
-      <div class="numbers">
-        <p class="data">2017-09-10 21:30</p>
-        <p class="money">
-          <span>310.00</span> 元</p>
+      <div slot="bottom" class="mint-loadmore-bottom">
+        <span v-show="topStatus === 'loading'">Loading...</span>
       </div>
-    </div>
+    </mt-loadmore>
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { MessageBox } from 'mint-ui'
+import { MessageBox, Loadmore } from 'mint-ui'
+import Vue from 'vue'
+Vue.component(Loadmore.name, Loadmore)
 export default {
   name: 'evalute',
   data () {
     return {
       state: 2,
-      click: false
+      click: false,
+      topStatus: ''
     }
   },
   methods: {
@@ -58,6 +66,17 @@ export default {
     btn () {
       this.click = true
       this.$router.push({ name: 'personMoney' })
+    },
+    loadBottom () {
+      this.allLoaded = true
+      // this.$refs.loadmore.onBottomLoaded()
+    },
+    loadTop () {
+      // this.$refs.loadmore.onBottomLoaded()
+    },
+    // 底部数据发生变化的回调函数
+    handleTopChange (status) {
+      this.topStatus = status
     }
   }
 }

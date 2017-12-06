@@ -16,13 +16,13 @@
           <taskList :datas='bbb' @myrouter="show"></taskList>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <taskList :datas='ccc' @myrouter="show"></taskList>
+          <!-- <taskList :datas='ccc' @myrouter="show"></taskList> -->
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
-          <taskList :datas='eee' @myrouter="show"></taskList>
+          <!-- <taskList :datas='eee' @myrouter="show"></taskList> -->
         </mt-tab-container-item>
         <mt-tab-container-item id="5">
-          <taskList :datas='fff' @myrouter="show"></taskList>
+          <!-- <taskList :datas='fff' @myrouter="show"></taskList> -->
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -48,13 +48,14 @@ export default {
         myMoney: 550.00,
         yongMoney: 100.00,
         task: 0,
+        taskNumber: 546546546464654546468,
+        content: '复制的测试一下',
         prom: 1,
         proms: 0,
         btn: {
           state: 2
         }
-      },
-      {
+      }, {
         slot: {
           state: ''
         },
@@ -63,10 +64,11 @@ export default {
         myMoney: 550.00,
         yongMoney: 100.00,
         task: 0,
+        taskNumber: 546546546464654546468,
         prom: 1,
         proms: 0,
         btn: {
-          state: 2
+          state: 1
         }
       }],
       bbb: [{
@@ -78,25 +80,11 @@ export default {
         myMoney: 550.00,
         yongMoney: 100.00,
         task: 0,
+        taskNumber: 546546546464654546468,
         prom: 2,
         proms: 1,
         btn: {
           state: 3
-        }
-      },
-      {
-        slot: {
-          state: ''
-        },
-        shopName: '店铺的名字名字的呃呃鹅鹅鹅',
-        imgSrc: 'http://cdn.static.linlangxiu.com/upload/trade/20171013/6046914754984d09d7496b13537c978d.jpg',
-        myMoney: 550.00,
-        yongMoney: 100.00,
-        task: 0,
-        prom: 1,
-        proms: 0,
-        btn: {
-          state: 2
         }
       }]
     }
@@ -108,6 +96,8 @@ export default {
         '确定快递已签收'
       ).then((data) => {
         // alert(data)
+      }).catch((error) => {
+        console.log(error)
       })
     }
   }

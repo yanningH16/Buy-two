@@ -1,14 +1,10 @@
 <template>
   <div class="wrap">
     <div class="moneyBank">
-      <div class="flex first">
-        <p class="bankName">提现到银行卡</p>
-        <p class="right">中信银行 姓名**</p>
-      </div>
       <div class="flex two">
-        <mt-field label="" placeholder="输入可提现金额" type="tel" v-model="moneyNum" style="width:15rem;padding-left:0.8rem"></mt-field>
+        <mt-field label="" placeholder="输入转本金金额" type="tel" v-model="moneyNum" style="width:15rem;padding-left:0.8rem"></mt-field>
         <p class="benjin">
-          <span>可提现本金(元):</span>
+          <span>可转出佣金(元):</span>
           <span>1.23</span>
         </p>
       </div>
@@ -18,13 +14,10 @@
         </p>
       </div>
       <div class="flex yanpass">
-        <mt-field label="" placeholder="请输入提现密码" type="password" v-model="password" style="width:100%"></mt-field>
+        <mt-field label="" placeholder="请输入密码" type="password" v-model="password" style="width:100%"></mt-field>
       </div>
     </div>
-    <mt-button size="large" type="danger" style="margin-top:2rem" @click="tixian">提现</mt-button>
-    <router-link :to="{name:'yongText'}">
-      <p class="yongjin">佣金提现规则</p>
-    </router-link>
+    <mt-button size="large" type="danger" style="margin-top:2rem" @click="tixian">转出</mt-button>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -35,7 +28,8 @@ export default {
       phone: '',
       password: '',
       moneyNum: '',
-      cover: false
+      cover: false,
+      personName: '鄢宁'
     }
   },
   methods: {
@@ -53,7 +47,7 @@ export default {
   height 100%
   overflow auto
   .moneyBank
-    margin-top 1.2rem
+    // margin-top 1.2rem
     padding-top 1.8rem
     .flex
       display flex
@@ -61,21 +55,11 @@ export default {
       font-size 1.2rem
       color #666666
       background #ffffff
-      .bankName
-        font-size 1.4rem
-        color #08090a
-        padding-left 1.6rem
-      .right
-        padding-right 1.6rem
-    .first
-      // border-bottom 1px solid #D4D5D8
-      padding-bottom 1.5rem
-      padding-top 1.5rem
     .flex .benjin
       margin-top 1.5rem
       padding-right 1.6rem
     .two
-      margin-top 2rem
+      padding-left 0.6rem
       // border-bottom 1px solid #d4d5d8
     .money
       margin-top 1.2rem

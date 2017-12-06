@@ -6,9 +6,11 @@ import router from './router'
 import MintUI from 'mint-ui'
 import 'babel-polyfill'
 import 'mint-ui/lib/style.css'
+import axios from 'axios'
 
 Vue.use(MintUI)
 Vue.config.productionTip = false
+Vue.prototype.$ajax = axios
 Vue.filter('phonePwd', function (value) {
   if (!value) {
     return false
@@ -29,5 +31,17 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  methods: {
+    submitForm () {
+      this.$ajax({
+        method: 'post',
+        url: '/user',
+        data: {
+          name: 'wise',
+          info: 'wrong'
+        }
+      })
+    }
+  }
 })

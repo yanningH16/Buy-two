@@ -13,11 +13,6 @@ const YongBank = (resolve) => {
     resolve(module)
   })
 }
-const YongText = (resolve) => {
-  import('@/components/yongMoney/yongText').then((module) => {
-    resolve(module)
-  })
-}
 const yongMoney = [{
   path: '/yongMoney',
   component: YongMoney,
@@ -35,12 +30,6 @@ const yongMoney = [{
   component: YongBank,
   name: 'yongBank',
   meta: { title: '佣金提现' }
-},
-{
-  path: '/yongText',
-  component: YongText,
-  name: 'yongText',
-  meta: { title: '佣金提现规则' }
 }
 ]
 
