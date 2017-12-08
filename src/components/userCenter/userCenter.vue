@@ -26,7 +26,7 @@
           <span>帐号绑定</span>
           <strong>
             <b></b>
-            <i>&gt;</i>
+            <i></i>
           </strong>
         </li>
         <li>
@@ -34,7 +34,7 @@
           <span>帮助与客服</span>
           <strong>
             <b></b>
-            <i>&gt;</i>
+            <i></i>
           </strong>
         </li>
         <li>
@@ -42,7 +42,7 @@
           <span>设置</span>
           <strong>
             <b></b>
-            <i>&gt;</i>
+            <i></i>
           </strong>
         </li>
       </ul>
@@ -167,12 +167,22 @@ export default {
             border-radius 50%
             background #FF3341
           >i
+            position relative
             display inline-block
             width 2rem
             height 2rem
-            font-size 2rem
-            line-height 2rem
-            color #999999
+            &:after
+              border solid 2px #999999
+              border-bottom-width 0
+              border-left-width 0
+              content ' '
+              top 1rem
+              right 0.75rem
+              position absolute
+              width 5px
+              height 5px
+              -webkit-transform translateY(-50%) rotate(45deg)
+              transform translateY(-50%) rotate(45deg)
     .buttons
       position absolute
       display flex
