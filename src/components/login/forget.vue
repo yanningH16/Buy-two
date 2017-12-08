@@ -6,7 +6,7 @@
       </div>
       <div class="input haveButton">
         <input type="number" v-model="keyNum" placeholder="输入验证码" @input="input">
-        <span @click="getkey">{{ timeout }}</span>
+        <span @click="getMessage">{{ timeout }}</span>
       </div>
     </div>
     <div class="group border">
@@ -23,6 +23,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+import md5 from 'md5'
 import { Toast } from 'mint-ui'
 export default {
   name: 'forget',
@@ -41,23 +42,15 @@ export default {
   },
   methods: {
     getkey () {
-      let reg = /^1[34578]\d{9}$/
-      if (this.timeout === '获取' && reg.test(this.phone)) {
-        let left = 60
-        let timeset = setInterval(() => {
-          left--
-          this.timeout = left + ' s'
-          if (left === 0) {
-            clearInterval(timeset)
-            this.timeout = '获取'
-          }
-        }, 1000)
-      } else {
-        Toast({
-          message: '请输入手机号码',
-          position: 'bottom'
-        })
-      }
+      let left = 60
+      let timeset = setInterval(() => {
+        left--
+        this.timeout = left + ' s'
+        if (left === 0) {
+          clearInterval(timeset)
+          this.timeout = '获取'
+        }
+      }, 1000)
     },
     input () {
       if ((/^1[34578]\d{9}$/).test(this.phone) && this.keyNum !== '' && this.pass1 !== '' && this.pass2 !== '' && this.pass1 === this.pass2) {
@@ -94,10 +87,80 @@ export default {
         })
       }
     },
+    // 获取短信接口
+    getMessage () {
+      let reg = /^1[34578]\d{9}$/
+      if (this.timeout === '获取' && reg.test(this.phone)) {
+        this.$ajax.post('/api/config/sms/sendSms', {
+          type: 2,
+          telephone: this.phone
+        }).then((data) => {
+          console.log(data)
+          if (data.data.code === '200') {
+            this.getkey()
+          } else {
+            Toast({
+              message: data.data.message,
+              position: 'bottom'
+            })
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      } else {
+        Toast({
+          message: '请输入手机号码',
+          position: 'bottom'
+        })
+      }
+    },
+    // 验证验证码
+    testMessage () {
+      this.$ajax.post('/api/config/sms/vertify', {
+        type: 2,
+        telephone: this.phone,
+        code: this.keyNum
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          this.fixPass()
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
     sure () {
       if (this.isOk) {
         // 验证可以修改
+        this.testMessage()
       }
+    },
+    fixPass () {
+      this.$ajax.post('/api/buyerAccount/resetPassword', {
+        newPassword: md5(this.pass1),
+        telephone: this.phone
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          Toast({
+            message: '修改成功!',
+            position: 'bottom'
+          })
+          this.$router.push({ name: 'login' })
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 }

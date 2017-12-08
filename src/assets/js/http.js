@@ -2,14 +2,14 @@ import axios from 'axios'
 import store from '../../store'
 import * as types from '../../store/mutation-types'
 import router from '../../router'
+import { MessageBox } from 'mint-ui'
 import { setErrorTimeList, getErrorTimeList, clearErrorTimeList } from './cache'
 // axios 配置
 axios.defaults.timeout = 5000
 clearErrorTimeList()
-// http request 拦截器
-/* axios token认证 */
+  // http request 拦截器
+  /* axios token认证 */
 axios.interceptors.request.use((config) => {
-  console.log('123')
   if (store.state.userInfo) {
     config.headers.accesstoken = store.state.userToken //    请求接口header参数添加
     config.headers.userAccountId = store.state.userInfo.buyerUserAccountId
@@ -32,9 +32,10 @@ axios.interceptors.response.use((res) => {
         setErrorTimeList((new Date()).getTime())
         let lifeTime = getErrorTimeList()
         if (lifeTime.length === 1) {
-          alert('登录失效，请重新登录', '提示', {
-            showCancelButton: false,
-            closeOnClickModal: false
+          MessageBox({
+            title: '提示',
+            message: '登录失效，请重新登录',
+            showCancelButton: true
           }).then(() => {
             store.commit(types.CLEAR_USER_TOKEN)
             router.replace({
