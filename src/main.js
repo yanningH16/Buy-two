@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import store from './store'
 import router from './router'
 import MintUI from 'mint-ui'
 import 'babel-polyfill'
@@ -30,18 +31,7 @@ Vue.filter('name', function (value) {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
-  components: { App },
-  methods: {
-    submitForm () {
-      this.$ajax({
-        method: 'post',
-        url: '/user',
-        data: {
-          name: 'wise',
-          info: 'wrong'
-        }
-      })
-    }
-  }
+  components: { App }
 })

@@ -77,5 +77,28 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
+  },
+  dev: {
+    env: require('./dev.env'),
+    port: process.env.PORT || 8030,
+    autoOpenBrowser: true,
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
+    proxyTable: {
+      '/api': {
+        target: 'http://182.61.29.51:8089', // 测试环境
+        // target: 'http://182.61.24.42:8089', // 线上
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+    },
+    // CSS Sourcemaps off by default because relative paths are "buggy"
+    // with this option, according to the CSS-Loader README
+    // (https://github.com/webpack/css-loader#sourcemaps)
+    // In our experience, they generally work as expected,
+    // just be aware of this issue when enabling this option.
+    cssSourceMap: false
   }
 }

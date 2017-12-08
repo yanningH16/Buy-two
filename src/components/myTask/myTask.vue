@@ -1,8 +1,12 @@
 <template>
   <div class="myTask">
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">待下单</mt-tab-item>
-      <mt-tab-item id="2">待返款</mt-tab-item>
+      <mt-tab-item id="1">待下单
+        <mt-badge type="error" style="position: fixed;margin-top:-10px;margin-left:-10px">0</mt-badge>
+      </mt-tab-item>
+      <mt-tab-item id="2">待返款
+        <mt-badge type="error" style="position: fixed;margin-top:-10px;margin-left:-10px">0</mt-badge>
+      </mt-tab-item>
       <mt-tab-item id="3">待评价</mt-tab-item>
       <mt-tab-item id="4">待返佣</mt-tab-item>
       <mt-tab-item id="5">全部</mt-tab-item>
@@ -31,6 +35,7 @@
 <script type="text/ecmascript-6">
 import TaskList from '../../base/taskList/taskList'
 import { MessageBox } from 'mint-ui'
+import { mapGetters } from 'vuex'
 export default {
   name: 'myTask',
   components: {
@@ -89,6 +94,15 @@ export default {
       }]
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo',
+      'userToken'
+    ])
+  },
+  created () {
+    this.pointNum()
+  },
   methods: {
     show (index) {
       MessageBox.confirm(
@@ -98,6 +112,22 @@ export default {
         // alert(data)
       }).catch((error) => {
         console.log(error)
+      })
+    },
+    pointNum () {
+      this.$ajax.post('/api/buyer/task/getTaskListByStatus', {
+        buyerUserId: this.userInfo.buyerUserAccountId,
+        status: 0,
+        pageNo: 1,
+        pageSize: 5
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+        } else {
+        }
+      }).catch((err) => {
+        console.log(err)
       })
     }
   }

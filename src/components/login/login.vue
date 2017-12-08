@@ -8,12 +8,15 @@
       <input type="password" v-model="password" @input="isInput" placeholder="输入密码">
     </div>
     <div class="goIn">
-      <span class="btn" :class="{'btn-gray': !canLogin}" @click="login">登录</span>
+      <button class="btn" :class="{'btn-gray': !canLogin}" @click="login">登录</button>
       <p @click="$router.push({name: 'forget'})">忘记密码</p>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+// import md5 from 'md5'
+import { Toast } from 'mint-ui'
+import { mapActions } from 'vuex'
 export default {
   name: 'login',
   data () {
@@ -25,10 +28,27 @@ export default {
   },
   methods: {
     login () {
-      if (this.canLogin) {
-        this.$router.push({ name: 'myTask' })
-      }
+      // 登录
+      this.$ajax.post('/api/buyerAccount/login', {
+        telephone: this.phone,
+        password: this.password
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          this.setUserInfo(data.data.data)
+          this.setUserToken(data.headers.accesstoken)
+          this.$router.push({ name: 'myTask' })
+        } else {
+          Toast(data.data.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     },
+    ...mapActions([
+      'setUserInfo',
+      'setUserToken'
+    ]),
     isInput () {
       let reg = /^1[34578]\d{9}$/
       if (reg.test(this.phone) && this.password.length >= 6) {
@@ -73,4 +93,7 @@ export default {
       line-height 1
       margin-top 1.6rem
       text-align center
+    .btn
+      outline none
+      border none
 </style>
