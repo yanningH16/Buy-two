@@ -31,13 +31,21 @@
       </li>
     </ul>
     <ul class="cashSet">
-      <li>
-        <mt-cell title="提现设置" is-link>
-          <span slot="label" class="label">买号通过审核后方可设置</span>
+      <li class="label">
+        <mt-cell title="提现设置" class="title" label="买号通过审核后方可设置" is-link>
           <span class="contText">未设置</span>
         </mt-cell>
       </li>
     </ul>
+    <ul class="changePass">
+      <li>
+        <mt-cell title="更改登录密码" class="title" is-link>
+        </mt-cell>
+      </li>
+    </ul>
+    <div class="buttons">
+      <span class="btn">退出登录</span>
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -86,4 +94,8 @@ export default {
       border-radius 50%
       margin-top 0.8rem
       margin-bottom 0.8rem
+  .buttons
+    padding 2rem 1.6rem
+    .btn
+      background #FF3341
 </style>
