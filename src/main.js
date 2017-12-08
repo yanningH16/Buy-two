@@ -7,7 +7,7 @@ import router from './router'
 import MintUI from 'mint-ui'
 import 'babel-polyfill'
 import 'mint-ui/lib/style.css'
-import axios from 'axios'
+import axios from './assets/js/http'
 
 Vue.use(MintUI)
 Vue.config.productionTip = false
