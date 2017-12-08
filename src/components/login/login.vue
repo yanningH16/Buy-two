@@ -22,8 +22,8 @@ export default {
   data () {
     return {
       canLogin: false,
-      phone: '',
-      password: ''
+      phone: '18314801103',
+      password: '123456'
     }
   },
   methods: {
@@ -57,6 +57,9 @@ export default {
         this.canLogin = false
       }
     }
+  },
+  mounted () {
+    this.isInput()
   }
 }
 </script>
