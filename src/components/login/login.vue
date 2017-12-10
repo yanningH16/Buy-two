@@ -14,7 +14,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import md5 from 'md5'
+// import md5 from 'md5'
 import { Toast } from 'mint-ui'
 import { mapActions } from 'vuex'
 export default {
@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       canLogin: false,
-      phone: '18667199035',
+      phone: '18314801103',
       password: '123456'
     }
   },
@@ -31,7 +31,7 @@ export default {
       // 登录
       this.$ajax.post('/api/buyerAccount/login', {
         telephone: this.phone,
-        password: md5(this.password)
+        password: this.password
       }).then((data) => {
         console.log(data)
         if (data.data.code === '200') {

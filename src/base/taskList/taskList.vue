@@ -4,20 +4,20 @@
       <div class="header">
         <p>
           <em class="img"></em>
-          <span class="jd">手机京东垫付</span>
+          <span class="jd">{{item.jdTask}}</span>
         </p>
-        <p class="slot" v-if="item.slot.state===0">待下单</p>
-        <p class="slot" v-else-if="item.slot.state===1">待商家确认并返还本金</p>
-        <p class="slot" v-else-if="item.slot.state===2">待根据提示评价</p>
-        <p class="slot" v-else-if="item.slot.state===3">待商家确认并返还佣金</p>
-        <p class="slot gray" v-else-if="item.slot.state===4">已完成</p>
-        <p class="slot gray" v-else>已放弃</p>
+        <p class="slot" v-if="item.slot==='1'">待下单</p>
+        <p class="slot" v-else-if="item.slot==='3'">待商家确认并返还本金</p>
+        <p class="slot" v-else-if="item.slot==='10'">待根据提示评价</p>
+        <p class="slot" v-else-if="item.slot==='11'">待商家确认并返还佣金</p>
+        <p class="slot gray" v-else-if="item.slot==='20'">已完成</p>
+        <p class="slot gray" v-else-if="item.slot==='19'">已放弃</p>
       </div>
       <div class="shopName">
         <h2>{{item.shopName}}</h2>
       </div>
       <div class="shopConten">
-        <img :src="item.imgSrc" alt="" class="picImg">
+        <img :src="item.imgSrc" alt="" class="picImg" width="8rem" height="8rem">
         <div class="shopText">
           <p>垫付本金(元)&nbsp;
             <span class="color">{{item.myMoney}}</span>
@@ -30,23 +30,23 @@
       <div class="detail">
         <div class="detail_first">
           <p>
-            <span v-if="item.task===0">子</span>任务编号
-            <span>{{item.taskNumber}}</span>
+            任务编号
+            <span class="taskNumber">{{item.taskNumber}}</span>
           </p>
-          <p class="copy" @click="doCopy" :data-clipboard-text='item.content'>复制</p>
+          <p class="copy" @click="doCopy" :data-clipboard-text='item.taskNumber'>复制</p>
         </div>
-        <p class="detail_two" v-if="item.prom===0">请一定要签收后再评价哦~</p>
-        <p class="detail_two red" v-else-if="item.prom===1">驳回原因：
+        <p class="detail_two" v-if="item.prom==='1'">请一定要签收后再评价哦~</p>
+        <p class="detail_two red" v-else-if="item.prom==='1'||item.prom==='10'">驳回原因：
           <span>拍错商品</span>
         </p>
-        <p class="detail_two red" v-if="item.proms===0">修改方案:
+        <p class="detail_two red" v-if="item.proms==='10'">修改方案:
           <span>拍正确的商品</span>
         </p>
       </div>
       <div class="bottom">
-        <p class="appraise" v-if="item.btn.state===0" @click="goTask(index)">去做任务</p>
-        <p class="appraise" v-else-if="item.btn.state===1" @click="goTask(index)">去评价</p>
-        <p class="appraise grey" v-else-if="item.btn.state===2" @click="goTask(index)">删除任务</p>
+        <p class="appraise" v-if="item.btn==='1'" @click="goTask(index)">去做任务</p>
+        <p class="appraise" v-else-if="item.btn==='10'" @click="goTask(index)">去评价</p>
+        <p class="appraise grey" v-else-if="item.btn==='20'" @click="goTask(index)">删除任务</p>
       </div>
     </div>
   </div>
@@ -154,6 +154,13 @@ export default {
         padding 4px 8px
         border-radius 3px
         cursor pointer
+      .taskNumber
+        display inline-block
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
+        width 14.5rem
+        vertical-align top
     .detail_two
       margin-top 1.1rem
     .red
