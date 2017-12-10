@@ -18,7 +18,7 @@
     <div class="bg">
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-            <taskList :datas='tableData' @myrouter="show"></taskList>
+          <taskList :datas='tableData' @myrouter="show"></taskList>
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
           <taskList :datas='tableData' @myrouter="show"></taskList>
@@ -37,11 +37,13 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import TaskList from '../../base/taskList/taskList'
-import { MessageBox, Loadmore } from 'mint-ui'
-import { mapGetters } from 'vuex'
 import Vue from 'vue'
-Vue.component(Loadmore.name, Loadmore)
+import { mapGetters } from 'vuex'
+import TaskList from '../../base/taskList/taskList'
+import { MessageBox, InfiniteScroll } from 'mint-ui'
+
+Vue.use(InfiniteScroll)
+
 export default {
   name: 'myTask',
   components: {
@@ -61,6 +63,7 @@ export default {
       pageSize: 5,
       // 每次累加总的数据
       tableData: [],
+      loadAllData: [],
       bottomText: '上拉加载更多...',
       totalCount: '',
       getScoreLog: [],
@@ -84,6 +87,18 @@ export default {
     this.taskList(1, this.pageSize)
   },
   methods: {
+    loadBottom () {
+      // 加载更多数据
+      // this.pageNo++
+      // let oldArr = this.tableData
+      // this.taskList(this.pageNo, this.pageSize)
+      // let newArr = this.tableData
+      // oldArr.concat(newArr)
+      // this.tableData = oldArr
+      console.log(123456)
+      this.allLoaded = true // 若数据已全部获取完毕
+      this.$refs.loadmore.onBottomLoaded()
+    },
     show (index) {
       console.log(index, this.tableData[index])
       if (this.tableData[index].slot === '1') {
