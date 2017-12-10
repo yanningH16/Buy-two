@@ -1,16 +1,16 @@
 <template>
   <div class="forget">
-    <div class="group border">
-      <div class="input border">
+    <div class="group border-bottom-1px">
+      <div class="input border-bottom-1px">
         <input type="number" v-model="phone" placeholder="输入手机号" @input="input">
       </div>
       <div class="input haveButton">
         <input type="number" v-model="keyNum" placeholder="输入验证码" @input="input">
-        <span @click="getMessage">{{ timeout }}</span>
+        <span class="border-1px" @click="getMessage">{{ timeout }}</span>
       </div>
     </div>
-    <div class="group border">
-      <div class="input border">
+    <div class="group border-bottom-1px">
+      <div class="input border-bottom-1px">
         <input type="password" v-model="pass1" placeholder="输入新密码" @input="input">
       </div>
       <div class="input">
@@ -194,7 +194,6 @@ export default {
         position absolute
         top 0.8rem
         right 1.6rem
-        border 0.5px solid #B7B9BF
         border-radius 0.2rem
         width 4.8rem
         height 3.4rem

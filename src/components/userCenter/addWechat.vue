@@ -6,27 +6,70 @@
         <h3>长按扫码添加该微信号为好友</h3>
       </li>
       <li>
-        <img src="https://qr.api.cli.im/qr?data=http%253A%252F%252F10.0.0.42%253A9998%252FwithdrawSet2&level=H&transparent=false&bgcolor=%23ffffff&forecolor=%23000000&blockpixel=12&marginblock=1&logourl=&size=280&kid=cliim&key=95adf5a72e9f22bb430283139d680afb" alt="erCode">
+        <img :src="weChatObj.wechatPicId" alt="erCode">
       </li>
       <li>
         <h3>或者<br />长按复制添加该微信号为好友</h3>
       </li>
       <li>
-        <strong>baoyi2017</strong>
-        <span class="border-1px">复制</span>
+        <strong>{{ weChatObj.wechatNum }}</strong>
+        <span class="border-1px copy" @click="doCopy" :data-clipboard-text='weChatObj.wechatNum'>复制</span>
       </li>
     </ul>
     <div class="footer">
-      <span class="btn">确认并返回个人中心</span>
+      <span class="btn" @click="toCenter">确认并返回个人中心</span>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import { mapGetters } from 'vuex'
+import { Toast } from 'mint-ui'
+import Clipboard from 'clipboard'
 export default {
   name: 'addWechat',
   data () {
     return {
+      weChatObj: {}
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
+  methods: {
+    getWechat () {
+      this.$ajax.post('/api/platform/wechat/getByOperatorWechatId', {
+        operatorWechatId: this.userInfo.operateWechatId
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          this.weChatObj = data.data.data
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    doCopy () {
+      var clipboard = new Clipboard('.copy')
+      clipboard.on('success', (e) => {
+        Toast({
+          message: '复制成功',
+          position: 'bottom'
+        })
+      })
+    },
+    toCenter () {
+      this.$router.push({ name: 'userCenter' })
+    }
+  },
+  mounted () {
+    this.getWechat()
   }
 }
 </script>

@@ -5,24 +5,24 @@
     </div>
     <ul class="cont">
       <li class="border-bottom-1px">
-        <input type="text" placeholder="输入持卡人姓名，须和支付宝姓名一致">
+        <input type="text" v-model="bankUserName" placeholder="输入持卡人姓名，须和支付宝姓名一致">
       </li>
       <li class="border-bottom-1px">
-        <input type="number" placeholder="输入银行卡号">
+        <input type="number" v-model="bankCardNo" placeholder="输入银行卡号">
       </li>
       <li class="border-bottom-1px" @click="showAddress=true">
         <input type="text" style="width:80%" readonly placeholder="开户行省、市">
         <i></i>
       </li>
       <li>
-        <input type="text" placeholder="输入开户行名称">
+        <input type="text" v-model="bankName" placeholder="输入开户行名称">
       </li>
     </ul>
     <div class="footer">
       <p>
         1. 只支持提现到借记卡（普通储蓄卡），不支持提现 到信用卡和农村信用社<br />2. 如果您填写的银行卡账户信息不正确，可能将无法 成功返款，平台不承担由此产生的一切费用<br/>3. 为确保您资金安全，绑定后支付宝信息、银行卡开 户名不可修改，即便帐号被盗，您帐号里的资金也不会 转移到他人的账户中
       </p>
-      <span class="btn">下一步</span>
+      <span class="btn" @click="doNext">下一步</span>
     </div>
     <div class="address" v-show="showAddress">
       <div class="buttons border-bottom-1px">
@@ -35,8 +35,9 @@
 </template>
 <script type="text/ecmascript-6">
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 import Step from '../../base/step/step'
-import { Picker } from 'mint-ui'
+import { Picker, Toast } from 'mint-ui'
 Vue.component(Picker.name, Picker)
 
 export default {
@@ -64,8 +65,16 @@ export default {
           className: 'slot3',
           textAlign: 'left'
         }
-      ]
+      ],
+      bankName: '',
+      bankUserName: '',
+      bankCardNo: ''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   },
   methods: {
     onValuesChange (picker, values) {
@@ -73,6 +82,26 @@ export default {
       if (values[0] > values[1]) {
         picker.setSlotValue(1, values[0])
       }
+    },
+    doNext () {
+      this.$ajax.post('/api/buyerAccount/bindBankCard', {
+        buyerUserAccountId: this.userInfo.buyerUserAccountId,
+        bankName: this.bankName,
+        bankUserName: this.bankUserName,
+        bankCardNo: this.bankCardNo
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          this.$router.push({ name: 'withdrawSet2' })
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 }

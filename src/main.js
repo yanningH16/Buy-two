@@ -7,6 +7,7 @@ import router from './router'
 import MintUI from 'mint-ui'
 import 'babel-polyfill'
 import 'mint-ui/lib/style.css'
+import './assets/stylus/index.styl'
 import axios from './assets/js/http'
 
 Vue.use(MintUI)
@@ -21,13 +22,12 @@ Vue.filter('phonePwd', function (value) {
 })
 
 Vue.filter('name', function (value) {
-  if (!value) {
-    return false
+  if (value) {
+    let reg = /^([\u4e00-\u9fa5]{1})[\u4e00-\u9fa5]*([\u4e00-\u9fa5]{0})$/
+    return value.replace(reg, '$1**')
   }
-  let reg = /^([\u4e00-\u9fa5]{1})[\u4e00-\u9fa5]*([\u4e00-\u9fa5]{0})$/
-  return value.replace(reg, '$1**')
 })
-/* eslint-disable no-new */
+  /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,

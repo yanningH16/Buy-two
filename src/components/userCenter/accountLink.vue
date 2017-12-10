@@ -1,39 +1,45 @@
 <template>
   <ul class="accountLink">
     <li class="border-bottom-1px">
-      <mt-cell v-if="1" title="加微信好友" class="title" is-link>
+      <mt-cell v-if="userInfo.isAddManagerWechat==0" title="加微信好友" class="title" is-link to="addWechat">
         <span class="contText">未加好友</span>
       </mt-cell>
-      <mt-cell v-if="0" title="加微信好友" class="title">
+      <mt-cell v-if="userInfo.isAddManagerWechat==1" title="加微信好友" class="title">
         <span class="contText Asuccess">已加好友</span>
       </mt-cell>
     </li>
     <li>
-      <!-- <mt-cell v-if="0" class="title" is-link>
+      <mt-cell v-if="userInfo.isJdPassCheck==0" class="title" is-link>
         <span slot="title">绑定京东买号</span>
         <span class="contText">未绑定</span>
       </mt-cell>
-      <mt-cell v-if="1" class="title">
-        <span slot="title">绑定京东买号：飞洒</span>
+      <mt-cell v-if="userInfo.isJdPassCheck==2" class="title">
+        <span slot="title">绑定京东买号：{{ userInfo.jdNickName }}</span>
         <span class="contText Awaiting">审核中</span>
       </mt-cell>
-      <mt-cell v-if="2" class="title" is-link>
-        <span slot="title">绑定京东买号：飞洒</span>
+      <mt-cell v-if="userInfo.isJdPassCheck==3" class="title" is-link>
+        <span slot="title">绑定京东买号：{{ userInfo.jdNickName }}</span>
         <span class="contText Aerror">未通过审核</span>
-      </mt-cell> -->
-      <mt-cell v-if="3" class="title">
-        <span slot="title">绑定京东买号：飞洒</span>
+      </mt-cell>
+      <mt-cell v-if="userInfo.isJdPassCheck==1" class="title">
+        <span slot="title">绑定京东买号：{{ userInfo.jdNickName }}</span>
         <span class="contText Asuccess">已通过审核</span>
       </mt-cell>
     </li>
   </ul>
 </template>
 <script type="text/ecmascript-6">
+import { mapGetters } from 'vuex'
 export default {
   name: 'accountLink',
   data () {
     return {
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   }
 }
 </script>

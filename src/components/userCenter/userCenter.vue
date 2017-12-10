@@ -5,24 +5,24 @@
         <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511957696669&di=5bbc3ea76a7b62eae7dc82073b12b0a6&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201504%2F16%2F20150416H4223_vG4eY.jpeg" alt="">
       </li>
       <li class="userPhone">
-        <span>{{ userPhone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') }}</span>
+        <span>{{ userInfo.telephone ? userInfo.telephone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : '******' }}</span>
         <i></i>
       </li>
     </ul>
     <div class="bottom">
       <ul class="title">
-        <li class="border-right-1px">
+        <li class="border-right-1px" @click="toDo('yongjin')">
           <span>佣金收益(元)</span>
-          <p>23.00</p>
+          <p>{{ moneyObj.totalCommissionAmount }}</p>
         </li>
-        <li>
+        <li @click="toDo('benjin')">
           <span>本金总计(元)</span>
-          <p>3466.00</p>
+          <p>{{ moneyObj.totalCapitalAmount }}</p>
         </li>
       </ul>
       <ul class="cell">
-        <li>
-          <b>?</b>
+        <li @click="toDo('bindAccount')">
+          <b class="bangdingIcon"></b>
           <span>帐号绑定</span>
           <strong>
             <b></b>
@@ -30,15 +30,15 @@
           </strong>
         </li>
         <li>
-          <b>?</b>
+          <b class="helpIcon"></b>
           <span>帮助与客服</span>
           <strong>
-            <b></b>
+            <b v-if="0"></b>
             <i></i>
           </strong>
         </li>
-        <li>
-          <b>?</b>
+        <li @click="toDo('setting')">
+          <b class="setIcon"></b>
           <span>设置</span>
           <strong>
             <b></b>
@@ -47,12 +47,12 @@
         </li>
       </ul>
       <ul class="buttons">
-        <li class="t">
-          <span>?</span>
+        <li class="t" @click="toDo('task')">
+          <span class="myTaskIcon"></span>
           <p>我的任务</p>
         </li>
         <li class="c">
-          <span>?</span>
+          <span class="userCenterIcon"></span>
           <p>个人中心</p>
         </li>
       </ul>
@@ -60,12 +60,66 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+import { Toast } from 'mint-ui'
+import { mapGetters } from 'vuex'
 export default {
   name: 'userCenter',
   data () {
     return {
-      userPhone: '18667199559'
+      moneyObj: {}
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
+  methods: {
+    toDo (where) {
+      switch (where) {
+        case 'task':
+          this.$router.push({ name: 'myTask' })
+          break
+        case 'yongjin':
+          this.$router.push({ name: 'yongMoney' })
+          break
+        case 'benjin':
+          this.$router.push({ name: 'moneyAdmin' })
+          break
+        case 'bindAccount':
+          this.$router.push({ name: 'accountLink' })
+          break
+        case 'setting':
+          this.$router.push({ name: 'userSet' })
+          break
+        default:
+          break
+      }
+    },
+    getMoney () {
+      this.$ajax.post('/api/userFund/getBuyerUserFund', {
+        buyerUserAccountId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          this.moneyObj = data.data.data
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast({
+          message: err,
+          position: 'bottom'
+        })
+      })
+    }
+  },
+  mounted () {
+    this.getMoney()
   }
 }
 </script>
@@ -133,10 +187,10 @@ export default {
     .cell
       padding 3.8rem 3.2rem
       li
-        height 2rem
-        margin-top 3.6rem
+        height 2.4rem
+        margin-top 3.2rem
         font-size 1.6rem
-        line-height 2rem
+        line-height 2.4rem
         overflow hidden
         b, span, strong, i
           vertical-align middle
@@ -147,7 +201,6 @@ export default {
           font-size 2rem
           line-height 2rem
           color #333333
-          background red
           margin-right 2.4rem
         span
           display inline-block
@@ -202,7 +255,6 @@ export default {
           height 4.4rem
           line-height 4.4rem
           font-size 2rem
-          background #ffffff
           border-radius 50%
           box-shadow 0 6px 8px rgba(204, 204, 204, 0.3)
         p

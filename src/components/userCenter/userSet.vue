@@ -8,55 +8,82 @@
       </li>
       <li class="border-bottom-1px">
         <mt-cell title="用户名" class="title">
-          <span class="contText">辛巴达</span>
+          <span class="contText">{{ userInfo.userName || '暂无用户名' }}</span>
         </mt-cell>
       </li>
       <li class="border-bottom-1px">
-        <mt-cell title="旺旺等级" class="title">
+        <mt-cell title="京东等级" class="title">
           <div class="leave">
-            <strong class="gold">金牌会员</strong>
-            <p class="contText">Plus到期日：2017-12-11</p>
+            <strong class="gold">{{ (userInfo.jdPlusType == 0 ? '临时会员' : '正式会员') || '暂无等级' }}</strong>
+            <p class="contText">Plus到期日：{{ (userInfo.jdPlusEndDate.split(' ')[0]) || '暂无' }}</p>
           </div>
         </mt-cell>
       </li>
       <li class="border-bottom-1px">
         <mt-cell title="性别" class="title">
-          <span class="contText">女</span>
+          <span class="contText">{{ userInfo.gender == '1' ? '男' : '女' }}</span>
         </mt-cell>
       </li>
       <li>
         <mt-cell title="职业" class="title">
-          <span class="contText">白领</span>
+          <span class="contText">{{ userInfo.profession || '暂无' }}</span>
         </mt-cell>
       </li>
     </ul>
     <ul class="cashSet">
-      <li class="label">
+      <li class="label" @click="toDo('withdraw')">
         <mt-cell title="提现设置" class="title" label="买号通过审核后方可设置" is-link>
           <span class="contText">未设置</span>
         </mt-cell>
       </li>
     </ul>
     <ul class="changePass">
-      <li>
+      <li @click="toDo('changePass')">
         <mt-cell title="更改登录密码" class="title" is-link>
         </mt-cell>
       </li>
     </ul>
     <div class="buttons">
-      <span class="btn">退出登录</span>
+      <span class="btn" @click="toDo('logout')">退出登录</span>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import Vue from 'vue'
-import { Cell } from 'mint-ui'
+import { mapGetters } from 'vuex'
+import { Cell, MessageBox } from 'mint-ui'
 Vue.component(Cell.name, Cell)
 
 export default {
   name: 'userSet',
   data () {
     return {
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
+  methods: {
+    toDo (where) {
+      switch (where) {
+        case 'withdraw':
+          this.$router.push({ name: 'withdrawSet' })
+          break
+        case 'changePass':
+          this.$router.push({ name: 'forget' })
+          break
+        case 'logout':
+          MessageBox.confirm('确定退出登录?').then((action) => {
+            this.$router.push({ name: 'login' })
+          }).catch((err) => {
+            console.log(err)
+          })
+          break
+        default:
+          break
+      }
     }
   }
 }

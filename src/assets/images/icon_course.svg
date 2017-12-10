@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_course</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Cell/Left-Icon/Course" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M32,39.9998 L8,39.9998 C5.8,39.9998 4,38.1998 4,35.9998 L4,3.9998 C4,1.7998 5.8,-0.0002 8,-0.0002 L32,-0.0002 C34.2,-0.0002 36,1.7998 36,3.9998 L36,35.9998 C36,38.1998 34.2,39.9998 32,39.9998" id="Fill-1" fill="#333333"></path>
+        <polygon id="Fill-4" fill="#CCCCCC" points="30.186 6 30.186 9.976 30.205 9.976 30.205 28.053 26.095 26.006 22 28.085 22 9.976 22.001 9.976 22.001 6"></polygon>
+        <polygon id="Fill-6" fill="#CCCCCC" points="4 10 36 10 36 6 4 6"></polygon>
+    </g>
+</svg>
