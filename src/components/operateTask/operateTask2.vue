@@ -1,6 +1,6 @@
 <template>
   <div class="operateTask2">
-    <div class="reject" v-if="$route.query.rb">
+    <div class="reject" v-if="$route.query.rbSellerTaskId">
       <p>驳回原因：截图有误</p>
       <p>修改方案：上传正确截图</p>
     </div>
@@ -15,13 +15,13 @@
         <payOrder :title="stpesObj.step9Title" :orderInfo="stpesObj.step9Arr"></payOrder>
       </li>
       <li>
-        <upload :title="stpesObj.step10Title" :myImgs="stpesObj.step10Arr"></upload>
+        <upload :title="stpesObj.step10Title" :myimgs="stpesObj.step10Arr"></upload>
       </li>
     </ul>
     <div class="footer">
       <p>提示：<br />商家将在72小时内操作发货，请耐心等待，不要找客 服催商家</p>
-      <span class="btn">提交</span>
-      <span class="rb btn border-1px" v-if="$route.query.rb">返回货比三家</span>
+      <span class="btn" @click="submit">提交</span>
+      <span class="rb btn border-1px" v-if="$route.query.rbSellerTaskId">返回货比三家</span>
       <p>如遇问题，请联系在线客服QQ: 2256825635</p>
     </div>
   </div>
@@ -31,6 +31,7 @@ import Step from '../../base/step/step'
 import Pay from '../../base/taskStep/pay'
 import PayOrder from '../../base/taskStep/payOrder'
 import Upload from '../../base/taskStep/upload'
+import { Toast } from 'mint-ui'
 
 export default {
   name: 'operateTask2',
@@ -51,6 +52,46 @@ export default {
         step10Title: '十、上传订单详情截图',
         step10Arr: []
       }
+    }
+  },
+  methods: {
+    submit () {
+      if (this.stpesObj.step9Arr[0] === '') {
+        Toast({
+          message: '请输入订单号!'
+        })
+      } else if (this.stpesObj.step9Arr[1] === '') {
+        Toast({
+          message: '请输入实付金额!'
+        })
+      } else if (this.stpesObj.step10Arr.length === 0) {
+        Toast({
+          message: '请上传订单详情截图!'
+        })
+      } else {
+        this.toPost()
+      }
+    },
+    toPost () {
+      this.$ajax.post('/api/buyer/task/doTaskSecond', {
+        buyerTaskId: this.$route.query.buyerTaskId,
+        realOrderId: this.stpesObj.step9Arr[0],
+        realPayment: this.stpesObj.step9Arr[1],
+        realOrderPicUrl: this.stpesObj.step10Arr
+      }).then((data) => {
+        if (data.data.code === '200') {
+          Toast({
+            message: '提交成功!'
+          })
+          this.$router.push({ name: 'myTask' })
+        } else {
+          Toast({
+            message: data.data.message
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 }

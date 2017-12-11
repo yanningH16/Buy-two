@@ -1,14 +1,14 @@
 <template>
   <div class="upload">
     <h2>{{ title }}
-      <i @click="wander">?</i>
+      <i class="wanderIcon" @click="wander"></i>
     </h2>
     <p>{{ tip }}</p>
     <div class='finish_room'>
       <div class='finish_room2'>
         <div v-for='(item ,index ) in imgs' class='room_img' :key="index">
           <img :src="item">
-          <span @click='delete_img(index)' class="removeImg"><img src="./imgs/delete.png" ref="deleteBox"></span>
+          <span @click='delete_img(index)' class="removeImg"><img src="../../assets/images/delete.svg" ref="deleteBox"></span>
         </div>
         <div class='room_add_img' v-show="isMax">
           <span><img src="./imgs/add_img.png"></span>
@@ -20,7 +20,8 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { MessageBox } from 'mint-ui'
+import { uploadPromise, uploadFile } from '../../assets/js/upload'
+import { MessageBox, Toast } from 'mint-ui'
 export default {
   name: 'upload',
   data () {
@@ -60,6 +61,7 @@ export default {
   },
   watch: {
     imgs (newVal) {
+      console.log(newVal)
       if (newVal.length === this.max) {
         this.isMax = false
       }
@@ -78,25 +80,38 @@ export default {
       }
     },
     add_img (event) {
-      // let reader = new FileReader()
       let img1 = event.target.files[0]
-      console.log(event.target.files)
       if (!(/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(img1.name))) {
         MessageBox('错误提示', '图片格式只能为gif，jpg，jpeg，png')
         return false
+      } else {
+        this.uploadImg(img1)
       }
-      this.imgs.push(img1)
-      // this.lastImg.push(img1.name)
-      // let myTime = (new Date()).getTime()
-      // if (img1.lastModified) {
-      //   myTime = img1.lastModified
-      // }
-      // let picName = parseInt(Math.random() * 10000000 + 10000000000) + md5(img1.name) + myTime
+    },
+    uploadImg (img) {
+      uploadPromise.then((res) => {
+        if (res.statusText === 'OK') {
+          uploadFile(res.data, img).then((res) => {
+            this.imgs.push(res)
+          }).catch((err) => {
+            console.log(err)
+            Toast({
+              message: '上传失败!',
+              position: 'bottom'
+            })
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast({
+          message: '上传失败!',
+          position: 'bottom'
+        })
+      })
     },
     // 疑问
     wander () {
       this.$emit('wander')
-      console.log(1)
     }
   }
 }
@@ -114,7 +129,7 @@ export default {
       height 1.6rem
       font-size 1.6rem
       text-align center
-      background red
+      vertical-align top
   p
     font-size 1.2rem
     color #666666

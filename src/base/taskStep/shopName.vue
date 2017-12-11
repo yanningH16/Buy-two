@@ -1,10 +1,10 @@
 <template>
   <div class="shopName">
     <h2>{{ title }}
-      <i>？</i>
+      <i class="wanderIcon"></i>
     </h2>
     <div class="inputs">
-      <input type="text" placeholder="输入店铺名称" v-model="value">
+      <input type="text" placeholder="输入店铺名称" @blur="onBlur" v-model="value">
     </div>
   </div>
 </template>
@@ -15,14 +15,30 @@ export default {
     return {
     }
   },
+  computed: {
+    value: {
+      get (val) {
+        return this.shopValue
+      },
+      set (val) {
+        this.$emit('update:shopValue', val)
+        return val
+      }
+    }
+  },
   props: {
     title: {
       type: String,
       default: ''
     },
-    value: {
+    shopValue: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    onBlur () {
+      this.$emit('onBlur')
     }
   }
 }
@@ -39,7 +55,7 @@ export default {
       line-height 1
       width 1.6rem
       height 1.6rem
-      background red
+      vertical-align top
   .inputs
     margin-top 4rem
     input

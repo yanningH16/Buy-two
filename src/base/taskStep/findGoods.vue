@@ -9,7 +9,7 @@
         <p>{{ value }}</p>
       </li>
       <li>
-        <i @click="refresh"></i>
+        <i class="refreshIcon" @click="refresh"></i>
       </li>
     </ul>
   </div>
@@ -75,5 +75,4 @@ export default {
         height 1.6rem
         font-size 1.6rem
         text-align center
-        background red
 </style>

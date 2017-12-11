@@ -11,7 +11,7 @@
         <p>{{ condition[1] }}</p>
       </li>
       <li>
-        <span>价格区间</span>
+        <span>品牌</span>
         <p>{{ condition[2] }}</p>
       </li>
       <li>
@@ -20,13 +20,13 @@
       </li>
     </ul>
     <div class="buttons">
-      <span @click="alert=true">找不到商品？</span>
+      <span class="border-1px" @click="alert=true">找不到商品？</span>
     </div>
     <div class="alert" v-if="alert">
       <div class="tip">
         <h2>提示</h2>
         <p>找不到商品？可以刷新关键词再试试查找商品</p>
-        <h3 class="red" @click="alert=false">再找找</h3>
+        <h3 class="red" @click="lookMore">再找找</h3>
         <h3 @click="giveup">放弃该任务</h3>
       </div>
     </div>
@@ -53,6 +53,10 @@ export default {
   methods: {
     giveup () {
       this.$emit('giveup')
+      this.alert = false
+    },
+    lookMore () {
+      this.$emit('lookMore')
       this.alert = false
     }
   }
@@ -85,7 +89,6 @@ export default {
     margin-top 0.4rem
     span
       display inline-block
-      border 0.5px solid #08090A
       border-radius 0.2rem
       line-height 2.9rem
       width 10.7rem
