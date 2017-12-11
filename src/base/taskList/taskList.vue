@@ -12,6 +12,7 @@
         <p class="slot" v-else-if="item.slot==='11'">待商家确认并返还佣金</p>
         <p class="slot gray" v-else-if="item.slot==='20'">已完成</p>
         <p class="slot gray" v-else-if="item.slot==='19'">已放弃</p>
+        <p class="slot" v-else>已下单</p>
       </div>
       <div class="shopName">
         <h2>{{item.shopName}}</h2>

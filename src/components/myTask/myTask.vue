@@ -102,7 +102,7 @@ export default {
     show (index) {
       console.log(index, this.tableData[index])
       if (this.tableData[index].slot === '1') {
-        this.$router.push({ name: 'operateTask', buyerTaskId: this.tableData[index].buyerTaskId })
+        this.$router.push({ name: 'operateTask', query: { buyerTaskId: this.tableData[index].buyerTaskId } })
       } else if (this.tableData[index].slot === '10') {
         MessageBox.confirm(
           '请务必确认物流信息已显示签收,需上传截图',
