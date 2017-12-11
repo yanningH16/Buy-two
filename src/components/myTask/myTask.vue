@@ -4,7 +4,7 @@
       <mt-tab-item id="1">待下单
         <mt-badge type="error" style="position: absolute;margin-top:-10px;margin-left:-10px" v-if="order">{{this.toPlaceOrderNum}}</mt-badge>
       </mt-tab-item>
-      <mt-tab-item id="4">待返款
+      <mt-tab-item id="3">待返款
         <mt-badge type="error" style="position: absolute;margin-top:-10px;margin-left:-10px" v-if="money">{{this.waitMoneyNum}}</mt-badge>
       </mt-tab-item>
       <mt-tab-item id="10">待评价
@@ -20,7 +20,7 @@
         <mt-tab-container-item id="1">
           <taskList :datas='tableData' @myrouter="show"></taskList>
         </mt-tab-container-item>
-        <mt-tab-container-item id="4">
+        <mt-tab-container-item id="3">
           <taskList :datas='tableData' @myrouter="show"></taskList>
         </mt-tab-container-item>
         <mt-tab-container-item id="10">

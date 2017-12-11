@@ -47,7 +47,7 @@
       <div class="bottom">
         <p class="appraise" v-if="item.btn==='1'" @click="goTask(index)">去做任务</p>
         <p class="appraise" v-else-if="item.btn==='10'" @click="goTask(index)">去评价</p>
-        <p class="appraise grey" v-else-if="item.btn==='20'" @click="goTask(index)">删除任务</p>
+        <p class="appraise grey" v-else-if="item.btn==='20'|| item.btn==='19'" @click="goTask(index)">删除任务</p>
       </div>
     </div>
   </div>

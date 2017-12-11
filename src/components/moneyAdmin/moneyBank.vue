@@ -22,11 +22,11 @@
           <mt-field label="" placeholder="请输入密码" type="password" v-model="password"></mt-field>
         </p>
       </div>
-      <div class="flex yanpass">
+      <!-- <div class="flex yanpass">
         <mt-field label="" placeholder="输入手机验证码" type="tel" v-model="phone"></mt-field>
         <span class="get" @click="get" v-show="show">获取</span>
         <span class="get gray" v-show="hidden">{{time}}</span>
-      </div>
+      </div> -->
     </div>
     <mt-button size="large" type="danger" style="margin-top:2rem" @click="tixian">提现</mt-button>
     <router-link :to="{name:'yongText'}">

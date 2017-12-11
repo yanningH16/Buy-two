@@ -34,12 +34,65 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+import { mapGetters } from 'vuex'
 export default {
   name: 'userCenter',
   data () {
     return {
       state: 2,
-      shopState: 2
+      shopState: 2,
+      pageSize: 5
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo',
+      'userToken'
+    ])
+  },
+  created () {
+    this.taskList(1, this.pageSize)
+  },
+  methods: {
+    taskList (pageNo, pageSize) {
+      this.$ajax.post('/api/userFund/getBuyerCommissionFundFlows', {
+        pageNo: pageNo,
+        pageSize: pageSize,
+        buyerUserAccountId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          // let arr = []
+          // for (let word of res.data) {
+          //   let obj = {
+          //     jdTask: word.taskTypeDetail || '暂无数据',
+          //     slot: word.status || '暂无数据',
+          //     shopName: word.productName || '暂无数据',
+          //     wchat: word.wechatNum || '暂无数据',
+          //     imgSrc: word.productPicUrl || '暂无数据',
+          //     myMoney: word.payment || '暂无数据',
+          //     yongMoney: word.commision || '暂无数据',
+          //     taskNumber: word.sellerTaskDayId || '暂无数据',
+          //     city: word.postCity || '暂无数据',
+          //     money: word.jdMonthIncome || '暂无数据',
+          //     sellerUserId: word.buyerUserAccountId || '暂无数据',
+          //     btn: word.status || '暂无数据',
+          //     prom: word.status || '暂无数据',
+          //     buyerTaskId: word.buyerTaskId
+          //   }
+          //   arr.push(obj)
+          // }
+          // this.tableData = arr
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.message
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 }
@@ -78,7 +131,7 @@ export default {
           font-size 1.2rem
           color #08009a
       .green
-        color #00cc88    
+        color #00cc88
     .time
       margin-top 0.8rem
       padding-bottom 1.75rem
