@@ -1,8 +1,8 @@
 <template>
   <div class="operateTask2">
-    <div class="reject" v-if="$route.query.rbSellerTaskId">
-      <p>驳回原因：截图有误</p>
-      <p>修改方案：上传正确截图</p>
+    <div class="reject" v-if="$route.query.rbBuyerTaskId">
+      <p>驳回原因：{{ rbObj.rejectReason }}</p>
+      <p>修改方案：{{ rbObj.solution }}</p>
     </div>
     <div class="step">
       <step :stepArr="stpesObj.stepArr" :stepIndex="1"></step>
@@ -21,7 +21,7 @@
     <div class="footer">
       <p>提示：<br />商家将在72小时内操作发货，请耐心等待，不要找客 服催商家</p>
       <span class="btn" @click="submit">提交</span>
-      <span class="rb btn border-1px" v-if="$route.query.rbSellerTaskId">返回货比三家</span>
+      <span class="rb btn border-1px" v-if="$route.query.rbBuyerTaskId" @click="toPreStep">返回货比三家</span>
       <p>如遇问题，请联系在线客服QQ: 2256825635</p>
     </div>
   </div>
@@ -74,7 +74,7 @@ export default {
     },
     toPost () {
       this.$ajax.post('/api/buyer/task/doTaskSecond', {
-        buyerTaskId: this.$route.query.buyerTaskId,
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId,
         realOrderId: this.stpesObj.step9Arr[0],
         realPayment: this.stpesObj.step9Arr[1],
         realOrderPicUrl: this.stpesObj.step10Arr
@@ -92,6 +92,51 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
+    },
+    // 返回上一步
+    toPreStep () {
+      this.$router.push({ name: 'operateTask', query: { backBuyerTaskId: (this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId) } })
+    },
+    // 获取商品信息详情
+    getTaskInfo () {
+      this.$ajax.post('/api/buyer/task/getTaskDetail', {
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId
+      }).then((data) => {
+        if (data.data.code === '200') {
+          let res = data.data.data
+          this.stpesObj.step8Arr = [res.isSupportBlankNote, res.isSupprotCreditCard, res.isSupportTicket]
+        } else {
+          Toast({
+            message: data.data.message
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getRbInfo () {
+      this.$ajax.post('/api/buyer/task/getOrderTaskSecond', {
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId
+      }).then((data) => {
+        if (data.data.code === '200') {
+          let res = data.data.data
+          this.rbObj = res
+          this.stpesObj.step9Arr = [res.realOrderId, res.realPayment]
+          this.stpesObj.step10Arr = JSON.parse(res.realOrderPicUrl)
+        } else {
+          Toast({
+            message: data.data.message
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    this.getTaskInfo()
+    if (this.$route.query.rbBuyerTaskId) {
+      this.getRbInfo()
     }
   }
 }

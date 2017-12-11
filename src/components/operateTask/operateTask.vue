@@ -31,7 +31,7 @@
       </li>
     </ul>
     <div class="next">
-      <span v-if="$route.query.buyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
+      <span v-if="$route.query.buyerTaskId || $route.query.backBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
       <span v-if="$route.query.rbBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">确认提交</span>
     </div>
     <p>如遇问题，请联系在线客服QQ: 2256825635</p>
@@ -108,7 +108,7 @@ export default {
     // 调取放弃任务接口
     toGive () {
       this.$ajax.post('/api/buyer/task/cancelTask', {
-        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId
       }).then((data) => {
         if (data.data.code === '200') {
           Toast({
@@ -145,7 +145,7 @@ export default {
     // 获取商品信息详情
     getTaskInfo () {
       this.$ajax.post('/api/buyer/task/getTaskDetail', {
-        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId
       }).then((data) => {
         if (data.data.code === '200') {
           let res = data.data.data
@@ -180,33 +180,37 @@ export default {
       }
     },
     submit () {
-      this.$ajax.post('/api/buyer/task/doTaskFirst', {
-        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId,
-        searchPicUrl: this.stpesObj.step2ImgArr,
-        otherPicUrl: this.stpesObj.step4ImgArr
-      }).then((data) => {
-        if (data.data.code === '200') {
-          if (this.$route.query.buyerTaskId) {
-            this.$router.push({ name: 'operateTask2', query: { buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId } })
-          } else if (this.$route.query.rbBuyerTaskId) {
+      if (this.$route.query.backBuyerTaskId) {
+        this.$router.push({ name: 'operateTask2', query: { rbBuyerTaskId: this.$route.query.backBuyerTaskId } })
+      } else {
+        this.$ajax.post('/api/buyer/task/doTaskFirst', {
+          buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId,
+          searchPicUrl: this.stpesObj.step2ImgArr,
+          otherPicUrl: this.stpesObj.step4ImgArr
+        }).then((data) => {
+          if (data.data.code === '200') {
+            if (this.$route.query.buyerTaskId) {
+              this.$router.push({ name: 'operateTask2', query: { buyerTaskId: this.$route.query.buyerTaskId } })
+            } else if (this.$route.query.rbBuyerTaskId) {
+              Toast({
+                message: '修改成功!'
+              })
+              this.$router.push({ name: 'myTask' })
+            }
+          } else {
             Toast({
-              message: '修改成功!'
+              message: data.data.message
             })
-            this.$router.push({ name: 'myTask' })
           }
-        } else {
-          Toast({
-            message: data.data.message
-          })
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
     },
     // 获取驳回的信息
     getRbInfo () {
       this.$ajax.post('/api/buyer/task/getOrderTaskFirst', {
-        buyerTaskId: this.$route.query.rbBuyerTaskId
+        buyerTaskId: this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId
       }).then((data) => {
         if (data.data.code === '200') {
           this.rbObj = data.data.data
@@ -225,7 +229,7 @@ export default {
   },
   mounted () {
     this.getTaskInfo()
-    if (this.$route.query.rbBuyerTaskId) {
+    if (this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId) {
       this.getRbInfo()
     }
   }

@@ -30,7 +30,9 @@ export function uploadFile (res, file) {
   return new Promise((resolve, reject) => {
     client.putObjectFromBlob('scalp', name, file).then((response) => {
       var url = client.generatePresignedUrl('scalp', name)
-      resolve(url)
+      var urlForm = url.split('?')[0]
+      console.log(urlForm)
+      resolve(urlForm)
     }).catch((error) => {
       reject(error)
     })

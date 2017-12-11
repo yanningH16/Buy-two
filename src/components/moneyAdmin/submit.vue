@@ -1,12 +1,12 @@
 <template>
   <div class="wrap">
     <div class="submit">
-      <img :src='imgPic' alt="" v-if="state===1" class="pic">
-      <img :src='imgPic1' alt="" v-if="state===2" class="pic">
-      <h2 v-if="state===1">提交成功</h2>
-      <h2 v-if="state===2">提交失败</h2>
-      <p v-if="state===1">我们会在1-2个工作日内处理</p>
-      <p v-if="state===2" style="color:#ff3341">失败原因:系统繁忙,请稍后再试</p>
+      <img :src='imgPic' alt="" v-if="$route.query.state==1" class="pic">
+      <img :src='imgPic1' alt="" v-if="$route.query.state==2" class="pic">
+      <h2 v-if="$route.query.state==1">提交成功</h2>
+      <h2 v-if="$route.query.state==2">提交失败</h2>
+      <p v-if="$route.query.state==1">我们会在1-2个工作日内处理</p>
+      <p v-if="$route.query.state==2" style="color:#ff3341">失败原因:系统繁忙,请稍后再试</p>
       <span>返回个人中心</span>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
       margin-top 2rem
       color #75787f
       font-size 1.2rem
-    span 
+    span
       width 12.4rem
       height 3.4rem
       display inline-block
@@ -55,6 +55,6 @@ export default {
       font-size 1.4rem
       color #08090a
       border-radius 3px
-      border 1px solid  #383a3f
-      margin-top 2rem  
+      border 1px solid #383a3f
+      margin-top 2rem
 </style>

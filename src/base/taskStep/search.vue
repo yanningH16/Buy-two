@@ -7,11 +7,11 @@
         <p>{{ condition[0] }}</p>
       </li>
       <li>
-        <span>折扣和服务</span>
+        <span>品牌</span>
         <p>{{ condition[1] }}</p>
       </li>
       <li>
-        <span>品牌</span>
+        <span>价格区间</span>
         <p>{{ condition[2] }}</p>
       </li>
       <li>
