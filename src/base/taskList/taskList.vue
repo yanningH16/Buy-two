@@ -12,6 +12,10 @@
         <p class="slot" v-else-if="item.slot==='11'">待商家确认并返还佣金</p>
         <p class="slot gray" v-else-if="item.slot==='20'">已完成</p>
         <p class="slot gray" v-else-if="item.slot==='19'">已放弃</p>
+        <p class="slot" v-else-if="item.slot==='6'|| item.slot==='7'">待修改订单</p>
+        <p class="slot" v-else-if="item.slot==='12'">待修改评价</p>
+        <p class="slot" v-else-if="item.slot==='13'">待返佣</p>
+        <p class="slot" v-else-if="item.slot==='5'">待完成订单</p>
         <p class="slot" v-else>已下单</p>
       </div>
       <div class="shopName">
@@ -48,6 +52,9 @@
         <p class="appraise" v-if="item.btn==='1'" @click="goTask(index)">去做任务</p>
         <p class="appraise" v-else-if="item.btn==='10'" @click="goTask(index)">去评价</p>
         <p class="appraise grey" v-else-if="item.btn==='20'|| item.btn==='19'" @click="goTask(index)">删除任务</p>
+        <p class="appraise" v-else-if="item.btn==='6'||item.btn==='7'" @click="goTask(index)">去修改订单</p>
+        <p class="appraise" v-else-if="item.btn==='12'" @click="goTask(index)">去修改评价</p>
+        <p class="appraise" v-else-if="item.btn==='5'" @click="goTask(index)">去完成</p>
       </div>
     </div>
   </div>

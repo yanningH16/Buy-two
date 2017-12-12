@@ -112,6 +112,14 @@ export default {
         }).catch((error) => {
           console.log(error)
         })
+      } else if (this.tableData[index].slot === '6') {
+        this.$router.push({ name: 'operateTask', query: { rbBuyerTaskId: this.tableData[index].buyerTaskId } })
+      } else if (this.tableData[index].slot === '7') {
+        this.$router.push({ name: 'operateTask2', query: { rbBuyerTaskId: this.tableData[index].buyerTaskId } })
+      } else if (this.tableData[index].slot === '12') {
+        this.$router.push({ name: 'evalute', query: { rbBuyerTaskId: this.tableData[index].buyerTaskId } })
+      } else if (this.tableData[index].slot === '5') {
+        this.$router.push({ name: 'operateTask2', query: { buyerTaskId: this.tableData[index].buyerTaskId } })
       } else {
         MessageBox.confirm(
           '删除后不可再恢复',
