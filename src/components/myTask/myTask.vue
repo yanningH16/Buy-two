@@ -108,7 +108,7 @@ export default {
           '请务必确认物流信息已显示签收,需上传截图',
           '确定快递已签收'
         ).then((data) => {
-          // alert(data)
+          this.$router.push({ name: 'evalute', query: { buyerTaskId: this.tableData[index].buyerTaskId } })
         }).catch((error) => {
           console.log(error)
         })
