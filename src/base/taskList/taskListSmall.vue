@@ -22,13 +22,15 @@
             <span>子任务编号</span>
             <span>{{ infoArr[3] }}</span>
           </p>
-          <span class="btn copy border-1px">复制</span>
+          <span class="btn copy border-1px" @click="doCopy" :data-clipboard-text="infoArr[3]">复制</span>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import Clipboard from 'clipboard'
+import { Toast } from 'mint-ui'
 export default {
   name: 'taskList',
   props: {
@@ -43,6 +45,16 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  methods: {
+    doCopy () {
+      var clipboard = new Clipboard('.copy')
+      clipboard.on('success', (e) => {
+        Toast({
+          message: '复制成功'
+        })
+      })
     }
   }
 }
@@ -87,6 +99,12 @@ export default {
         span
           line-height 1.8rem
           vertical-align middle
+          &:last-child
+            display inline-block
+            width 18rem
+            overflow hidden
+            text-overflow ellipsis
+            white-space nowrap
       .copy
         height 1.8rem
         width 3.6rem

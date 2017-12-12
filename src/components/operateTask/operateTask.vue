@@ -1,8 +1,8 @@
 <template>
   <div class="operateTask">
     <div class="reject" v-if="$route.query.rbBuyerTaskId">
-      <p>驳回原因：{{ rbObj.rejectReason }}</p>
-      <p>修改方案：{{ rbObj.solution }}</p>
+      <p>驳回原因：{{ rbObj.rejectReason || '' }}</p>
+      <p>修改方案：{{ rbObj.solution || ''}}</p>
     </div>
     <div class="step">
       <step :stepArr="stpesObj.stepArr" :stepIndex="0"></step>
@@ -32,7 +32,7 @@
     </ul>
     <div class="next">
       <span v-if="$route.query.buyerTaskId || $route.query.backBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
-      <span v-if="$route.query.rbBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">确认提交</span>
+      <span v-if="$route.query.rbBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
     </div>
     <p>如遇问题，请联系在线客服QQ: 2256825635</p>
   </div>
@@ -192,10 +192,7 @@ export default {
             if (this.$route.query.buyerTaskId) {
               this.$router.push({ name: 'operateTask2', query: { buyerTaskId: this.$route.query.buyerTaskId } })
             } else if (this.$route.query.rbBuyerTaskId) {
-              Toast({
-                message: '修改成功!'
-              })
-              this.$router.push({ name: 'myTask' })
+              this.$router.push({ name: 'operateTask2', query: { backBuyerTaskId: this.$route.query.rbBuyerTaskId } })
             }
           } else {
             Toast({

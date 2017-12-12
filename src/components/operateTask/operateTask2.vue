@@ -1,8 +1,8 @@
 <template>
   <div class="operateTask2">
     <div class="reject" v-if="$route.query.rbBuyerTaskId">
-      <p>驳回原因：{{ rbObj.rejectReason }}</p>
-      <p>修改方案：{{ rbObj.solution }}</p>
+      <p>驳回原因：{{ rbObj.rejectReason || '' }}</p>
+      <p>修改方案：{{ rbObj.solution || ''}}</p>
     </div>
     <div class="step">
       <step :stepArr="stpesObj.stepArr" :stepIndex="1"></step>
@@ -51,7 +51,8 @@ export default {
         step9Arr: ['', ''],
         step10Title: '十、上传订单详情截图',
         step10Arr: []
-      }
+      },
+      rbObj: {}
     }
   },
   methods: {
