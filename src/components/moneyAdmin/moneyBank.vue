@@ -3,21 +3,21 @@
     <div class="moneyBank">
       <div class="flex first border-bottom-1px">
         <p class="bankName">提现到银行卡</p>
-        <p class="right">中信银行 {{personName | name}} {{bankCard | phonePwd}}</p>
+        <p class="right">{{this.userInfo.bankCardName}}</p>
       </div>
       <div class="flex two border-bottom-1px">
-        <mt-field label="" placeholder="输入可提现金额" type="tel" v-model="moneyNum" style="width:15rem;padding-left:0.8rem"></mt-field>
+        <mt-field label="" placeholder="输入可提现金额" type="tel" v-model="moneyNum" style="width:15rem;padding-left:0.8rem" @change="change"></mt-field>
         <p class="benjin">
           <span>可提现本金(元):</span>
-          <span>421.23</span>
+          <span>{{this.$route.query.money}}</span>
         </p>
       </div>
       <div class="money">
         <p>实际到账金额为:
-          <span>20.00</span>
+          <span>{{money}}</span>
         </p>
         <p class="top">当前提现手续费为:
-          <span>30</span>%</p>
+          <span>{{feeMoney}}</span>%</p>
         <p class="border-bottom-1px">
           <mt-field label="" placeholder="请输入密码" type="password" v-model="password"></mt-field>
         </p>
@@ -38,18 +38,21 @@
       <div class="content">
         <h3>核对金额</h3>
         <p class="tishi">本次提现金额:
-          <span>200</span>元</p>
+          <span>{{countMoney}}</span>元</p>
         <p style="margin-top:1rem">实际到账金额:
-          <span>180</span>元</p>
+          <span>{{money}}</span>元</p>
         <div class="work">
-          <span class="work_1">取消</span>
-          <span class="work_2">确认提现</span>
+          <span class="work_1" @click="cover=false">取消</span>
+          <span class="work_2" @click="sureTx">确认提现</span>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import { Toast } from 'mint-ui'
+import { mapGetters } from 'vuex'
+import md5 from 'md5'
 export default {
   name: 'evalute',
   data () {
@@ -57,33 +60,72 @@ export default {
       phone: '',
       password: '',
       moneyNum: '',
+      feeMoney: 0,
       cover: false,
       show: true,
       hidden: false,
-      time: 60,
-      bankCard: '45446145631655686856654654654654654656',
-      personName: '张三啊'
+      money: 0,
+      countMoney: 0
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo',
+      'userToken'
+    ])
   },
   created () {
   },
   methods: {
     tixian () {
-      // this.cover = true
-      this.$router.push({ name: 'submit' })
+      if (this.moneyNum === '' || this.password === '') {
+        Toast('请正确填写信息')
+        return false
+      }
+      this.cover = true
+      // this.$router.push({ name: 'submit' })
     },
-    get () {
-      this.show = false
-      this.hidden = true
-      let timeset = setInterval(() => {
-        this.time--
-        if (this.time === 0) {
-          clearInterval(timeset)
-          this.time = 60
-          this.show = true
-          this.hidden = false
+    sureTx () {
+      this.$ajax.post('/api/withdrawApply/createBuyerApply', {
+        withdrawAmount: this.moneyNum,
+        userId: this.userInfo.buyerUserAccountId,
+        withdrawPassword: md5(this.password)
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+
+        } else {
+          Toast(res.message)
         }
-      }, 1000)
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
+    },
+    // 提现手续费的获取
+    change () {
+      if (this.moneyNum > this.$route.query.money) {
+        Toast('输入金额不能大于可提现本金')
+        this.moneyNum = ''
+        return false
+      }
+      this.$ajax.post('/api/withdrawApply/feeCalculate', {
+        withdrawAmount: this.moneyNum
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          this.money = res.data.actualAmount
+          this.feeMoney = res.data.feeAmount
+          this.countMoney = res.data.withdrawAmount
+        } else {
+          Toast(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
     }
   }
 }

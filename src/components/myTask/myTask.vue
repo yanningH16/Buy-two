@@ -10,7 +10,7 @@
       <mt-tab-item id="10">待评价
         <mt-badge type="error" style="position: absolute;margin-top:-10px;margin-left:-10px" v-if="favor">{{this.toFavorNum}}</mt-badge>
       </mt-tab-item>
-      <mt-tab-item id="13">待返佣
+      <mt-tab-item id="11">待返佣
         <mt-badge type="error" style="position: absolute;margin-top:-10px;margin-left:-10px" v-if="commision">{{this.waitCommision}}</mt-badge>
       </mt-tab-item>
       <mt-tab-item id="0">全部</mt-tab-item>
@@ -26,7 +26,7 @@
         <mt-tab-container-item id="10">
           <taskList :datas='tableData' @myrouter="show"></taskList>
         </mt-tab-container-item>
-        <mt-tab-container-item id="13">
+        <mt-tab-container-item id="11">
           <taskList :datas='tableData' @myrouter="show"></taskList>
         </mt-tab-container-item>
         <mt-tab-container-item id="0">
@@ -40,10 +40,8 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import TaskList from '../../base/taskList/taskList'
-import { MessageBox, InfiniteScroll } from 'mint-ui'
-
+import { MessageBox, InfiniteScroll, Toast } from 'mint-ui'
 Vue.use(InfiniteScroll)
-
 export default {
   name: 'myTask',
   components: {
@@ -195,13 +193,11 @@ export default {
           }
           this.tableData = arr
         } else {
-          this.$message({
-            type: 'error',
-            message: res.message
-          })
+          Toast(res.message)
         }
       }).catch((err) => {
         console.log(err)
+        Toast('未知错误')
       })
     }
   }

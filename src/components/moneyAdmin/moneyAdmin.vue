@@ -7,7 +7,7 @@
         <p class="detail" :class="{'isactive':click}" @click="btn">本金明细</p>
       </div>
       <div class="money">
-        <h2>100.00</h2>
+        <h2>{{money}}</h2>
         <span @click="takeMoney">提现</span>
       </div>
     </header>
@@ -35,8 +35,9 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { MessageBox, Loadmore } from 'mint-ui'
+import { MessageBox, Loadmore, Toast } from 'mint-ui'
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 Vue.component(Loadmore.name, Loadmore)
 export default {
   name: 'evalute',
@@ -44,23 +45,79 @@ export default {
     return {
       state: 2,
       click: false,
-      topStatus: ''
+      topStatus: '',
+      money: 0,
+      pageSize: 5
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo',
+      'userToken'
+    ])
+  },
+  created () {
+    this.userMoney()
+    // this.userMoneyDetail(1, this.pageSize)
+  },
   methods: {
+    // 进入页面后进行信息的获取 获取钱的数量
+    userMoney () {
+      this.$ajax.post('/api/userFund/getBuyerUserFund', {
+        buyerUserAccountId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          this.money = res.data.availableCapitalAmount
+        } else {
+          Toast(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
+    },
+    // 进入页面后进行信息的获取 提现明细的资金流水
+    userMoneyDetail (pageNo, pageSize) {
+      this.$ajax.post('/api/withdrawApply/getApplysByConditions', {
+        pageNo: pageNo,
+        pageSize: pageSize,
+        buyerUserAccountId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          let arr = []
+          for (let word of res.data.fundsFlows) {
+            let obj = {
+              fundsFlowId: word.fundsFlowId,
+              gmtModify: word.gmtModify
+
+            }
+            arr.push(obj)
+          }
+          this.tableData = arr
+        } else {
+          Toast(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
+    },
     takeMoney () {
-      if (this.state === 1) {
+      if (!this.userInfo.bankCardName) {
         MessageBox({
           title: '未完成提现设置',
           message: '未完成提现设置不能提现',
           confirmButtonText: '前去设置',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {
-          // 点击确认后出发的事件
-          alert(111)
+          this.$router.push({ name: 'userSet' })
         })
       } else {
-        this.$router.push({ name: 'moneybank' })
+        this.$router.push({ name: 'moneybank', query: { money: this.money } })
       }
     },
     btn () {

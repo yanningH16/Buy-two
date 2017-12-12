@@ -37,7 +37,7 @@ export default {
         if (data.data.code === '200') {
           this.setUserInfo(data.data.data)
           this.setUserToken(data.headers.accesstoken)
-          this.$router.push({ name: 'myTask' })
+          this.$router.push({ name: 'userCenter' })
         } else {
           Toast({
             message: data.data.message,
