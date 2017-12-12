@@ -3,7 +3,7 @@
     <div class="wrap" v-for="(item,index) in datas" :key="index">
       <div class="header">
         <p>
-          <em class="img"></em>
+          <em class="jdIcon img"></em>
           <span class="jd">{{item.jdTask}}</span>
         </p>
         <p class="slot" v-if="item.slot==='1'">待下单</p>
@@ -41,10 +41,10 @@
           <p class="copy" @click="doCopy" :data-clipboard-text='item.taskNumber'>复制</p>
         </div>
         <p class="detail_two" v-if="item.prom==='1'">请一定要签收后再评价哦~</p>
-        <p class="detail_two red" v-else-if="item.prom==='1'||item.prom==='10'">驳回原因：
+        <p class="detail_two red" v-else-if="item.prom==='12'">驳回原因：
           <span>拍错商品</span>
         </p>
-        <p class="detail_two red" v-if="item.proms==='10'">修改方案:
+        <p class="detail_two red" v-if="item.proms==='12'">修改方案:
           <span>拍正确的商品</span>
         </p>
       </div>
@@ -102,7 +102,6 @@ export default {
     .img
       width 1.5rem
       height 1.5rem
-      background #ff3341
       display inline-block
       vertical-align middle
       border-radius 2px
