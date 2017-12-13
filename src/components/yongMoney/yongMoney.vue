@@ -7,57 +7,120 @@
         <p class="detail" :class="{'isactive':click}" @click="btn">佣金明细</p>
       </div>
       <div class="money">
-        <h2>10.00</h2>
+        <h2>{{money}}</h2>
         <span @click="takeMoney">佣金转本金</span>
       </div>
     </header>
     <p class="title">转本金明细</p>
-    <div class="content border-bottom-1px" v-for="item in 10" :key="item">
+    <div class="content border-bottom-1px" v-for="(item,index) in tableData" :key="index">
       <div>
-        <p class="first">tx444644</p>
-        <p class="first_1" v-if="state===1">处理中</p>
-        <p class="first_1 green" v-else-if="state===2">到账成功</p>
-        <p class="first_1 red" v-else>转本金失败
-          <span>网络错误</span>
-        </p>
+        <p class="first">{{item.fundsFlowId}}</p>
+        <p class="green first_1">到账成功</p>
       </div>
       <div class="numbers">
-        <p class="data">2017-09-10 21:30</p>
+        <p class="data">{{item.gmtModify}}</p>
         <p class="money">
-          <span>310.00</span> 元</p>
+          <span>{{item.income||item.pay}}</span> 元</p>
       </div>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { MessageBox } from 'mint-ui'
+import { Loadmore, Toast } from 'mint-ui'
+import Vue from 'vue'
+import { mapGetters } from 'vuex'
+Vue.component(Loadmore.name, Loadmore)
 export default {
   name: 'evalute',
   data () {
     return {
-      state: 2,
-      click: false
+      click: false,
+      topStatus: '',
+      money: 0,
+      pageSize: 5,
+      tableData: []
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo',
+      'userToken'
+    ])
+  },
+  created () {
+    this.userMoney()
+    this.userMoneyDetail(1, this.pageSize)
+  },
   methods: {
+    // 进入页面后进行信息的获取 获取钱的数量
+    userMoney () {
+      this.$ajax.post('/api/userFund/getBuyerUserFund', {
+        buyerUserAccountId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          this.money = res.data.availableCommissionAmount
+        } else {
+          Toast(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
+    },
+    // 进入页面后进行信息的获取 提现明细的资金流水
+    userMoneyDetail (pageNo, pageSize) {
+      this.$ajax.post('/api/userFund/getBuyerFundFlowsByUsageType', {
+        pageNo: pageNo,
+        pageSize: pageSize,
+        usageType: ['3'],
+        buyerUserAccountId: this.userInfo.buyerUserAccountId,
+        fundsFlowType: ['TYP_BUYER_COMMISSION_PAY']
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          let arr = []
+          for (let word of res.data.fundsFlows) {
+            let obj = {
+              fundsFlowId: word.fundsFlowId,
+              gmtModify: word.gmtModify,
+              income: word.income || '',
+              pay: word.pay || ''
+            }
+            arr.push(obj)
+          }
+          this.tableData = arr
+        } else {
+          Toast(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
+    },
     takeMoney () {
-      if (this.state === 1) {
-        MessageBox({
-          title: '未完成提现设置',
-          message: '未完成提现设置不能提现',
-          confirmButtonText: '前去设置',
-          confirmButtonClass: 'sureAlert'
-        }).then((data) => {
-          // 点击确认后出发的事件
-          alert(111)
-        })
-      } else {
-        this.$router.push({ name: 'yongBank' })
+      if (this.money === 0) {
+        Toast('无可提现的佣金')
+        return false
       }
+      this.$router.push({ name: 'yongBank', query: { money: this.money } })
     },
     btn () {
       this.click = true
       this.$router.push({ name: 'yongDetail' })
+    },
+    loadBottom () {
+      this.allLoaded = true
+      // this.$refs.loadmore.onBottomLoaded()
+    },
+    loadTop () {
+      // this.$refs.loadmore.onBottomLoaded()
+    },
+    // 底部数据发生变化的回调函数
+    handleTopChange (status) {
+      this.topStatus = status
     }
   }
 }

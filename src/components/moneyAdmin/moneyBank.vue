@@ -32,6 +32,9 @@
     <router-link :to="{name:'yongText'}">
       <div class="guize">
         <p>本金提现规则</p>
+        <router-link :to="{name:'withdrawSet2'}">
+          <p style="margin-top:1.5rem">忘记提现密码</p>
+        </router-link>
       </div>
     </router-link>
     <div class="cover" v-show="cover">
@@ -74,8 +77,6 @@ export default {
       'userToken'
     ])
   },
-  created () {
-  },
   methods: {
     tixian () {
       if (this.moneyNum === '' || this.password === '') {
@@ -83,7 +84,6 @@ export default {
         return false
       }
       this.cover = true
-      // this.$router.push({ name: 'submit' })
     },
     sureTx () {
       this.$ajax.post('/api/withdrawApply/createBuyerApply', {
@@ -92,11 +92,11 @@ export default {
         withdrawPassword: md5(this.password)
       }).then((data) => {
         console.log(data)
-        let res = data.data
-        if (res.code === '200') {
-
+        if (data.data.code === '200') {
+          Toast(data.data.message)
+          this.$router.push({ name: 'submit', query: { state: 1 } })
         } else {
-          Toast(res.message)
+          Toast(data.message)
         }
       }).catch((err) => {
         console.log(err)

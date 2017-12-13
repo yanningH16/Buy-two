@@ -3,16 +3,16 @@
     <div style="background:#ffffff">
       <div class="conten" v-for="(item,index) in tableData" :key="index">
         <div>
-          <p v-if="shopState===1" class="top">
+          <!-- <p v-if="shopState===1" class="top">
             <span>本金返款</span>-
             <span class="overflow">夏季新款男士家乐福Joe</span>
-          </p>
+          </p> -->
           <p v-if="shopState===2" class="top">
             <span>{{item.content}}</span>
           </p>
-          <p v-if="shopState===3" class="top">
+          <!-- <p v-if="shopState===3" class="top">
             <span>提现</span>
-          </p>
+          </p> -->
           <p v-if="item.income" class="font">
             <em>+</em>
             <span>{{item.income}}</span>
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     userMoneyDetail (pageNo, pageSize) {
-      this.$ajax.post('/api/userFund/getBuyerCommissionFundFlows', {
+      this.$ajax.post('/api/userFund/getBuyerCapitalFundFlows', {
         pageNo: pageNo,
         pageSize: pageSize,
         buyerUserAccountId: this.userInfo.buyerUserAccountId

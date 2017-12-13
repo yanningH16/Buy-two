@@ -13,19 +13,19 @@
     </header>
     <p class="title">提现明细</p>
     <mt-loadmore :bottom-method="loadTop" @bottom-status-change="handleTopChange">
-      <div class="content border-bottom-1px" v-for="item in 10" :key="item">
+      <div class="content border-bottom-1px" v-for="(item,index) in tableData" :key="index">
         <div>
-          <p class="first">tx444644</p>
-          <p class="first_1" v-if="state===1">处理中</p>
-          <p class="first_1 green" v-else-if="state===2">到账成功</p>
-          <p class="first_1 red" v-else>提现失败
+          <p class="first">{{item.withdrawApplyId}}</p>
+          <p class="first_1" v-if="item.status==='0'">处理中</p>
+          <p class="first_1 green" v-else-if="item.status==='1'">到账成功</p>
+          <p class="first_1 red" v-else-if="item.status==='2'">提现失败
             <span>银行卡有误</span>
           </p>
         </div>
         <div class="numbers">
-          <p class="data">2017-09-10 21:30</p>
+          <p class="data">{{item.gmtModify}}</p>
           <p class="money">
-            <span>310.00</span> 元</p>
+            <span>{{item.actualAmount}}</span> 元</p>
         </div>
       </div>
       <div slot="bottom" class="mint-loadmore-bottom">
@@ -47,7 +47,8 @@ export default {
       click: false,
       topStatus: '',
       money: 0,
-      pageSize: 5
+      pageSize: 5,
+      tableData: []
     }
   },
   computed: {
@@ -58,7 +59,7 @@ export default {
   },
   created () {
     this.userMoney()
-    // this.userMoneyDetail(1, this.pageSize)
+    this.userMoneyDetail(1, this.pageSize)
   },
   methods: {
     // 进入页面后进行信息的获取 获取钱的数量
@@ -83,17 +84,18 @@ export default {
       this.$ajax.post('/api/withdrawApply/getApplysByConditions', {
         pageNo: pageNo,
         pageSize: pageSize,
-        buyerUserAccountId: this.userInfo.buyerUserAccountId
+        statusList: ['0', '1', '2']
       }).then((data) => {
         console.log(data)
         let res = data.data
         if (res.code === '200') {
           let arr = []
-          for (let word of res.data.fundsFlows) {
+          for (let word of res.data.withdrawApplys) {
             let obj = {
-              fundsFlowId: word.fundsFlowId,
-              gmtModify: word.gmtModify
-
+              withdrawApplyId: word.withdrawApplyId,
+              gmtModify: word.gmtModify,
+              status: word.status,
+              actualAmount: word.actualAmount
             }
             arr.push(obj)
           }
@@ -107,6 +109,10 @@ export default {
       })
     },
     takeMoney () {
+      if (this.money === 0) {
+        Toast('无可提现的金额')
+        return false
+      }
       if (!this.userInfo.bankCardName) {
         MessageBox({
           title: '未完成提现设置',

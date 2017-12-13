@@ -7,7 +7,9 @@
       <h2 v-if="$route.query.state==2">提交失败</h2>
       <p v-if="$route.query.state==1">我们会在1-2个工作日内处理</p>
       <p v-if="$route.query.state==2" style="color:#ff3341">失败原因:系统繁忙,请稍后再试</p>
-      <span>返回个人中心</span>
+      <router-link :to="{name:'userCenter'}">
+        <span>返回个人中心</span>
+      </router-link>
     </div>
   </div>
 </template>
