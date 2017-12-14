@@ -10,8 +10,8 @@
       <li class="border-bottom-1px">
         <input type="number" v-model="bankCardNo" placeholder="输入银行卡号">
       </li>
-      <li class="border-bottom-1px" @click="showAddress=true">
-        <input type="text" style="width:80%" readonly placeholder="开户行省、市">
+      <li class="border-bottom-1px" @click="chooseAddress">
+        <input type="text" v-model="pcName" style="width:80%" readonly placeholder="开户行省、市">
         <i></i>
       </li>
       <li>
@@ -24,12 +24,14 @@
       </p>
       <span class="btn" @click="doNext">下一步</span>
     </div>
-    <div class="address" v-show="showAddress">
-      <div class="buttons border-bottom-1px">
-        <span @click="showAddress=false">取消</span>
-        <span>确定</span>
+    <div class="addressWrap" v-show="showAddress">
+      <div class="address">
+        <div class="buttons border-bottom-1px">
+          <span @click="showAddress=false">取消</span>
+          <span @click="sureTheAddress">确定</span>
+        </div>
+        <mt-picker ref='pickerObj' :slots="slots" visibleItemCount="7" value-key="name" @change="onValuesChange"></mt-picker>
       </div>
-      <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
     </div>
   </div>
 </template>
@@ -49,12 +51,15 @@ export default {
     return {
       showAddress: false,
       stepArr: ['绑定银行卡', '设置提现密码'],
+      provinceArr: [],
+      addressArr: [],
+      pcName: '',
       slots: [
         {
           flex: 1,
-          values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
+          values: [{ code: '110000', id: 1, name: '北京市' }],
           className: 'slot1',
-          textAlign: 'right'
+          textAlign: 'center'
         }, {
           divider: true,
           content: '-',
@@ -63,7 +68,7 @@ export default {
           flex: 1,
           values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
           className: 'slot3',
-          textAlign: 'left'
+          textAlign: 'center'
         }
       ],
       bankName: '',
@@ -76,12 +81,58 @@ export default {
       'userInfo'
     ])
   },
+  watch: {
+    provinceArr (val) {
+      if (val) {
+        this.getCity(val.code)
+      }
+    }
+  },
   methods: {
     onValuesChange (picker, values) {
       console.log(picker, values)
-      if (values[0] > values[1]) {
-        picker.setSlotValue(1, values[0])
-      }
+      this.provinceArr = values[0]
+      this.addressArr = values
+    },
+    chooseAddress () {
+      this.getProvince()
+    },
+    getProvince () {
+      this.$ajax.post('/api/config/location/getProvinceList', {
+      }).then((data) => {
+        if (data.data.code === '200') {
+          this.showAddress = true
+          this.slots[0].values = data.data.data
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getCity (provinceCode) {
+      this.$ajax.post('/api/config/location/getCityListByProvinceCode', {
+        provinceCode: provinceCode
+      }).then((data) => {
+        if (data.data.code === '200') {
+          this.slots[2].values = data.data.data
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    sureTheAddress () {
+      this.showAddress = false
+      console.log(this.addressArr)
+      this.pcName = (this.addressArr[0].name) + (this.addressArr[1] ? this.addressArr[1].name : '')
     },
     doNext () {
       this.$ajax.post('/api/buyerAccount/bindBankCard', {
@@ -151,23 +202,35 @@ export default {
     .btn
       margin-top 2rem
       margin-bottom 2rem
-  .address
+  .addressWrap
     position fixed
-    bottom 0
-    left 0
     width 100%
-    background #ffffff
-    animation slideUp 0.2s ease-out
+    height 100%
+    top 0
+    left 0
+    background rgba(0, 0, 0, 0.6)
+    animation fadeIn 0.2s ease-out
     transition 0.2s
-    @keyframes slideUp
+    @keyframes fadeIn
       from
-        transform translate3d(0, 20rem, 0)
-    .buttons
-      display flex
-      span
-        flex 1
-        font-size 1.2rem
-        line-height 3.2rem
-        color #26a2ff
-        text-align center
+        opacity 0
+    .address
+      position absolute
+      bottom 0
+      left 0
+      width 100%
+      background #ffffff
+      animation slideUp 0.2s ease-out
+      transition 0.2s
+      @keyframes slideUp
+        from
+          transform translate3d(0, 20rem, 0)
+      .buttons
+        display flex
+        span
+          flex 1
+          font-size 1.2rem
+          line-height 3.2rem
+          color #26a2ff
+          text-align center
 </style>
