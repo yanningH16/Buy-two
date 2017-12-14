@@ -78,7 +78,7 @@ export default {
   },
   watch: {
     selected (value) {
-      this.taskList(1, this.pageSize)
+      this.taskList()
     }
   },
   computed: {
