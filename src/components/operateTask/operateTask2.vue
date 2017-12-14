@@ -84,7 +84,7 @@ export default {
           Toast({
             message: '提交成功!'
           })
-          this.$router.push({ name: 'myTask' })
+          this.$router.push({ name: 'userCenter' })
         } else {
           Toast({
             message: data.data.message

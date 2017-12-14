@@ -31,9 +31,14 @@
       </li>
     </ul>
     <ul class="cashSet">
-      <li class="label" @click="toDo('withdraw')">
+      <li class="label" v-if="!userInfo.bankCardName" @click="toDo('withdraw')">
         <mt-cell title="提现设置" class="title" label="买号通过审核后方可设置" is-link>
           <span class="contText">未设置</span>
+        </mt-cell>
+      </li>
+      <li class="label" v-else>
+        <mt-cell title="提现设置" class="title" label="买号通过审核后方可设置">
+          <span class="contText">已设置</span>
         </mt-cell>
       </li>
     </ul>

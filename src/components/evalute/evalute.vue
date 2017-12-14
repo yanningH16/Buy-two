@@ -1,8 +1,8 @@
 <template>
   <div class="evalute">
     <div class="reject" v-if="$route.query.rbBuyerTaskId">
-      <p>驳回原因：截图有误</p>
-      <p>修改方案：上传正确截图</p>
+      <p>驳回原因：{{ infoObj.rejectReason }}</p>
+      <p>备注：{{ infoObj.comment }}</p>
     </div>
     <ul class="cont">
       <li>
@@ -85,7 +85,11 @@ export default {
           this.evaluateObj.infoArr = [obj.productName, obj.commision, obj.productOrderPrice, obj.taskDayId] || []
           this.evaluateObj.step1Arr = [obj.productName, obj.shopName, obj.numPerOrder, obj.productFormat, obj.productUnitPrice] || []
           this.evaluateObj.step4Text = obj.sellerFavor
-          this.evaluateObj.step5Arr = JSON.parse(obj.sellerFavorPicUrl)
+          this.evaluateObj.step5Arr = JSON.parse(obj.sellerFavorPicUrl) || []
+          if (this.$route.query.rbBuyerTaskId) {
+            this.evaluateObj.step2Arr = JSON.parse(obj.logisticsPicId) || []
+            this.evaluateObj.step6Arr = JSON.parse(obj.buyerFavorPicUrl) || []
+          }
         } else {
           Toast({
             message: data.data.message
@@ -114,7 +118,7 @@ export default {
             Toast({
               message: '提交成功!'
             })
-            this.$router.push({ name: 'myTask' })
+            this.$router.push({ name: 'userCenter' })
           } else {
             Toast({
               message: data.data.message

@@ -42,10 +42,10 @@
         </div>
         <p class="detail_two" v-if="item.prom==='1'">请一定要签收后再评价哦~</p>
         <p class="detail_two red" v-else-if="item.prom==='12'">驳回原因：
-          <span>拍错商品</span>
+          <span>{{ item.rejectReason }}</span>
         </p>
         <p class="detail_two red" v-if="item.proms==='12'">修改方案:
-          <span>拍正确的商品</span>
+          <span>{{ item.solution }}</span>
         </p>
       </div>
       <div class="bottom">

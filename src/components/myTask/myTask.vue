@@ -189,7 +189,9 @@ export default {
               sellerUserId: word.buyerUserAccountId || '暂无数据',
               btn: word.status || '暂无数据',
               prom: word.status || '暂无数据',
-              buyerTaskId: word.buyerTaskId
+              buyerTaskId: word.buyerTaskId,
+              rejectReason: word.rejectReason || '暂未填写驳回原因',
+              solution: word.solution || '暂未填写解决方案'
             }
             arr.push(obj)
           }
