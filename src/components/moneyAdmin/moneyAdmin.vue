@@ -19,7 +19,7 @@
           <p class="first_1" v-if="item.status==='0'">处理中</p>
           <p class="first_1 green" v-else-if="item.status==='1'">到账成功</p>
           <p class="first_1 red" v-else-if="item.status==='2'">提现失败
-            <span>银行卡有误</span>
+            <!-- <span>银行卡有误</span> -->
           </p>
         </div>
         <div class="numbers">
@@ -47,7 +47,7 @@ export default {
       click: false,
       topStatus: '',
       money: 0,
-      pageSize: 5,
+      pageSize: 20,
       tableData: []
     }
   },

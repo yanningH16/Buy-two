@@ -114,7 +114,21 @@ export default {
           '删除后不可再恢复',
           '确定删除?'
         ).then((data) => {
-          // alert(data)
+          this.$ajax.post('/api/buyer/task/deleteOrder', {
+            buyerTaskId: this.tableData[index].buyerTaskId
+          }).then((data) => {
+            console.log(data)
+            let res = data.data
+            if (res.code === '200') {
+              Toast(res.message)
+              this.taskList(1, this.pageSize)
+            } else {
+              Toast(res.message)
+            }
+          }).catch((err) => {
+            console.log(err)
+            Toast('未知错误')
+          })
         }).catch((error) => {
           console.log(error)
         })
