@@ -30,7 +30,7 @@
           <span @click="showAddress=false">取消</span>
           <span @click="sureTheAddress">确定</span>
         </div>
-        <mt-picker ref='pickerObj' :slots="slots" visibleItemCount="7" value-key="name" @change="onValuesChange"></mt-picker>
+        <mt-picker ref='pickerObj' :slots="slots" :visibleItemCount="7" value-key="name" @change="onValuesChange"></mt-picker>
       </div>
     </div>
   </div>
@@ -66,7 +66,7 @@ export default {
           className: 'slot2'
         }, {
           flex: 1,
-          values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
+          values: [],
           className: 'slot3',
           textAlign: 'center'
         }
@@ -90,7 +90,6 @@ export default {
   },
   methods: {
     onValuesChange (picker, values) {
-      console.log(picker, values)
       this.provinceArr = values[0]
       this.addressArr = values
     },
@@ -131,7 +130,6 @@ export default {
     },
     sureTheAddress () {
       this.showAddress = false
-      console.log(this.addressArr)
       this.pcName = (this.addressArr[0].name) + (this.addressArr[1] ? this.addressArr[1].name : '')
     },
     doNext () {

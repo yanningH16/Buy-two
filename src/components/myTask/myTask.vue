@@ -1,5 +1,5 @@
 <template>
-  <div class="myTask">
+  <div class="myTask" ref="myTask">
     <mt-navbar v-model="selected">
       <mt-tab-item id="1">待下单
         <mt-badge type="error" style="position: absolute;margin-top:-10px;margin-left:-10px" v-if="order">{{this.toPlaceOrderNum}}</mt-badge>
@@ -15,7 +15,7 @@
       </mt-tab-item>
       <mt-tab-item id="0">全部</mt-tab-item>
     </mt-navbar>
-    <div class="bg">
+    <div class="bg" ref="myTaskCont">
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
           <taskList :datas='tableData' @myrouter="show"></taskList>
@@ -33,6 +33,11 @@
           <taskList :datas='tableData' @myrouter="show"></taskList>
         </mt-tab-container-item>
       </mt-tab-container>
+      <div class="spinnerWrap" v-show="showMore">
+        <div class="spinner">
+          <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,8 +45,9 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import TaskList from '../../base/taskList/taskList'
-import { MessageBox, InfiniteScroll, Toast } from 'mint-ui'
+import { MessageBox, InfiniteScroll, Toast, Spinner } from 'mint-ui'
 Vue.use(InfiniteScroll)
+Vue.component(Spinner.name, Spinner)
 export default {
   name: 'myTask',
   components: {
@@ -66,7 +72,8 @@ export default {
       totalCount: '',
       getScoreLog: [],
       pageNo: 1,
-      allLoaded: false
+      pageNos: 1,
+      showMore: false
     }
   },
   watch: {
@@ -80,23 +87,7 @@ export default {
       'userToken'
     ])
   },
-  created () {
-    this.pointNum()
-    this.taskList(1, this.pageSize)
-  },
   methods: {
-    loadBottom () {
-      // 加载更多数据
-      // this.pageNo++
-      // let oldArr = this.tableData
-      // this.taskList(this.pageNo, this.pageSize)
-      // let newArr = this.tableData
-      // oldArr.concat(newArr)
-      // this.tableData = oldArr
-      console.log(123456)
-      this.allLoaded = true // 若数据已全部获取完毕
-      this.$refs.loadmore.onBottomLoaded()
-    },
     show (index) {
       console.log(index, this.tableData[index])
       if (this.tableData[index].slot === '1') {
@@ -161,10 +152,10 @@ export default {
         console.log(err)
       })
     },
-    taskList (pageNo, pageSize) {
+    taskList (type) {
       this.$ajax.post('/api/buyer/task/getTaskListByStatus', {
-        pageNo: pageNo,
-        pageSize: pageSize,
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
         status: this.selected,
         buyerUserId: this.userInfo.buyerUserAccountId
       }).then((data) => {
@@ -193,7 +184,13 @@ export default {
             }
             arr.push(obj)
           }
-          this.tableData = arr
+          if (type === 1) {
+            this.tableData = this.tableData.concat(arr)
+          } else {
+            this.tableData = arr
+          }
+          this.showMore = false
+          this.pageNos = res.pageNos
         } else {
           Toast(res.message)
         }
@@ -201,7 +198,25 @@ export default {
         console.log(err)
         Toast('未知错误')
       })
+    },
+    handleScroll () {
+      let scrollTop = this.$refs.myTask.scrollTop
+      let clientHeight = this.$refs.myTask.clientHeight
+      let scrollHeight = this.$refs.myTask.scrollHeight
+      if ((scrollHeight - clientHeight - scrollTop <= 20) && (this.pageNos > this.pageNo)) {
+        this.showMore = true
+        this.taskList(1)
+      }
+      console.log(scrollTop, clientHeight, scrollHeight)
     }
+  },
+  mounted () {
+    this.pointNum()
+    this.taskList()
+    this.$refs.myTask.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed () {
+    this.$refs.myTask.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -217,4 +232,11 @@ export default {
     background #f5f5f5
     border-top 1px solid #D4D5D8
     margin-top 0.2rem
+  .spinnerWrap
+    background #ffffff
+    .spinner
+      text-align center
+      width 28px
+      height 28px
+      margin 0 auto
 </style>
