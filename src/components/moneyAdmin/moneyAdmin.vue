@@ -7,25 +7,25 @@
         <p class="detail" :class="{'isactive':click}" @click="btn">本金明细</p>
       </div>
       <div class="money">
-        <h2>100.00</h2>
+        <h2>{{money}}</h2>
         <span @click="takeMoney">提现</span>
       </div>
     </header>
     <p class="title">提现明细</p>
     <mt-loadmore :bottom-method="loadTop" @bottom-status-change="handleTopChange">
-      <div class="content border-bottom-1px" v-for="item in 10" :key="item">
+      <div class="content border-bottom-1px" v-for="(item,index) in tableData" :key="index">
         <div>
-          <p class="first">tx444644</p>
-          <p class="first_1" v-if="state===1">处理中</p>
-          <p class="first_1 green" v-else-if="state===2">到账成功</p>
-          <p class="first_1 red" v-else>提现失败
+          <p class="first">{{item.withdrawApplyId}}</p>
+          <p class="first_1" v-if="item.status==='0'">处理中</p>
+          <p class="first_1 green" v-else-if="item.status==='1'">到账成功</p>
+          <p class="first_1 red" v-else-if="item.status==='2'">提现失败
             <span>银行卡有误</span>
           </p>
         </div>
         <div class="numbers">
-          <p class="data">2017-09-10 21:30</p>
+          <p class="data">{{item.gmtModify}}</p>
           <p class="money">
-            <span>310.00</span> 元</p>
+            <span>{{item.actualAmount}}</span> 元</p>
         </div>
       </div>
       <div slot="bottom" class="mint-loadmore-bottom">
@@ -35,8 +35,9 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { MessageBox, Loadmore } from 'mint-ui'
+import { MessageBox, Loadmore, Toast } from 'mint-ui'
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 Vue.component(Loadmore.name, Loadmore)
 export default {
   name: 'evalute',
@@ -44,23 +45,85 @@ export default {
     return {
       state: 2,
       click: false,
-      topStatus: ''
+      topStatus: '',
+      money: 0,
+      pageSize: 5,
+      tableData: []
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo',
+      'userToken'
+    ])
+  },
+  created () {
+    this.userMoney()
+    this.userMoneyDetail(1, this.pageSize)
+  },
   methods: {
+    // 进入页面后进行信息的获取 获取钱的数量
+    userMoney () {
+      this.$ajax.post('/api/userFund/getBuyerUserFund', {
+        buyerUserAccountId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          this.money = res.data.availableCapitalAmount
+        } else {
+          Toast(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
+    },
+    // 进入页面后进行信息的获取 提现明细的资金流水
+    userMoneyDetail (pageNo, pageSize) {
+      this.$ajax.post('/api/withdrawApply/getApplysByConditions', {
+        pageNo: pageNo,
+        pageSize: pageSize,
+        statusList: ['0', '1', '2']
+      }).then((data) => {
+        console.log(data)
+        let res = data.data
+        if (res.code === '200') {
+          let arr = []
+          for (let word of res.data.withdrawApplys) {
+            let obj = {
+              withdrawApplyId: word.withdrawApplyId,
+              gmtModify: word.gmtModify,
+              status: word.status,
+              actualAmount: word.actualAmount
+            }
+            arr.push(obj)
+          }
+          this.tableData = arr
+        } else {
+          Toast(res.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
+    },
     takeMoney () {
-      if (this.state === 1) {
+      if (this.money === 0) {
+        Toast('无可提现的金额')
+        return false
+      }
+      if (!this.userInfo.bankCardName) {
         MessageBox({
           title: '未完成提现设置',
           message: '未完成提现设置不能提现',
           confirmButtonText: '前去设置',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {
-          // 点击确认后出发的事件
-          alert(111)
+          this.$router.push({ name: 'userSet' })
         })
       } else {
-        this.$router.push({ name: 'moneybank' })
+        this.$router.push({ name: 'moneybank', query: { money: this.money } })
       }
     },
     btn () {

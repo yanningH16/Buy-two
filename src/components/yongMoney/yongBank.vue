@@ -5,12 +5,12 @@
         <mt-field label="" placeholder="输入转本金金额" type="tel" v-model="moneyNum" style="width:15rem;padding-left:0.8rem"></mt-field>
         <p class="benjin">
           <span>可转出佣金(元):</span>
-          <span>1.23</span>
+          <span>{{this.$route.query.money}}</span>
         </p>
       </div>
       <div class="money">
         <p>实际到账金额为:
-          <span>20.00</span>
+          <span>{{moneyNum}}</span>
         </p>
       </div>
       <div class="flex yanpass">
@@ -21,21 +21,50 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+import { Toast } from 'mint-ui'
+import { mapGetters } from 'vuex'
+import md5 from 'md5'
 export default {
   name: 'evalute',
   data () {
     return {
-      phone: '',
       password: '',
-      moneyNum: '',
-      cover: false,
-      personName: '鄢宁'
+      moneyNum: ''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo',
+      'userToken'
+    ])
   },
   methods: {
     tixian () {
-      // this.cover = true
-      this.$router.push({ name: 'submit' })
+      if (this.moneyNum > this.$route.query.money) {
+        Toast('输入金额不能大于可提现本金')
+        this.moneyNum = ''
+        return false
+      }
+      if (this.moneyNum === '' || this.password === '') {
+        Toast('请正确填写信息')
+        return false
+      }
+      this.$ajax.post('/api/userFund/buyer/commissionToCapital', {
+        changeAmount: this.moneyNum,
+        buyerUserAccountId: this.userInfo.buyerUserAccountId,
+        withdrawPassword: md5(this.password)
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          Toast(data.data.message)
+          this.$router.push({ name: 'submit', query: { state: 1 } })
+        } else {
+          Toast(data.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast('未知错误')
+      })
     }
   }
 }
