@@ -1,5 +1,5 @@
 <template>
-  <div class="personMoney">
+  <div class="personMoney" ref="myTask">
     <div style="background:#ffffff">
       <div class="conten" v-for="(item,index) in tableData" :key="index">
         <div>
@@ -30,19 +30,30 @@
             <span>{{item.availableCommission}}</span>元</p>
         </div>
       </div>
+      <div class="spinnerWrap" v-show="showMore">
+        <div class="spinner">
+          <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import { Toast } from 'mint-ui'
+import { Toast, InfiniteScroll, Spinner } from 'mint-ui'
+Vue.use(InfiniteScroll)
+Vue.component(Spinner.name, Spinner)
 export default {
   name: 'userCenter',
   data () {
     return {
       shopState: 2,
-      pageSize: 10,
-      tableData: []
+      pageSize: 7,
+      tableData: [],
+      pageNo: 1,
+      showMore: false,
+      pageNos: 1
     }
   },
   computed: {
@@ -51,14 +62,15 @@ export default {
       'userToken'
     ])
   },
-  created () {
-    this.userMoneyDetail(1, this.pageSize)
+  mounted () {
+    this.userMoneyDetail()
+    this.$refs.myTask.addEventListener('scroll', this.handleScroll)
   },
   methods: {
-    userMoneyDetail (pageNo, pageSize) {
+    userMoneyDetail (type) {
       this.$ajax.post('/api/userFund/getBuyerCommissionFundFlows', {
-        pageNo: pageNo,
-        pageSize: pageSize,
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
         buyerUserAccountId: this.userInfo.buyerUserAccountId
       }).then((data) => {
         console.log(data)
@@ -75,7 +87,15 @@ export default {
             }
             arr.push(obj)
           }
-          this.tableData = arr
+          if (type === 1) {
+            // concat() 方法用于连接两个或多个数组。
+            this.tableData = this.tableData.concat(arr)
+          } else {
+            this.tableData = arr
+          }
+          this.showMore = false
+          this.pageNos = Math.ceil(res.data.totalCount / this.pageSize)
+          console.log(this.pageNos, this.pageNo)
         } else {
           Toast(res.message)
         }
@@ -83,6 +103,19 @@ export default {
         console.log(err)
         Toast('未知错误')
       })
+    },
+    handleScroll () {
+      let scrollTop = this.$refs.myTask.scrollTop
+      let clientHeight = this.$refs.myTask.clientHeight
+      let scrollHeight = this.$refs.myTask.scrollHeight
+      if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo) && !this.showMore) {
+        console.log(scrollTop, clientHeight, scrollHeight)
+        this.showMore = true
+        this.pageNo++
+        setTimeout(() => {
+          this.userMoneyDetail(1)
+        }, 600)
+      }
     }
   }
 }
@@ -93,6 +126,14 @@ export default {
   width 100%
   height 100%
   overflow auto
+  .spinnerWrap
+    background #ffffff
+    // margin-top 5px
+    .spinner
+      text-align center
+      width 28px
+      height 28px
+      margin 0 auto
   .conten
     margin-top 1rem
     background #ffffff

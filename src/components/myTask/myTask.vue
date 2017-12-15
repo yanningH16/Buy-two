@@ -64,7 +64,7 @@ export default {
       money: true,
       favor: true,
       commision: true,
-      pageSize: 2,
+      pageSize: 5,
       // 每次累加总的数据
       tableData: [],
       loadAllData: [],
