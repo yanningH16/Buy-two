@@ -4,15 +4,22 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import router from './router'
-import MintUI from 'mint-ui'
+// import MintUI from 'mint-ui'
+import VueLazyLoad from 'vue-lazyload'
 import 'babel-polyfill'
-import 'mint-ui/lib/style.css'
+// import 'mint-ui/lib/style.css'
 import './assets/stylus/index.styl'
 import axios from './assets/js/http'
 
-Vue.use(MintUI)
+// Vue.use(MintUI)
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios
+
+Vue.use(VueLazyLoad, {
+  loading: '/static/images/loading.gif',
+  error: '/static/images/noContainer.svg'
+})
+
 Vue.filter('phonePwd', function (value) {
   if (!value) {
     return false

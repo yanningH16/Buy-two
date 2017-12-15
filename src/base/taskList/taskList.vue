@@ -22,7 +22,7 @@
         <h2>{{item.shopName}}</h2>
       </div>
       <div class="shopConten">
-        <img :src="item.imgSrc" alt="" class="picImg" width="8rem" height="8rem">
+        <img v-lazy="item.imgSrc" alt="" class="picImg" width="8rem" height="8rem">
         <div class="shopText">
           <p>垫付本金(元)&nbsp;
             <span class="color">{{item.myMoney}}</span>

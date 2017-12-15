@@ -75,7 +75,7 @@ export default {
     },
     toPost () {
       this.$ajax.post('/api/buyer/task/doTaskSecond', {
-        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId,
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId,
         realOrderId: this.stpesObj.step9Arr[0],
         realPayment: this.stpesObj.step9Arr[1],
         realOrderPicUrl: this.stpesObj.step10Arr
@@ -96,12 +96,12 @@ export default {
     },
     // 返回上一步
     toPreStep () {
-      this.$router.push({ name: 'operateTask', query: { backBuyerTaskId: (this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId) } })
+      this.$router.push({ name: 'operateTask', query: { backBuyerTaskId: (this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId) } })
     },
     // 获取商品信息详情
     getTaskInfo () {
       this.$ajax.post('/api/buyer/task/getTaskDetail', {
-        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId
       }).then((data) => {
         if (data.data.code === '200') {
           let res = data.data.data
@@ -117,7 +117,7 @@ export default {
     },
     getRbInfo () {
       this.$ajax.post('/api/buyer/task/getOrderTaskSecond', {
-        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId
+        buyerTaskId: this.$route.query.buyerTaskId || this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId
       }).then((data) => {
         if (data.data.code === '200') {
           let res = data.data.data
@@ -136,7 +136,7 @@ export default {
   },
   mounted () {
     this.getTaskInfo()
-    if (this.$route.query.rbBuyerTaskId) {
+    if (this.$route.query.rbBuyerTaskId || this.$route.query.backBuyerTaskId) {
       this.getRbInfo()
     }
   }

@@ -5,6 +5,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <link href="https://cdn.bootcss.com/mint-ui/2.2.10/style.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/vue/2.5.2/vue.min.js"></script>
+  <script src="https://cdn.bootcss.com/mint-ui/2.2.10/index.js"></script>
+  <!-- <script src="https://cdn.bootcss.com/mint-ui/2.2.10/mint-ui.common.min.js"></script> -->
+  <!-- 百度图片上传获取参数的文件 -->
+  <script src="http://182.61.15.128:8010/static/js/baidubce-sdk.bundle.min.js"></script>
+  <script>
+    (function(doc, win) {
+      var _root = doc.documentElement,
+        resizeEvent = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        resizeCallback = function() {
+          var clientWidth = _root.clientWidth,
+            fontSize = 10;
+          if (!clientWidth) return;
+          if (clientWidth < 640) {
+            fontSize = 10 * (clientWidth / 320);
+          } else {
+            fontSize = 10 * (640 / 320);
+          }
+          _root.style.fontSize = fontSize + 'px';
+        };
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvent, resizeCallback, false);
+      doc.addEventListener('DOMContentLoaded', resizeCallback, false);
+    })(document, window)
+  </script>
   <title>buyer</title>
   <style>
     body {
@@ -13,33 +39,10 @@
       height: 100%;
     }
   </style>
-  <!-- 百度图片上传获取参数的文件 -->
-  <script src="http://182.61.15.128:8010/static/js/baidubce-sdk.bundle.min.js"></script>
 </head>
 
 <body>
   <div id="app"></div>
-  <!-- built files will be auto injected -->
 </body>
-<script>
-  (function(doc, win) {
-    var _root = doc.documentElement,
-      resizeEvent = 'orientationchange' in window ? 'orientationchange' : 'resize',
-      resizeCallback = function() {
-        var clientWidth = _root.clientWidth,
-          fontSize = 10;
-        if (!clientWidth) return;
-        if (clientWidth < 640) {
-          fontSize = 10 * (clientWidth / 320);
-        } else {
-          fontSize = 10 * (640 / 320);
-        }
-        _root.style.fontSize = fontSize + 'px';
-      };
-    if (!doc.addEventListener) return;
-    win.addEventListener(resizeEvent, resizeCallback, false);
-    doc.addEventListener('DOMContentLoaded', resizeCallback, false);
-  })(document, window)
-</script>
 
 </html>

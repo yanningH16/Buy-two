@@ -203,7 +203,7 @@ export default {
             this.tableData = arr
           }
           this.showMore = false
-          this.pageNos = res.pageNos
+          this.pageNos = res.data.pageNos
         } else {
           Toast(res.message)
         }
@@ -216,11 +216,13 @@ export default {
       let scrollTop = this.$refs.myTask.scrollTop
       let clientHeight = this.$refs.myTask.clientHeight
       let scrollHeight = this.$refs.myTask.scrollHeight
-      if ((scrollHeight - clientHeight - scrollTop <= 20) && (this.pageNos > this.pageNo)) {
+      if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo)) {
         this.showMore = true
-        this.taskList(1)
+        this.pageNo++
+        setTimeout(() => {
+          this.taskList(1)
+        }, 600)
       }
-      console.log(scrollTop, clientHeight, scrollHeight)
     }
   },
   mounted () {
