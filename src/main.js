@@ -16,8 +16,8 @@ Vue.config.productionTip = false
 Vue.prototype.$ajax = axios
 
 Vue.use(VueLazyLoad, {
-  loading: '/static/images/loading.gif',
-  error: '/static/images/noContainer.svg'
+  loading: './assets/images/loading.gif',
+  error: './assets/images/noContainer.svg'
 })
 
 Vue.filter('phonePwd', function (value) {

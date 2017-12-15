@@ -64,7 +64,7 @@ export default {
       money: true,
       favor: true,
       commision: true,
-      pageSize: 5,
+      pageSize: 2,
       // 每次累加总的数据
       tableData: [],
       loadAllData: [],
@@ -216,9 +216,9 @@ export default {
       let scrollTop = this.$refs.myTask.scrollTop
       let clientHeight = this.$refs.myTask.clientHeight
       let scrollHeight = this.$refs.myTask.scrollHeight
-      if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo)) {
+      if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo) && !this.showMore) {
         this.showMore = true
-        this.pageNo++
+        this.pageNo = this.pageNo + 1
         setTimeout(() => {
           this.taskList(1)
         }, 600)
