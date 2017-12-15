@@ -173,11 +173,10 @@ export default {
         status: this.selected,
         buyerUserId: this.userInfo.buyerUserAccountId
       }).then((data) => {
-        console.log(data)
         let res = data.data
         if (res.code === '200') {
           let arr = []
-          for (let word of res.data) {
+          for (let word of res.data.datas) {
             let obj = {
               jdTask: word.taskTypeDetail || '暂无数据',
               slot: word.status || '暂无数据',
@@ -198,7 +197,7 @@ export default {
             }
             arr.push(obj)
           }
-          if (type === 1) {
+          if (type === 1) { // 加载更多数据
             this.tableData = this.tableData.concat(arr)
           } else {
             this.tableData = arr
@@ -210,7 +209,7 @@ export default {
         }
       }).catch((err) => {
         console.log(err)
-        Toast('未知错误')
+        Toast(err)
       })
     },
     handleScroll () {
@@ -230,7 +229,7 @@ export default {
     this.$refs.myTask.addEventListener('scroll', this.handleScroll)
   },
   destroyed () {
-    this.$refs.myTask.removeEventListener('scroll', this.handleScroll)
+    // this.$refs.myTask.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>

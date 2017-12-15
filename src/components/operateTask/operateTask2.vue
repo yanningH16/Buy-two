@@ -15,7 +15,7 @@
         <payOrder :title="stpesObj.step9Title" :orderInfo="stpesObj.step9Arr"></payOrder>
       </li>
       <li>
-        <upload :title="stpesObj.step10Title" :myimgs="stpesObj.step10Arr"></upload>
+        <upload :title="stpesObj.step10Title" :myimgs="stpesObj.step10Arr" :max="1" :isShow="false"></upload>
       </li>
     </ul>
     <div class="footer">
