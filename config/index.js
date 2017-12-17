@@ -16,7 +16,7 @@ module.exports = {
     /**
      * Source Maps
      */
-    productionSourceMap: false,
+    productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
     // Gzip off by default as many popular static hosts such as

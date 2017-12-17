@@ -17,7 +17,7 @@
       <li>
         <findGoods :title="evaluateObj.step3Title" :onlyTitle="true"></findGoods>
       </li>
-      <li>
+      <li v-if="evaluateObj.step4Text!==''">
         <inputArea :title="evaluateObj.step4Title" :text="evaluateObj.step4Text"></inputArea>
       </li>
       <li v-if="evaluateObj.step5Arr.length!==0">
@@ -89,6 +89,11 @@ export default {
           if (this.$route.query.rbBuyerTaskId) {
             this.evaluateObj.step2Arr = JSON.parse(obj.logisticsPicId) || []
             this.evaluateObj.step6Arr = JSON.parse(obj.buyerFavorPicUrl) || []
+          }
+          if (this.evaluateObj.step4Text === '') { // 默认好评
+            this.evaluateObj.step6Title = '四、上传评价页面截图'
+          } else if (this.evaluateObj.step5Arr.length === 0) { // 文字好评
+            this.evaluateObj.step6Title = '五、上传评价页面截图'
           }
         } else {
           Toast({
