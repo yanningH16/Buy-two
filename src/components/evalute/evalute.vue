@@ -20,7 +20,7 @@
       <li>
         <inputArea :title="evaluateObj.step4Title" :text="evaluateObj.step4Text"></inputArea>
       </li>
-      <li>
+      <li v-if="">
         <upImgs :title="evaluateObj.step5Title" :imgsArr="evaluateObj.step5Arr"></upImgs>
       </li>
       <li>

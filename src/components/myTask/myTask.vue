@@ -38,6 +38,7 @@
           <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
         </div>
       </div>
+      <noCont v-if="tableData.length===0"></noCont>
     </div>
   </div>
 </template>
@@ -45,13 +46,15 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import TaskList from '../../base/taskList/taskList'
+import NoCont from '../../base/noCont/noCont'
 import { MessageBox, InfiniteScroll, Toast, Spinner } from 'mint-ui'
 Vue.use(InfiniteScroll)
 Vue.component(Spinner.name, Spinner)
 export default {
   name: 'myTask',
   components: {
-    TaskList
+    TaskList,
+    NoCont
   },
   data () {
     return {
