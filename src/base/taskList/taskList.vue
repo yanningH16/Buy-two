@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wrap" v-for="(item,index) in datas" :key="index">
-      <div class="header">
+      <div class="header border-bottom-1px">
         <p>
           <em class="jdIcon img"></em>
           <span class="jd">{{item.jdTask}}</span>
@@ -18,7 +18,7 @@
         <p class="slot" v-else-if="item.slot==='5'">待完成订单</p>
         <p class="slot" v-else>已下单</p>
       </div>
-      <div class="shopName">
+      <div class="shopName border-bottom-1px">
         <h2>{{item.shopName}}</h2>
       </div>
       <div class="shopConten">
@@ -32,7 +32,7 @@
           </p>
         </div>
       </div>
-      <div class="detail">
+      <div class="detail border-bottom-1px border-top-1px">
         <div class="detail_first">
           <p>
             子任务编号
@@ -96,7 +96,7 @@ export default {
   .header
     display flex
     justify-content space-between
-    border-bottom 1px solid #D4D5D8
+    // border-bottom 1px solid #D4D5D8
     padding-bottom 1.3rem
     padding-top 1.3rem
     .img
@@ -118,7 +118,7 @@ export default {
     .gray
       color #666666
   .shopName
-    border-bottom 1px solid #D4D5D8
+    // border-bottom 1px solid #D4D5D8
     padding-bottom 1.2rem
     margin-top 2rem
     h2
@@ -144,8 +144,8 @@ export default {
       .yongjin
         margin-top 1.25rem
   .detail
-    border-top 1px solid #D4D5D8
-    border-bottom 1px solid #D4D5D8
+    // border-top 1px solid #D4D5D8
+    // border-bottom 1px solid #D4D5D8
     padding-top 1.5rem
     padding-bottom 1.2rem
     margin-top 2rem

@@ -27,7 +27,7 @@
         <div class="time border-bottom-1px">
           <p>{{item.gmtModify}}</p>
           <p style="margin-right:1.6rem">余额:
-            <span>{{item.availableCommission}}</span>元</p>
+            <span>{{item.availableCapital}}</span>元</p>
         </div>
       </div>
       <div class="spinnerWrap" v-show="showMore">
@@ -83,7 +83,8 @@ export default {
               gmtModify: word.gmtModify,
               income: word.income || '',
               pay: word.pay || '',
-              availableCommission: word.availableCommission
+              availableCommission: word.availableCommission,
+              availableCapital: word.availableCapital
             }
             arr.push(obj)
           }
