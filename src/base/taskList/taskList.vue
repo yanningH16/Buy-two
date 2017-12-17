@@ -38,7 +38,7 @@
             子任务编号
             <span class="taskNumber">{{item.taskNumber}}</span>
           </p>
-          <p class="copy" @click="doCopy" :data-clipboard-text='item.taskNumber'>复制</p>
+          <p class="copy border-1px" @click="doCopy" :data-clipboard-text='item.taskNumber'>复制</p>
         </div>
         <p class="detail_two" v-if="item.prom==='1'">请一定要签收后再评价哦~</p>
         <p class="detail_two red" v-else-if="item.prom==='12'">驳回原因：
@@ -49,12 +49,12 @@
         </p>
       </div>
       <div class="bottom">
-        <p class="appraise" v-if="item.btn==='1'" @click="goTask(index)">去做任务</p>
-        <p class="appraise" v-else-if="item.btn==='10'" @click="goTask(index)">去评价</p>
-        <p class="appraise grey" v-else-if="item.btn==='20'|| item.btn==='19'" @click="goTask(index)">删除任务</p>
-        <p class="appraise" v-else-if="item.btn==='6'||item.btn==='7'" @click="goTask(index)">去修改订单</p>
-        <p class="appraise" v-else-if="item.btn==='12'" @click="goTask(index)">去修改评价</p>
-        <p class="appraise" v-else-if="item.btn==='5'" @click="goTask(index)">去完成</p>
+        <p class="appraise border-1px" v-if="item.btn==='1'" @click="goTask(index)">去做任务</p>
+        <p class="appraise border-1px" v-else-if="item.btn==='10'" @click="goTask(index)">去评价</p>
+        <p class="appraise border-1px grey" v-else-if="item.btn==='20'|| item.btn==='19'" @click="goTask(index)">删除任务</p>
+        <p class="appraise border-1px" v-else-if="item.btn==='6'||item.btn==='7'" @click="goTask(index)">去修改订单</p>
+        <p class="appraise border-1px" v-else-if="item.btn==='12'" @click="goTask(index)">去修改评价</p>
+        <p class="appraise border-1px" v-else-if="item.btn==='5'" @click="goTask(index)">去完成</p>
       </div>
     </div>
   </div>
@@ -157,7 +157,6 @@ export default {
       .copy
         margin-right 1.6rem
         font-size 1rem
-        border 1px solid #383a3f
         padding 4px 8px
         border-radius 3px
         cursor pointer
@@ -179,13 +178,11 @@ export default {
       float right
       margin-right 1.6rem
       font-size 1.4rem
-      border 1px solid #ff3341
       padding 0.8rem 1.9rem
       cursor pointer
       color #ff3341
       margin-top 1.2rem
       border-radius 3px
     .grey
-      border 1px solid #000000
       color #000000
 </style>

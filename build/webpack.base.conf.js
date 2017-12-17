@@ -79,6 +79,6 @@ module.exports = {
     'vue-router': 'VueRouter',
     'vuex': 'Vuex',
     'axios': 'axios'
-      // 'mint-ui': 'mintUi'
+      // 'mint-ui': 'Mint'
   }
 }
