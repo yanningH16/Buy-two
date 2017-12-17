@@ -71,6 +71,12 @@ export default {
       countMoney: 0
     }
   },
+  filters: {
+    point: function (value) {
+      value = Number(value)
+      return value.toFixed(2)
+    }
+  },
   computed: {
     ...mapGetters([
       'userInfo',

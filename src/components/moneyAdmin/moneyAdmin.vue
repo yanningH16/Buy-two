@@ -1,5 +1,5 @@
 <template>
-  <div class="moneyAdmin">
+  <div class="moneyAdmin" ref="myTask">
     <!-- 上部分 -->
     <header>
       <div>
@@ -28,17 +28,20 @@
             <span>{{item.actualAmount}}</span> 元</p>
         </div>
       </div>
-      <div slot="bottom" class="mint-loadmore-bottom">
-        <span v-show="topStatus === 'loading'">Loading...</span>
+      <div class="spinnerWrap" v-show="showMore">
+        <div class="spinner">
+          <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
+        </div>
       </div>
     </mt-loadmore>
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { MessageBox, Loadmore, Toast } from 'mint-ui'
+import { MessageBox, Loadmore, Toast, InfiniteScroll, Spinner } from 'mint-ui'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-Vue.component(Loadmore.name, Loadmore)
+Vue.component(Spinner.name, Spinner, Loadmore)
+Vue.use(InfiniteScroll)
 export default {
   name: 'evalute',
   data () {
@@ -47,8 +50,11 @@ export default {
       click: false,
       topStatus: '',
       money: 0,
-      pageSize: 20,
-      tableData: []
+      pageSize: 6,
+      tableData: [],
+      pageNo: 1,
+      pageNos: 1,
+      showMore: false
     }
   },
   computed: {
@@ -57,9 +63,10 @@ export default {
       'userToken'
     ])
   },
-  created () {
+  mounted () {
     this.userMoney()
     this.userMoneyDetail(1, this.pageSize)
+    this.$refs.myTask.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     // 进入页面后进行信息的获取 获取钱的数量
@@ -80,10 +87,10 @@ export default {
       })
     },
     // 进入页面后进行信息的获取 提现明细的资金流水
-    userMoneyDetail (pageNo, pageSize) {
+    userMoneyDetail (type) {
       this.$ajax.post('/api/withdrawApply/getApplysByConditions', {
-        pageNo: pageNo,
-        pageSize: pageSize,
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
         statusList: ['0', '1', '2']
       }).then((data) => {
         console.log(data)
@@ -99,7 +106,14 @@ export default {
             }
             arr.push(obj)
           }
-          this.tableData = arr
+          if (type) {
+            this.tableData = this.tableData.concat(arr)
+          } else {
+            this.tableData = arr
+          }
+          this.showMore = false
+          this.pageNos = Math.ceil(res.data.totalCount / this.pageSize)
+          console.log(this.pageNos, this.pageNo)
         } else {
           Toast(res.message)
         }
@@ -130,16 +144,18 @@ export default {
       this.click = true
       this.$router.push({ name: 'personMoney' })
     },
-    loadBottom () {
-      this.allLoaded = true
-      // this.$refs.loadmore.onBottomLoaded()
-    },
-    loadTop () {
-      // this.$refs.loadmore.onBottomLoaded()
-    },
-    // 底部数据发生变化的回调函数
-    handleTopChange (status) {
-      this.topStatus = status
+    handleScroll () {
+      let scrollTop = this.$refs.myTask.scrollTop
+      let clientHeight = this.$refs.myTask.clientHeight
+      let scrollHeight = this.$refs.myTask.scrollHeight
+      if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo) && !this.showMore) {
+        console.log(scrollTop, clientHeight, scrollHeight)
+        this.showMore = true
+        this.pageNo++
+        setTimeout(() => {
+          this.userMoneyDetail(1)
+        }, 600)
+      }
     }
   }
 }
@@ -211,4 +227,12 @@ export default {
           font-size 2rem
       .data
         margin-top 0.6rem
+  .spinnerWrap
+    background #ffffff
+    // margin-top 5px
+    .spinner
+      text-align center
+      width 28px
+      height 28px
+      margin 0 auto
 </style>

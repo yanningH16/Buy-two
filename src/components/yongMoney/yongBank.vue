@@ -38,6 +38,12 @@ export default {
       'userToken'
     ])
   },
+  filters: {
+    point: function (value) {
+      value = Number(value)
+      return value.toFixed(2)
+    }
+  },
   methods: {
     tixian () {
       if (this.moneyNum > this.$route.query.money) {

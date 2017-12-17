@@ -8,7 +8,9 @@
             <span class="overflow">夏季新款男士家乐福Joe</span>
           </p> -->
           <p v-if="shopState===2" class="top">
-            <span>{{item.content}}</span>
+            <span>{{item.content}}
+              <span style="color:#ff3341" v-if="item.fundsFlowType===1">(冻结)</span>
+            </span>
           </p>
           <!-- <p v-if="shopState===3" class="top">
             <span>提现</span>
@@ -53,7 +55,8 @@ export default {
       tableData: [],
       pageNo: 1,
       showMore: false,
-      pageNos: 1
+      pageNos: 1,
+      freeze: false
     }
   },
   computed: {
@@ -83,7 +86,8 @@ export default {
               gmtModify: word.gmtModify,
               income: word.income || '',
               pay: word.pay || '',
-              availableCommission: word.availableCommission
+              availableCommission: word.availableCommission,
+              fundsFlowType: word.fundsFlowType === 'TYP_BUYER_COMMISSION_FREEZE' ? 1 : 0
             }
             arr.push(obj)
           }

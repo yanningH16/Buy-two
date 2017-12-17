@@ -1,5 +1,5 @@
 <template>
-  <div class="moneyAdmin">
+  <div class="moneyAdmin" ref="myTask">
     <!-- 上部分 -->
     <header>
       <div>
@@ -23,13 +23,19 @@
           <span>{{item.income||item.pay}}</span> 元</p>
       </div>
     </div>
+    <div class="spinnerWrap" v-show="showMore">
+      <div class="spinner">
+        <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
+      </div>
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { Loadmore, Toast } from 'mint-ui'
+import { Loadmore, Toast, Spinner, InfiniteScroll } from 'mint-ui'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-Vue.component(Loadmore.name, Loadmore)
+Vue.use(InfiniteScroll)
+Vue.component(Loadmore.name, Loadmore, Spinner.name, Spinner)
 export default {
   name: 'evalute',
   data () {
@@ -37,8 +43,11 @@ export default {
       click: false,
       topStatus: '',
       money: 0,
-      pageSize: 5,
-      tableData: []
+      pageSize: 6,
+      tableData: [],
+      showMore: false,
+      pageNo: 1,
+      pageNos: 1
     }
   },
   computed: {
@@ -47,9 +56,10 @@ export default {
       'userToken'
     ])
   },
-  created () {
+  mounted () {
     this.userMoney()
     this.userMoneyDetail(1, this.pageSize)
+    this.$refs.myTask.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     // 进入页面后进行信息的获取 获取钱的数量
@@ -70,10 +80,10 @@ export default {
       })
     },
     // 进入页面后进行信息的获取 提现明细的资金流水
-    userMoneyDetail (pageNo, pageSize) {
+    userMoneyDetail (type) {
       this.$ajax.post('/api/userFund/getBuyerFundFlowsByUsageType', {
-        pageNo: pageNo,
-        pageSize: pageSize,
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
         usageType: ['3'],
         buyerUserAccountId: this.userInfo.buyerUserAccountId,
         fundsFlowType: ['TYP_BUYER_COMMISSION_PAY']
@@ -91,7 +101,13 @@ export default {
             }
             arr.push(obj)
           }
-          this.tableData = arr
+          if (type) {
+            this.tableData = this.tableData.concat(arr)
+          } else {
+            this.tableData = arr
+          }
+          this.showMore = false
+          this.pageNos = Math.ceil(res.data.totalCount / this.pageSize)
         } else {
           Toast(res.message)
         }
@@ -111,16 +127,18 @@ export default {
       this.click = true
       this.$router.push({ name: 'yongDetail' })
     },
-    loadBottom () {
-      this.allLoaded = true
-      // this.$refs.loadmore.onBottomLoaded()
-    },
-    loadTop () {
-      // this.$refs.loadmore.onBottomLoaded()
-    },
-    // 底部数据发生变化的回调函数
-    handleTopChange (status) {
-      this.topStatus = status
+    handleScroll () {
+      let scrollTop = this.$refs.myTask.scrollTop
+      let clientHeight = this.$refs.myTask.clientHeight
+      let scrollHeight = this.$refs.myTask.scrollHeight
+      if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo) && !this.showMore) {
+        console.log(scrollTop, clientHeight, scrollHeight)
+        this.showMore = true
+        this.pageNo++
+        setTimeout(() => {
+          this.userMoneyDetail(1)
+        }, 600)
+      }
     }
   }
 }
@@ -193,4 +211,12 @@ export default {
           font-size 2rem
       .data
         margin-top 0.6rem
+  .spinnerWrap
+    background #ffffff
+    // margin-top 5px
+    .spinner
+      text-align center
+      width 28px
+      height 28px
+      margin 0 auto
 </style>
