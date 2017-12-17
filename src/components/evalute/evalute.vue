@@ -20,7 +20,7 @@
       <li>
         <inputArea :title="evaluateObj.step4Title" :text="evaluateObj.step4Text"></inputArea>
       </li>
-      <li>
+      <li v-if="evaluateObj.step5Arr.length!==0">
         <upImgs :title="evaluateObj.step5Title" :imgsArr="evaluateObj.step5Arr"></upImgs>
       </li>
       <li>
@@ -65,7 +65,7 @@ export default {
         step4Title: '四、将以下评价内容打字到手机京东',
         step4Text: '',
         step5Title: '五、将以下图片上传到手机京东',
-        step5Arr: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511875719755&di=ab6dcb955b793b77820db79130a2f05d&imgtype=0&src=http%3A%2F%2Fdiy.qqjay.com%2Fu2%2F2014%2F0721%2F31d87362da0efcf126a487a049b1576e.jpg'],
+        step5Arr: [],
         step6Title: '六、上传评价页面截图',
         step6Arr: []
       },
