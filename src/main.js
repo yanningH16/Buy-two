@@ -15,6 +15,7 @@ import axios from './assets/js/http'
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios
 
+// 图片懒加载
 Vue.use(VueLazyLoad, {
   loading: './assets/images/loading.gif',
   error: './assets/images/noContainer.svg'
