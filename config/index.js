@@ -34,7 +34,7 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: process.env.PORT || 8030,
-    host: 'localhost',
+    host: '10.0.0.34',
     // host: '10.0.0.42',
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',

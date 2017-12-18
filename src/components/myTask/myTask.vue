@@ -124,7 +124,7 @@ export default {
             let res = data.data
             if (res.code === '200') {
               Toast('删除成功')
-              this.taskList(1, this.pageSize)
+              this.taskList()
             } else {
               Toast(res.message)
             }
