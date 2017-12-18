@@ -92,7 +92,7 @@ export default {
   background white
   padding-left 1.6rem
   // margin-bottom 1.2rem
-  border-bottom 10px solid #F5F5F5
+  margin-top 1.2rem
   .header
     display flex
     justify-content space-between

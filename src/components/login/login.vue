@@ -22,8 +22,8 @@ export default {
   data () {
     return {
       canLogin: false,
-      phone: '18667199034',
-      password: '123456'
+      phone: '',
+      password: ''
     }
   },
   methods: {
@@ -89,6 +89,7 @@ export default {
     input
       font-size 1.4rem
       height 1.4rem
+      line-height 1.4rem
       width 100%
       outline none
   .goIn

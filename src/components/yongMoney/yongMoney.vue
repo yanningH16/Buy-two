@@ -154,11 +154,6 @@ export default {
     background #1B1C1F
     padding 1.65rem 1.6rem 3rem 2rem
     color #ffffff
-    position fixed
-    top 0px
-    left 0
-    width 89%
-    z-index 100
     div
       display flex
       justify-content space-between
@@ -186,7 +181,7 @@ export default {
         color #666666
   .title
     color #08090a
-    margin-top 15rem
+    margin-top 1.6rem
     margin-left 1.1rem
     padding-bottom 1.6rem
   .content
