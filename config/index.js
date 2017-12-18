@@ -34,15 +34,15 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: process.env.PORT || 8030,
-    host: '10.0.0.34',
+    host: 'localhost',
     // host: '10.0.0.42',
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://182.61.29.51:8089', // 测试环境
-        // target: 'http://182.61.24.42:8089', // 线上
+        // target: 'http://182.61.29.51:8089', // 测试环境
+        target: 'http://182.61.24.42:8089', // 线上
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
