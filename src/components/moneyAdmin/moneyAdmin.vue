@@ -127,14 +127,23 @@ export default {
         Toast('无可提现的金额')
         return false
       }
-      if (!this.userInfo.bankCardName) {
+      if (!(this.userInfo.bankName || this.userInfo.bankUserName || this.userInfo.bankCardNo)) {
+        MessageBox({
+          title: '未完成银行卡绑定',
+          message: '未完成银行卡绑定不能提现',
+          confirmButtonText: '前去绑定',
+          confirmButtonClass: 'sureAlert'
+        }).then((data) => {
+          this.$router.push({ name: 'withdrawSet' })
+        })
+      } else if (!this.userInfo.withdrawPassword) {
         MessageBox({
           title: '未完成提现设置',
           message: '未完成提现设置不能提现',
           confirmButtonText: '前去设置',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {
-          this.$router.push({ name: 'userSet' })
+          this.$router.push({ name: 'withdrawSet2' })
         })
       } else {
         this.$router.push({ name: 'moneybank', query: { money: this.money } })
