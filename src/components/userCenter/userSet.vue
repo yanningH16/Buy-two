@@ -15,7 +15,7 @@
         <mt-cell title="京东等级" class="title">
           <div class="leave">
             <strong class="gold">{{ (userInfo.jdPlusType == 0 ? '临时会员' : '正式会员') || '暂无等级' }}</strong>
-            <p class="contText">Plus到期日：{{ (userInfo.jdPlusEndDate.split(' ')[0]) || '暂无' }}</p>
+            <p class="contText">Plus到期日：{{ userInfo.jdPlusEndDate ? (userInfo.jdPlusEndDate.split(' ')[0]) : '暂无' }}</p>
           </div>
         </mt-cell>
       </li>
@@ -31,7 +31,7 @@
       </li>
     </ul>
     <ul class="cashSet">
-      <li class="label" v-if="!userInfo.bankCardName" @click="toDo('withdraw')">
+      <li class="label" v-if="!(userInfo.bankUserName || userInfo.bankCardNo || userInfo.bankName)" @click="toDo('withdraw')">
         <mt-cell title="提现设置" class="title" label="买号通过审核后方可设置" is-link>
           <span class="contText">未设置</span>
         </mt-cell>
