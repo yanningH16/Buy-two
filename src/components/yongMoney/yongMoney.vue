@@ -31,7 +31,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { Loadmore, Toast, Spinner, InfiniteScroll } from 'mint-ui'
+import { Loadmore, Toast, Spinner, InfiniteScroll, MessageBox } from 'mint-ui'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 Vue.use(InfiniteScroll)
@@ -121,7 +121,27 @@ export default {
         Toast('无可提现的佣金')
         return false
       }
-      this.$router.push({ name: 'yongBank', query: { money: this.money } })
+      if (!(this.userInfo.bankName || this.userInfo.bankUserName || this.userInfo.bankCardNo)) {
+        MessageBox({
+          title: '未完成银行卡绑定',
+          message: '未完成银行卡绑定不能提现',
+          confirmButtonText: '前去绑定',
+          confirmButtonClass: 'sureAlert'
+        }).then((data) => {
+          this.$router.push({ name: 'withdrawSet' })
+        })
+      } else if (!this.userInfo.withdrawPassword) {
+        MessageBox({
+          title: '未完成提现设置',
+          message: '未完成提现设置不能提现',
+          confirmButtonText: '前去设置',
+          confirmButtonClass: 'sureAlert'
+        }).then((data) => {
+          this.$router.push({ name: 'withdrawSet2' })
+        })
+      } else {
+        this.$router.push({ name: 'yongBank', query: { money: this.money } })
+      }
     },
     btn () {
       this.click = true
