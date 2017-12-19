@@ -105,7 +105,7 @@ export default {
       }).then((data) => {
         if (data.data.code === '200') {
           let res = data.data.data
-          this.stpesObj.step8Arr = [res.isSupportBlankNote, res.isSupprotCreditCard, res.isSupportTicket]
+          this.stpesObj.step8Arr = [parseInt(res.isSupportBlankNote), parseInt(res.isSupprotCreditCard), parseInt(res.isSupportTicket)]
         } else {
           Toast({
             message: data.data.message
