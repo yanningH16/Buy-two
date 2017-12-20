@@ -132,8 +132,8 @@ export default {
         })
       } else if (!this.userInfo.withdrawPassword) {
         MessageBox({
-          title: '未完成提现设置',
-          message: '未完成提现设置不能提现',
+          title: '未完成转本金设置',
+          message: '未完成转本金设置不能提现',
           confirmButtonText: '前去设置',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {

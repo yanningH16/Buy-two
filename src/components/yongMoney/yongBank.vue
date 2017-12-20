@@ -18,7 +18,9 @@
       </div>
     </div>
     <mt-button size="large" type="danger" style="margin-top:2rem" @click="tixian">转出</mt-button>
-    <p>修改密码</p>
+    <router-link :to="{name:'withdrawSet2'}">
+      <p style="margin-top:2.5rem;text-align:center">忘记提现密码</p>
+    </router-link>
   </div>
 </template>
 <script type="text/ecmascript-6">
