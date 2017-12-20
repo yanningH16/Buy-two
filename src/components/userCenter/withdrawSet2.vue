@@ -5,7 +5,7 @@
     </div>
     <ul class="cont">
       <li class="border-bottom-1px">
-        <input type="number" v-model="phone" placeholder="输入手机号">
+        <input type="number" v-model="phone" disabled="true" placeholder="输入手机号">
       </li>
       <li>
         <input style="width:50%;" type="number" v-model="keyNum" placeholder="输入验证码">
@@ -162,6 +162,9 @@ export default {
     ...mapActions([
       'setUserInfo'
     ])
+  },
+  mounted () {
+    this.phone = this.userInfo.telephone
   }
 }
 </script>
@@ -192,6 +195,7 @@ export default {
       input
         width 100%
         outline none
+        background #ffffff
   .footer
     padding 2rem 1.6rem
 </style>
