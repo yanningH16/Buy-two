@@ -18,6 +18,7 @@
       </div>
     </div>
     <mt-button size="large" type="danger" style="margin-top:2rem" @click="tixian">转出</mt-button>
+    <p>修改密码</p>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -65,7 +66,7 @@ export default {
           Toast(data.data.message)
           this.$router.push({ name: 'submit', query: { state: 1 } })
         } else {
-          Toast(data.message)
+          Toast(data.data.message)
         }
       }).catch((err) => {
         console.log(err)

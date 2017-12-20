@@ -9,6 +9,7 @@
           </p> -->
           <p v-if="shopState===2" class="top">
             <span>{{item.content}}</span>
+            <span style="color:#ff3341" v-if="item.fundsFlowId===1">(冻结)</span>
           </p>
           <!-- <p v-if="shopState===3" class="top">
             <span>提现</span>
@@ -84,7 +85,8 @@ export default {
               income: word.income || '',
               pay: word.pay || '',
               availableCommission: word.availableCommission,
-              availableCapital: word.availableCapital
+              availableCapital: word.availableCapital,
+              fundsFlowId: word.fundsFlowType === 'TYP_BUYER_CAPITAL_FREEZE' ? 1 : 0
             }
             arr.push(obj)
           }
