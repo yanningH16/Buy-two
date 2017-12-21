@@ -256,9 +256,9 @@ export default {
     background #ffffff
     border-radius 50%
     border 1px solid #dddddd
-    box-shadow 0 0 1px #dddddd
-    width 3rem
-    height 3rem
+    box-shadow 0 6px 8px rgba(204, 204, 204, 0.3)
+    width 4rem
+    height 4rem
     text-align center
     opacity 0.8
     span
