@@ -25,7 +25,7 @@
           <b class="bangdingIcon"></b>
           <span>帐号绑定</span>
           <strong>
-            <b></b>
+            <b v-if="0"></b>
             <i></i>
           </strong>
         </li>
@@ -41,7 +41,7 @@
           <b class="setIcon"></b>
           <span>设置</span>
           <strong>
-            <b></b>
+            <b v-if="0"></b>
             <i></i>
           </strong>
         </li>
@@ -50,6 +50,7 @@
         <li class="t" @click="toDo('task')">
           <span class="myTaskIcon"></span>
           <p>我的任务</p>
+          <b v-if="taskNumObj.needOperateOrderCount!==0"></b>
         </li>
         <li class="c">
           <span class="userCenterIcon"></span>
@@ -66,7 +67,8 @@ export default {
   name: 'userCenter',
   data () {
     return {
-      moneyObj: {}
+      moneyObj: {},
+      taskNumObj: {}
     }
   },
   computed: {
@@ -116,10 +118,31 @@ export default {
           position: 'bottom'
         })
       })
+    },
+    getTaskNum () {
+      this.$ajax.post('/api/order/search/buyerStatistics', {
+        buyerUserId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        if (data.data.code === '200') {
+          this.taskNumObj = data.data.data
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+        Toast({
+          message: err,
+          position: 'bottom'
+        })
+      })
     }
   },
   mounted () {
     this.getMoney()
+    this.getTaskNum()
   }
 }
 </script>
@@ -249,6 +272,7 @@ export default {
         margin-left 4.5rem
         margin-right 4.5rem
         text-align center
+        position relative
         span
           display inline-block
           width 4.4rem
@@ -261,6 +285,14 @@ export default {
           font-size 1.2rem
           line-height 1
           margin-top 0.8rem
+        b
+          position absolute
+          top 10px
+          right 10px
+          width 6px
+          height 6px
+          border-radius 50%
+          background #ff3341
       .t
         color #999999
       .c
