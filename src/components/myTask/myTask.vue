@@ -1,7 +1,7 @@
 <template>
   <div class="myTask" ref="myTask">
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">待下单
+      <mt-tab-item id="1,6,7">待下单
         <mt-badge type="error" style="position: absolute;margin-top:-10px;margin-left:-10px" v-if="order">{{this.toPlaceOrderNum}}</mt-badge>
       </mt-tab-item>
       <mt-tab-item id="3">待返款
@@ -17,7 +17,7 @@
     </mt-navbar>
     <div class="bg" ref="myTaskCont">
       <mt-tab-container v-model="selected">
-        <mt-tab-container-item id="1">
+        <mt-tab-container-item id="1,6,7">
           <taskList :datas='tableData' @myrouter="show"></taskList>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
@@ -58,7 +58,7 @@ export default {
   },
   data () {
     return {
-      selected: '1',
+      selected: '1,6,7',
       toFavorNum: '',
       toPlaceOrderNum: '',
       waitCommision: '',

@@ -129,8 +129,8 @@ export default {
       }
       if (!(this.userInfo.bankName || this.userInfo.bankUserName || this.userInfo.bankCardNo)) {
         MessageBox({
-          title: '未完成银行卡绑定',
-          message: '未完成银行卡绑定不能提现',
+          title: '未完成设置',
+          message: '请先完成银行卡绑定与提现密码设置',
           confirmButtonText: '前去绑定',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {
@@ -139,7 +139,7 @@ export default {
       } else if (!this.userInfo.withdrawPassword) {
         MessageBox({
           title: '未完成提现设置',
-          message: '未完成提现设置不能提现',
+          message: '未完成提现密码设置不能提现',
           confirmButtonText: '前去设置',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {

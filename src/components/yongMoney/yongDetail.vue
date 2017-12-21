@@ -32,6 +32,7 @@
             <span>{{item.availableCommission}}</span>元</p>
         </div>
       </div>
+      <noCont v-if="tableData.length===0"></noCont>
       <div class="spinnerWrap" v-show="showMore">
         <div class="spinner">
           <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
@@ -44,10 +45,14 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import { Toast, InfiniteScroll, Spinner } from 'mint-ui'
+import noCont from '../../base/noCont/noCont'
 Vue.use(InfiniteScroll)
 Vue.component(Spinner.name, Spinner)
 export default {
   name: 'userCenter',
+  components: {
+    noCont
+  },
   data () {
     return {
       shopState: 2,
