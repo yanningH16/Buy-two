@@ -23,6 +23,9 @@
           <span>{{item.income||item.pay}}</span> 元</p>
       </div>
     </div>
+    <div v-if="tableData.length===0" class="nocont">
+      <noCont></noCont>
+    </div>
     <div class="spinnerWrap" v-show="showMore">
       <div class="spinner">
         <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
@@ -34,10 +37,14 @@
 import { Loadmore, Toast, Spinner, InfiniteScroll, MessageBox } from 'mint-ui'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import NoCont from '../../base/noCont/noCont'
 Vue.use(InfiniteScroll)
 Vue.component(Loadmore.name, Loadmore, Spinner.name, Spinner)
 export default {
   name: 'evalute',
+  components: {
+    NoCont
+  },
   data () {
     return {
       click: false,
@@ -123,8 +130,8 @@ export default {
       }
       if (!(this.userInfo.bankName || this.userInfo.bankUserName || this.userInfo.bankCardNo)) {
         MessageBox({
-          title: '未完成银行卡绑定',
-          message: '未完成银行卡绑定不能提现',
+          title: '未完成设置',
+          message: '请先完成银行卡绑定与提现密码设置',
           confirmButtonText: '前去绑定',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {
@@ -133,7 +140,7 @@ export default {
       } else if (!this.userInfo.withdrawPassword) {
         MessageBox({
           title: '未完成转本金设置',
-          message: '未完成转本金设置不能提现',
+          message: '请先完成提现密码设置',
           confirmButtonText: '前去设置',
           confirmButtonClass: 'sureAlert'
         }).then((data) => {
@@ -169,6 +176,7 @@ export default {
   width 100%
   height 100%
   overflow auto
+  position relative
   header
     height 10rem
     background #1B1C1F
@@ -231,6 +239,10 @@ export default {
           font-size 2rem
       .data
         margin-top 0.6rem
+  .nocont
+    position fixed
+    width 100%
+    height 100%
   .spinnerWrap
     background #ffffff
     // margin-top 5px
