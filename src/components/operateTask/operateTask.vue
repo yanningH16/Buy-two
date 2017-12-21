@@ -150,6 +150,11 @@ export default {
         if (data.data.code === '200') {
           let res = data.data.data
           this.taskInfoObj = data.data.data
+          if (this.taskInfoObj.taskSubType === '1') {
+            this.stpesObj.step1Title = '一、打开手机京东app，查找商品'
+          } else if (this.taskInfoObj.taskSubType === '2') {
+            this.stpesObj.step1Title = '一、打开手机京东微信，查找商品'
+          }
           this.stpesObj.step6Arr = [res.productName, res.shopName, res.numPerOrder, res.productFormat, res.productUnitPrice]
           this.stpesObj.step6Url = res.productPicUrl
           this.randomKey()

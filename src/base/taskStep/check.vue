@@ -9,7 +9,7 @@
         <h3>{{ infoArr[0] }}</h3>
         <p>
           <span>店铺名称</span>
-          <strong>{{ infoArr[1] }}</strong>
+          <strong>{{ shopNameFormate }}</strong>
         </p>
         <p>
           <span>下单数量</span>
@@ -32,6 +32,20 @@ export default {
   name: 'check',
   data () {
     return {
+    }
+  },
+  computed: {
+    shopNameFormate: function () {
+      console.log(this.infoArr[1])
+      let shopName = this.infoArr[1].split('')
+      for (let i = 0; i < shopName.length; i++) {
+        console.log(i)
+        if (i % 2 !== 0) {
+          shopName[i] = '※'
+        }
+      }
+      shopName = shopName.join('')
+      return shopName
     }
   },
   props: {
