@@ -40,6 +40,9 @@
       </div>
       <noCont v-if="tableData.length===0"></noCont>
     </div>
+    <div class="buttons" @click="$router.push({name: 'userCenter'})">
+      <span class="userCenterIcon"></span>
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -246,6 +249,29 @@ export default {
   height 100%
   overflow auto
   position relative
+  .buttons
+    position fixed
+    left 1rem
+    bottom 3rem
+    background #ffffff
+    border-radius 50%
+    border 1px solid #dddddd
+    box-shadow 0 0 1px #dddddd
+    width 3rem
+    height 3rem
+    text-align center
+    opacity 0.8
+    span
+      position absolute
+      top 0
+      right 0
+      left 0
+      bottom 0
+      width 1.5rem
+      height 1.5rem
+      margin auto
+      background-size 1.5rem
+      color red
   .bg
     background #f5f5f5
     border-top 1px solid #D4D5D8
