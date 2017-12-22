@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     show (index) {
-      console.log(index, this.tableData[index])
       if (this.tableData[index].slot === '1') {
         this.$router.push({ name: 'operateTask', query: { buyerTaskId: this.tableData[index].buyerTaskId } })
       } else if (this.tableData[index].slot === '10') {
@@ -123,7 +122,6 @@ export default {
           this.$ajax.post('/api/buyer/task/deleteOrder', {
             buyerTaskId: this.tableData[index].buyerTaskId
           }).then((data) => {
-            console.log(data)
             let res = data.data
             if (res.code === '200') {
               Toast('删除成功')

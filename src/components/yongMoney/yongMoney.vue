@@ -74,7 +74,6 @@ export default {
       this.$ajax.post('/api/userFund/getBuyerUserFund', {
         buyerUserAccountId: this.userInfo.buyerUserAccountId
       }).then((data) => {
-        console.log(data)
         let res = data.data
         if (res.code === '200') {
           this.money = res.data.availableCommissionAmount
@@ -95,7 +94,6 @@ export default {
         buyerUserAccountId: this.userInfo.buyerUserAccountId,
         fundsFlowType: ['TYP_BUYER_COMMISSION_PAY']
       }).then((data) => {
-        console.log(data)
         let res = data.data
         if (res.code === '200') {
           let arr = []
@@ -159,7 +157,6 @@ export default {
       let clientHeight = this.$refs.myTask.clientHeight
       let scrollHeight = this.$refs.myTask.scrollHeight
       if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo) && !this.showMore) {
-        console.log(scrollTop, clientHeight, scrollHeight)
         this.showMore = true
         this.pageNo++
         setTimeout(() => {

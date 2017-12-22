@@ -95,7 +95,6 @@ export default {
           type: 2,
           telephone: this.phone
         }).then((data) => {
-          console.log(data)
           if (data.data.code === '200') {
             this.getkey()
           } else {
@@ -121,7 +120,6 @@ export default {
         telephone: this.phone,
         code: this.keyNum
       }).then((data) => {
-        console.log(data)
         if (data.data.code === '200') {
           this.fixPass()
         } else {
@@ -145,7 +143,6 @@ export default {
         newPassword: md5(this.pass1),
         telephone: this.phone
       }).then((data) => {
-        console.log(data)
         if (data.data.code === '200') {
           Toast({
             message: '修改成功!',

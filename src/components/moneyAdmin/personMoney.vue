@@ -74,7 +74,6 @@ export default {
         pageSize: this.pageSize,
         buyerUserAccountId: this.userInfo.buyerUserAccountId
       }).then((data) => {
-        console.log(data)
         let res = data.data
         if (res.code === '200') {
           let arr = []
@@ -98,7 +97,6 @@ export default {
           }
           this.showMore = false
           this.pageNos = Math.ceil(res.data.totalCount / this.pageSize)
-          console.log(this.pageNos, this.pageNo)
         } else {
           Toast(res.message)
         }
@@ -112,7 +110,6 @@ export default {
       let clientHeight = this.$refs.myTask.clientHeight
       let scrollHeight = this.$refs.myTask.scrollHeight
       if ((scrollHeight - clientHeight - scrollTop <= 10) && (this.pageNos > this.pageNo) && !this.showMore) {
-        console.log(scrollTop, clientHeight, scrollHeight)
         this.showMore = true
         this.pageNo++
         setTimeout(() => {

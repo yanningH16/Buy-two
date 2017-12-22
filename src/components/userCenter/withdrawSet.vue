@@ -139,7 +139,6 @@ export default {
         bankUserName: this.bankUserName,
         bankCardNo: this.bankCardNo
       }).then((data) => {
-        console.log(data)
         if (data.data.code === '200') {
           this.$router.push({ name: 'withdrawSet2' })
         } else {

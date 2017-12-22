@@ -63,7 +63,6 @@ export default {
         buyerUserAccountId: this.userInfo.buyerUserAccountId,
         withdrawPassword: md5(this.password)
       }).then((data) => {
-        console.log(data)
         if (data.data.code === '200') {
           Toast(data.data.message)
           this.$router.push({ name: 'submit', query: { state: 1 } })

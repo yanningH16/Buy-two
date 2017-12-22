@@ -33,7 +33,6 @@ export default {
         telephone: this.phone,
         password: md5(this.password)
       }).then((data) => {
-        console.log(data)
         if (data.data.code === '200') {
           this.setUserInfo(data.data.data)
           this.setUserToken(data.headers.accesstoken)

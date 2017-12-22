@@ -102,7 +102,6 @@ export default {
       this.$ajax.post('/api/userFund/getBuyerUserFund', {
         buyerUserAccountId: this.userInfo.buyerUserAccountId
       }).then((data) => {
-        console.log(data)
         if (data.data.code === '200') {
           this.moneyObj = data.data.data
         } else {

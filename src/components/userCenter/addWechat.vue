@@ -42,7 +42,6 @@ export default {
       this.$ajax.post('/api/platform/wechat/getByOperatorWechatId', {
         operatorWechatId: this.userInfo.operateWechatId
       }).then((data) => {
-        console.log(data)
         if (data.data.code === '200') {
           this.weChatObj = data.data.data
         } else {
