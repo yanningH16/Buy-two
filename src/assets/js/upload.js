@@ -21,7 +21,7 @@ export function uploadFile (res, file) {
       sk: res.secretAccessKey // 您的SecretAccessKey
     },
     sessionToken: res.sessionToken
-      // STS服务器下发的sessionToken
+    // STS服务器下发的sessionToken
   }
 
   /* global baidubce */
@@ -29,7 +29,7 @@ export function uploadFile (res, file) {
   let client = new baidubce.sdk.BosClient(config)
   return new Promise((resolve, reject) => {
     client.putObjectFromBlob('scalpsd', name, file).then((response) => {
-      var url = client.generatePresignedUrl('scalp', name)
+      var url = client.generatePresignedUrl('scalpsd', name)
       var urlForm = url.split('?')[0]
       console.log(urlForm)
       resolve(urlForm)
