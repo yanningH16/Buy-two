@@ -20,10 +20,10 @@
   <!-- <script src="./src/assets/js/baidubce-sdk.bundle.min.js"></script> -->
   <script src="http://182.61.15.128:8012/static/js/baidubce-sdk.bundle.min.js"></script>
   <script>
-    (function (doc, win) {
+    (function(doc, win) {
       var _root = doc.documentElement,
         resizeEvent = 'orientationchange' in window ? 'orientationchange' : 'resize',
-        resizeCallback = function () {
+        resizeCallback = function() {
           var clientWidth = _root.clientWidth,
             fontSize = 10;
           if (!clientWidth) return;
@@ -38,7 +38,6 @@
       win.addEventListener(resizeEvent, resizeCallback, false);
       doc.addEventListener('DOMContentLoaded', resizeCallback, false);
     })(document, window)
-
   </script>
   <title>buyer</title>
   <style>
@@ -47,7 +46,6 @@
       width: 100%;
       height: 100%;
     }
-
   </style>
 </head>
 
