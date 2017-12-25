@@ -13,11 +13,11 @@
       <ul class="title">
         <li class="border-right-1px" @click="toDo('yongjin')">
           <span>佣金收益(元)</span>
-          <p>{{ moneyObj.totalCommissionAmount }}</p>
+          <p>{{ moneyObj.availableCommissionAmount }}</p>
         </li>
         <li @click="toDo('benjin')">
           <span>本金总计(元)</span>
-          <p>{{ moneyObj.totalCapitalAmount }}</p>
+          <p>{{ moneyObj.availableCapitalAmount }}</p>
         </li>
       </ul>
       <ul class="cell">

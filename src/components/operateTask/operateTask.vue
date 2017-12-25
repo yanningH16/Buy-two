@@ -166,20 +166,23 @@ export default {
       })
     },
     doNext () {
-      if (this.stpesObj.step2ImgArr.length === 0) {
-        Toast({
-          message: '请上传搜索截图'
-        })
-        return false
-      } else if (this.stpesObj.step4ImgArr.length === 0) {
-        Toast({
-          message: '请上传任意商品截图'
-        })
-        return false
-      } else {
-        if (this.isPass) {
-          this.submit()
-        }
+      // if (this.stpesObj.step2ImgArr.length === 0) {
+      //   Toast({
+      //     message: '请上传搜索截图'
+      //   })
+      //   return false
+      // } else if (this.stpesObj.step4ImgArr.length === 0) {
+      //   Toast({
+      //     message: '请上传任意商品截图'
+      //   })
+      //   return false
+      // } else {
+      //   if (this.isPass) {
+      //     this.submit()
+      //   }
+      // }
+      if (this.isPass) {
+        this.submit()
       }
     },
     submit () {
