@@ -34,16 +34,21 @@
         </div>
       </div>
     </mt-loadmore>
+    <noCont v-if="tableData.length===0"></noCont>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import { MessageBox, Loadmore, Toast, InfiniteScroll, Spinner } from 'mint-ui'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import NoCont from '../../base/noCont/noCont'
 Vue.component(Spinner.name, Spinner, Loadmore)
 Vue.use(InfiniteScroll)
 export default {
   name: 'evalute',
+  components: {
+    NoCont
+  },
   data () {
     return {
       state: 2,

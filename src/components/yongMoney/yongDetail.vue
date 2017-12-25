@@ -32,11 +32,13 @@
             <span>{{item.availableCommission}}</span>元</p>
         </div>
       </div>
-      <noCont v-if="tableData.length===0"></noCont>
       <div class="spinnerWrap" v-show="showMore">
         <div class="spinner">
           <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
         </div>
+      </div>
+      <div class="nocont">
+        <noCont v-if="tableData.length===0"></noCont>
       </div>
     </div>
   </div>
@@ -132,6 +134,7 @@ export default {
   width 100%
   height 100%
   overflow auto
+  position relative
   .spinnerWrap
     background #ffffff
     // margin-top 5px
@@ -172,4 +175,10 @@ export default {
     .time
       margin-top 0.8rem
       padding-bottom 1.75rem
+  .nocont
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
 </style>

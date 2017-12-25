@@ -15,9 +15,12 @@ export default {
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .noCont
-  padding 15rem 0
+  padding 10rem 0
   background #ffffff
   text-align center
+  width 100%
+  height 100%
+  position fixed
   img
     width 10rem
     height 10rem
