@@ -21,7 +21,7 @@ export function uploadFile (res, file) {
       sk: res.secretAccessKey // 您的SecretAccessKey
     },
     sessionToken: res.sessionToken
-    // STS服务器下发的sessionToken
+      // STS服务器下发的sessionToken
   }
 
   /* global baidubce */

@@ -4,7 +4,7 @@
       <i class="wanderIcon"></i>
     </h2>
     <div class="inputs">
-      <input type="text" placeholder="输入店铺名称" @blur="onBlur" v-model="value">
+      <input type="text" placeholder="输入店铺名称" @input="onInput" v-model="value">
     </div>
   </div>
 </template>
@@ -37,8 +37,8 @@ export default {
     }
   },
   methods: {
-    onBlur () {
-      this.$emit('onBlur')
+    onInput () {
+      this.$emit('onInput')
     }
   }
 }

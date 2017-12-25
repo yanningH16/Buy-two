@@ -27,7 +27,7 @@
         <check :title="stpesObj.step6Title" :goodsImg="stpesObj.step6Url" :infoArr="stpesObj.step6Arr"></check>
       </li>
       <li>
-        <shopName :title="stpesObj.step7Title" @onBlur="testShop" :shopValue.sync="shopName"></shopName>
+        <shopName :title="stpesObj.step7Title" @onInput="testShop" :shopValue.sync="shopName"></shopName>
       </li>
     </ul>
     <div class="next">
@@ -127,9 +127,7 @@ export default {
     // 验证店铺
     testShop () {
       if (this.stpesObj.step7Value !== this.taskInfoObj.shopName) {
-        Toast({
-          message: '店铺输入有误'
-        })
+        this.isPass = false
       } else {
         this.isPass = true
       }
