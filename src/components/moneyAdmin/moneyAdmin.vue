@@ -90,7 +90,8 @@ export default {
       this.$ajax.post('/api/withdrawApply/getApplysByConditions', {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
-        statusList: ['0', '1', '2']
+        statusList: ['0', '1', '2'],
+        buyerTelephoneOrName: this.userInfo.telephone
       }).then((data) => {
         let res = data.data
         if (res.code === '200') {
