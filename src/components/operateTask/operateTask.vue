@@ -11,15 +11,15 @@
       <li>
         <findGoods :title="stpesObj.step1Title" @refresh="randomKey" :value="stpesObj.step1Key"></findGoods>
       </li>
-      <li>
+      <!-- <li>
         <upload :title="stpesObj.step2Title" :tip="stpesObj.step2Tip" :myimgs="stpesObj.step2ImgArr" :max="1" :isShow="false"></upload>
-      </li>
+      </li> -->
       <li>
         <findGoods :title="stpesObj.step3Title" :onlyTitle="true"></findGoods>
       </li>
-      <li>
+      <!-- <li>
         <upload :title="stpesObj.step4Title" :tip="stpesObj.step4Tip" :myimgs="stpesObj.step4ImgArr" :max="2" :isShow="true"></upload>
-      </li>
+      </li> -->
       <li>
         <search :title="stpesObj.step5Title" @lookMore="randomKey" :condition="stpesObj.step5Arr" @giveup="giveup"></search>
       </li>
@@ -77,16 +77,16 @@ export default {
         step2Title: '二、上传搜索结果截图',
         step2Tip: '请把输入框内的搜索关键词也截到图片中',
         step2ImgArr: [],
-        step3Title: '三、下划商品列表，随机查看2件商品',
+        step3Title: '二、下划商品列表，随机查看2件商品',
         step4Title: '四、上传任意2件商品截图',
         step4Tip: '依次点开列表中任意2个商品，分别截图',
         step4ImgArr: [],
-        step5Title: '五、精确搜索，设置搜索条件',
+        step5Title: '三、精确搜索，设置搜索条件',
         step5Arr: ['价格排序', '阿迪', '20.00-50.00元', '河南'],
-        step6Title: '六、核对商品参数',
+        step6Title: '四、核对商品参数',
         step6Arr: ['美丽哈撒发美丽哈撒发美丽哈撒发', '事故多发司法所', '1件', '任意规格', '49.00'],
         step6Url: '',
-        step7Title: '七、输入店铺全称，验证店铺',
+        step7Title: '五、输入店铺全称，验证店铺',
         step7Value: ''
       },
       taskInfoObj: {},

@@ -14,9 +14,9 @@
       <li>
         <payOrder :title="stpesObj.step9Title" :orderInfo="stpesObj.step9Arr"></payOrder>
       </li>
-      <li>
+      <!-- <li>
         <upload :title="stpesObj.step10Title" :myimgs="stpesObj.step10Arr" :max="1" :isShow="false"></upload>
-      </li>
+      </li> -->
     </ul>
     <div class="footer">
       <p>提示：<br />商家将在72小时内操作发货，请耐心等待，不要找客 服催商家</p>
@@ -45,11 +45,11 @@ export default {
     return {
       stpesObj: {
         stepArr: ['货比三家', '填写订单信息'],
-        step8Title: '八、付款',
+        step8Title: '六、付款',
         step8Arr: [0, 1, 0],
-        step9Title: '九、填写付款订单信息',
+        step9Title: '七、填写付款订单信息',
         step9Arr: ['', ''],
-        step10Title: '十、上传订单详情截图',
+        step10Title: '八、上传订单详情截图',
         step10Arr: []
       },
       rbObj: {}
