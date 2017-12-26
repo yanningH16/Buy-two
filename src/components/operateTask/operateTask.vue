@@ -34,7 +34,7 @@
       <span v-if="$route.query.buyerTaskId || $route.query.backBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
       <span v-if="$route.query.rbBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
     </div>
-    <p>如遇问题，请联系在线客服QQ: 2256825635</p>
+    <p>如遇问题，请微信联系您的专属客服</p>
   </div>
 </template>
 <script type="text/ecmascript-6">
