@@ -40,7 +40,7 @@ export default {
   methods: {
     getWechat () {
       this.$ajax.post('/api/platform/wechat/getByOperatorWechatId', {
-        operatorWechatId: this.userInfo.operateWechatId
+        operatorWechatId: this.userInfo.operateWechatId || this.userInfo.wechatNum
       }).then((data) => {
         if (data.data.code === '200') {
           this.weChatObj = data.data.data
