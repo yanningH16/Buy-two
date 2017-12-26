@@ -34,7 +34,7 @@
       <span v-if="$route.query.buyerTaskId || $route.query.backBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
       <span v-if="$route.query.rbBuyerTaskId" class="btn" :class="{ 'btn-gray':!isPass }" @click="doNext">下一步</span>
     </div>
-    <p>如遇问题，请联系在线客服QQ: 2256825635</p>
+    <p>如遇问题，请微信联系您的专属客服</p>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -138,7 +138,7 @@ export default {
       let index = Math.floor(Math.random() * (num))
       let thisKeyObj = keyList[index]
       this.stpesObj.step1Key = thisKeyObj.keyword || '暂无'
-      this.stpesObj.step5Arr = [thisKeyObj.sortClass === '0' ? '综合排序' : thisKeyObj.sortClass === '1' ? '价格排序' : '', thisKeyObj.brand || '暂无', thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation]
+      this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', thisKeyObj.brand || '暂无', thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation]
     },
     // 获取商品信息详情
     getTaskInfo () {

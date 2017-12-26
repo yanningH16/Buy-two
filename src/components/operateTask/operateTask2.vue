@@ -22,7 +22,7 @@
       <p>提示：<br />商家将在72小时内操作发货，请耐心等待，不要找客 服催商家</p>
       <span class="btn" @click="submit">提交</span>
       <span class="rb btn border-1px" v-if="$route.query.rbBuyerTaskId" @click="toPreStep">返回货比三家</span>
-      <p>如遇问题，请联系在线客服QQ: 2256825635</p>
+      <p>如遇问题，请微信联系您的专属客服</p>
     </div>
   </div>
 </template>

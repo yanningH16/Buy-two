@@ -30,7 +30,7 @@
     <div class="footer">
       <p>若京东快递未签收，就提前在平台或京东店铺确认好 评，平台将扣除本次任务本金作为处罚</p>
       <span class="btn hand" @click="sureToPost">提交并返回我的任务</span>
-      <p>如遇问题，请联系在线客服QQ: 2256825635</p>
+      <p>如遇问题，请微信联系您的专属客服</p>
     </div>
   </div>
 </template>
