@@ -1,10 +1,10 @@
 <template>
   <div class="inputArea">
     <h2>{{ title }}</h2>
-    <p>前去京东输入评价内容，不可复制粘贴</p>
+    <p>前去京东输入评价内容，长按复制粘贴</p>
     <div class="textarea">
-      <!-- <textarea readonly v-model="text" placeholder="商家给出的评价内容"></textarea> -->
-      <p unselectable="on" :ontouchstart="aaa" :onselectstart="aaa" class="border-1px">{{ text }}</p>
+      <!-- <textarea v-model="text" placeholder="商家给出的评价内容"></textarea> -->
+      <p class="border-1px">{{ text }}</p>
     </div>
   </div>
 </template>
@@ -56,15 +56,4 @@ export default {
       font-size 1.4rem
       color #08090A
       border-radius 2px
-      user-select none
-      -moz-user-select none
-      -webkit-user-select none
-    &:before
-      content ''
-      position absolute
-      z-index 50
-      top 0
-      left 0
-      width 100%
-      height 100%
 </style>
