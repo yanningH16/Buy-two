@@ -95,7 +95,8 @@ export default {
       this.$ajax.post('/api/withdrawApply/createBuyerApply', {
         withdrawAmount: this.moneyNum,
         userId: this.userInfo.buyerUserAccountId,
-        withdrawPassword: md5(this.password)
+        withdrawPassword: md5(this.password),
+        withdrawType: '0'
       }).then((data) => {
         if (data.data.code === '200') {
           Toast(data.data.message)
