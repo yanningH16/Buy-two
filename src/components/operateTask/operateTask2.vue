@@ -65,10 +65,6 @@ export default {
         Toast({
           message: '请输入实付金额!'
         })
-      } else if (this.stpesObj.step10Arr.length === 0) {
-        Toast({
-          message: '请上传订单详情截图!'
-        })
       } else {
         this.toPost()
       }
