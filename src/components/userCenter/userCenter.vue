@@ -29,14 +29,14 @@
             <i></i>
           </strong>
         </li>
-        <li>
+        <!-- <li>
           <b class="helpIcon"></b>
           <span>帮助与客服</span>
           <strong>
             <b v-if="0"></b>
             <i></i>
           </strong>
-        </li>
+        </li> -->
         <li @click="toDo('setting')">
           <b class="setIcon"></b>
           <span>设置</span>
