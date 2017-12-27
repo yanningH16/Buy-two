@@ -1,5 +1,5 @@
 <template>
-  <div class="userCenter">
+  <div class="userCenter userCenterBg">
     <ul class="top">
       <li class="headImg">
         <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511957696669&di=5bbc3ea76a7b62eae7dc82073b12b0a6&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201504%2F16%2F20150416H4223_vG4eY.jpeg" alt="">
@@ -150,14 +150,12 @@ export default {
   width 100%
   height 100%
   overflow hidden
-  background #000000
   display flex
   flex-direction column
   .top
     height 17rem
     color #ffffff
     text-align center
-    background #000000
     .headImg
       padding-top 2rem
       img

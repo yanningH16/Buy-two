@@ -40,7 +40,7 @@
       </div>
       <noCont v-if="tableData.length===0"></noCont>
     </div>
-    <div class="buttons" @click="$router.push({name: 'userCenter'})">
+    <div class="buttons" v-show="showCenter" @click="$router.push({name: 'userCenter'})">
       <span class="userCenterIcon"></span>
     </div>
   </div>
@@ -79,7 +79,9 @@ export default {
       getScoreLog: [],
       pageNo: 1,
       pageNos: 1,
-      showMore: false
+      showMore: false,
+      touchStartY: 0,
+      touchEndY: 0
     }
   },
   watch: {
@@ -88,6 +90,13 @@ export default {
     }
   },
   computed: {
+    showCenter: function () {
+      if (this.touchStartY - this.touchEndY > 0) {
+        return false
+      } else {
+        return true
+      }
+    },
     ...mapGetters([
       'userInfo',
       'userToken'
@@ -227,12 +236,20 @@ export default {
           this.taskList(1)
         }, 600)
       }
+    },
+    touchStart (e) {
+      this.touchStartY = e.touches[0].pageY
+    },
+    touchEnd (e) {
+      this.touchEndY = e.changedTouches[0].pageY
     }
   },
   mounted () {
     this.pointNum()
     this.taskList()
     this.$refs.myTask.addEventListener('scroll', this.handleScroll)
+    this.$refs.myTask.addEventListener('touchstart', this.touchStart)
+    this.$refs.myTask.addEventListener('touchend', this.touchEnd)
   },
   destroyed () {
     // this.$refs.myTask.removeEventListener('scroll', this.handleScroll)
@@ -249,7 +266,7 @@ export default {
   position relative
   .buttons
     position fixed
-    left 1rem
+    right 1rem
     bottom 3rem
     background #ffffff
     border-radius 50%
