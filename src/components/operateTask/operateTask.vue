@@ -82,7 +82,7 @@ export default {
         step4Tip: '依次点开列表中任意2个商品，分别截图',
         step4ImgArr: [],
         step5Title: '三、精确搜索，设置搜索条件',
-        step5Arr: ['价格排序', '阿迪', '20.00-50.00元', '河南'],
+        step5Arr: ['价格排序', '阿迪', '20.00-50.00元', '河南', '0', '0'],
         step6Title: '四、核对商品参数',
         step6Arr: ['美丽哈撒发美丽哈撒发美丽哈撒发', '事故多发司法所', '1件', '任意规格', '49.00'],
         step6Url: '',
@@ -138,7 +138,7 @@ export default {
       let index = Math.floor(Math.random() * (num))
       let thisKeyObj = keyList[index]
       this.stpesObj.step1Key = thisKeyObj.keyword || '暂无'
-      this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', thisKeyObj.brand || '暂无', thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation]
+      this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', thisKeyObj.brand || '暂无', thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation, thisKeyObj.favorNum || '暂无', thisKeyObj.pageNum || '暂无']
     },
     // 获取商品信息详情
     getTaskInfo () {

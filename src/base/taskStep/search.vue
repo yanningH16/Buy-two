@@ -18,6 +18,14 @@
         <span>发货地</span>
         <p>{{ condition[3] }}</p>
       </li>
+      <li>
+        <span>评价数</span>
+        <p>{{ condition[4] }}</p>
+      </li>
+      <li>
+        <span>预计翻页数</span>
+        <p>{{ condition[5] }}</p>
+      </li>
     </ul>
     <div class="buttons">
       <span class="border-1px" @click="alert=true">找不到商品？</span>
@@ -47,7 +55,7 @@ export default {
     },
     condition: {
       type: Array,
-      default: ['综合排序', '无', '0.00-0.00元', '全国']
+      default: ['综合排序', '无', '0.00-0.00元', '全国', '0', '0']
     }
   },
   methods: {
