@@ -176,7 +176,7 @@ export default {
   position relative
   header
     height 10rem
-    background #1B1C1F
+    background url('../../assets/images/bg_account.png')
     padding 1.65rem 1.6rem 3rem 2rem
     color #ffffff
     div
