@@ -1,12 +1,22 @@
 <template>
   <div class="noCont">
-    <img src="../../assets/images/noContainer.svg" alt="">
-    <p>暂无数据</p>
+    <img v-if="!inivited" src="../../assets/images/noContainer.svg" alt="">
+    <p v-if="!inivited">暂无数据</p>
+    <img class="head" v-if="inivited" src="../../assets/images/icon_user.svg" alt="">
+    <p v-if="inivited">对不起
+      <br />您还没有资格做推广
+    </p>
   </div>
 </template>
 <script type="text/ecmascript-6">
 export default {
   name: 'noCont',
+  props: {
+    inivited: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
     }
@@ -24,8 +34,12 @@ export default {
   img
     width 10rem
     height 10rem
+  .head
+    width 8rem
+    height 8rem
   p
     font-size 1.4rem
     margin-top 1rem
+    line-height 2rem
     color #666666
 </style>

@@ -193,6 +193,6 @@ export default {
     left 0px
     width 100%
     height 100%
-    z-index 99999
+    z-index 9
     opacity 0
 </style>

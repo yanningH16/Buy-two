@@ -13,6 +13,21 @@ const AccountLink = (resolve) => {
     resolve(module)
   })
 }
+const bindJdAccount = (resolve) => {
+  import('@/components/userCenter/bindJdAccount').then((module) => {
+    resolve(module)
+  })
+}
+const myPush = (resolve) => {
+  import('@/components/userCenter/myPush').then((module) => {
+    resolve(module)
+  })
+}
+const inivited = (resolve) => {
+  import('@/components/userCenter/inivited').then((module) => {
+    resolve(module)
+  })
+}
 const WithdrawSet = (resolve) => {
   import('@/components/userCenter/withdrawSet').then((module) => {
     resolve(module)
@@ -44,6 +59,21 @@ const userCenter = [{
   component: AccountLink,
   name: 'accountLink',
   meta: { title: '帐号绑定' }
+}, {
+  path: '/bindJdAccount',
+  component: bindJdAccount,
+  name: 'bindJdAccount',
+  meta: { title: '绑定京东帐号' }
+}, {
+  path: '/myPush',
+  component: myPush,
+  name: 'myPush',
+  meta: { title: '我的推广' }
+}, {
+  path: '/inivited',
+  component: inivited,
+  name: 'inivited',
+  meta: { title: '我已邀请' }
 }, {
   path: '/withdrawSet',
   component: WithdrawSet,

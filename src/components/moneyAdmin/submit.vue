@@ -1,13 +1,18 @@
 <template>
   <div class="wrap">
     <div class="submit">
-      <img :src='imgPic' alt="" v-if="$route.query.state==1" class="pic">
+      <img :src='imgPic' alt="" v-if="$route.query.state==1 || $route.query.addWechat==1 || $route.query.bindAccount==1" class="pic">
       <img :src='imgPic1' alt="" v-if="$route.query.state==2" class="pic">
-      <h2 v-if="$route.query.state==1">提交成功</h2>
+      <h2 v-if="$route.query.state==1 || $route.query.bindAccount==1">提交成功</h2>
       <h2 v-if="$route.query.state==2">提交失败</h2>
+      <h2 v-if="$route.query.addWechat==1">您已获得参与活动资质</h2>
+      <p v-if="$route.query.addWechat==1">平台将在2个工作日内微信与您联系, 请耐心等待</p>
       <p v-if="$route.query.state==1">我们会在1-2个工作日内处理</p>
       <p v-if="$route.query.state==2" style="color:#ff3341">失败原因:系统繁忙,请稍后再试</p>
-      <router-link :to="{name:'userCenter'}">
+      <div v-if="$route.query.addWechat==1">
+        <span>我会耐心等待平台联系我</span>
+      </div>
+      <router-link v-else :to="{name:'userCenter'}">
         <span>返回个人中心</span>
       </router-link>
     </div>
@@ -18,8 +23,8 @@ export default {
   name: 'evalute',
   data () {
     return {
-      imgPic: 'http://cdn.static.renqizhu.cn/upload/activity/28867/15118541853711.jpg?imageView2/2/w/380',
-      imgPic1: 'http://cdn.static.linlangxiu.com/upload/trade/20171119/c3a45075b9cc08d4ef3fd33867a2d8b9.jpg',
+      imgPic: require('../../assets/images/success.svg'),
+      imgPic1: require('../../assets/images/fail.svg'),
       state: 2
     }
   }
@@ -49,8 +54,10 @@ export default {
       color #75787f
       font-size 1.2rem
     span
-      width 12.4rem
+      min-width 12.4rem
       height 3.4rem
+      padding-left 1rem
+      padding-right 1rem
       display inline-block
       line-height 3.4rem
       text-align center

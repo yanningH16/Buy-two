@@ -29,6 +29,14 @@
             <i></i>
           </strong>
         </li>
+        <li @click="toDo('myPush')">
+          <b class="pushIcon"></b>
+          <span>我的推广</span>
+          <strong>
+            <b v-if="0"></b>
+            <i></i>
+          </strong>
+        </li>
         <!-- <li>
           <b class="helpIcon"></b>
           <span>帮助与客服</span>
@@ -93,6 +101,9 @@ export default {
           break
         case 'setting':
           this.$router.push({ name: 'userSet' })
+          break
+        case 'myPush':
+          this.$router.push({ name: 'myPush' })
           break
         default:
           break

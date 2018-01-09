@@ -14,14 +14,14 @@
       <li class="border-bottom-1px">
         <mt-cell title="京东等级" class="title">
           <div class="leave">
-            <strong class="gold">{{ (userInfo.jdPlusType == 0 ? '临时会员' : '正式会员') || '暂无等级' }}</strong>
+            <strong class="gold">{{ (userInfo.jdPlusType == 1 ? '正式会员' : userInfo.jdPlusType == 0 ? '临时会员' : '非会员') || '暂无等级' }}</strong>
             <p class="contText">Plus到期日：{{ userInfo.jdPlusEndDate ? (userInfo.jdPlusEndDate.split(' ')[0]) : '暂无' }}</p>
           </div>
         </mt-cell>
       </li>
       <li class="border-bottom-1px">
         <mt-cell title="性别" class="title">
-          <span class="contText">{{ userInfo.gender == '1' ? '男' : '女' }}</span>
+          <span class="contText">{{ (userInfo.gender == '1' ? '男' : userInfo.gender == '2' ? '女' : '暂未设置') || '暂未设置' }}</span>
         </mt-cell>
       </li>
       <li>

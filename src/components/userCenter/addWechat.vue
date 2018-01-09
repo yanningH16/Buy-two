@@ -3,27 +3,30 @@
     <p class="common">备注：平台确认已添加您的微信号后您才可以接单</p>
     <ul class="cont">
       <li>
-        <h3>长按扫码添加该微信号为好友</h3>
+        <h3>请您复制如下信息添加备注</h3>
+      </li>
+      <li>
+        <strong>{{ weChatObj.memo || '暂无备注' }}</strong>
+        <span class="border-1px copy" @click="doCopy" :data-clipboard-text='weChatObj.memo'>复制</span>
       </li>
       <li>
         <img :src="weChatObj.wechatPicId" alt="erCode">
       </li>
       <li>
-        <h3>或者<br />长按复制添加该微信号为好友</h3>
-      </li>
-      <li>
-        <strong>{{ weChatObj.wechatNum }}</strong>
-        <span class="border-1px copy" @click="doCopy" :data-clipboard-text='weChatObj.wechatNum'>复制</span>
+        <h2>微信号: {{ weChatObj.wechatNum }}</h2>
+        <h3>扫码加好友或者
+          <br /> 复制添加该微信号为好友
+        </h3>
       </li>
     </ul>
     <div class="footer">
-      <span class="btn" @click="toCenter">确认并返回个人中心</span>
+      <span class="btn" @click="toCenter">我已确认添加了微信</span>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import { mapGetters } from 'vuex'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 import Clipboard from 'clipboard'
 export default {
   name: 'addWechat',
@@ -64,11 +67,23 @@ export default {
       })
     },
     toCenter () {
-      this.$router.push({ name: 'userCenter' })
+      MessageBox.confirm('确认已经复制了备注并提交了微信添加申请?').then((action) => {
+        this.$router.push({ name: 'submit', query: { addWechat: 1 } })
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   },
   mounted () {
-    this.getWechat()
+    if (this.$route.query.weChatObj) {
+      let obj = JSON.parse(sessionStorage.getItem('bindJdAccountObj'))
+      this.weChatObj = obj
+      this.weChatObj.memo = obj.name
+      this.weChatObj.wechatPicId = obj.wechatUrl
+      this.weChatObj.wechatNum = obj.wechatId
+    } else {
+      this.getWechat()
+    }
   }
 }
 </script>
@@ -88,9 +103,14 @@ export default {
   .cont
     text-align center
     h3
-      margin-top 3.2rem
+      margin-top 1.2rem
       margin-bottom 2rem
       font-size 1.4rem
+      line-height 2.2rem
+      color #08090A
+    h2
+      margin-top 2rem
+      font-size 1.6rem
       line-height 2.2rem
       color #08090A
     img
@@ -99,8 +119,9 @@ export default {
       height 13.4rem
     strong
       line-height 3.4rem
-      font-size 2.4rem
+      font-size 2rem
       margin-right 2rem
+      font-weight bold
       color #08090A
       vertical-align middle
     span
