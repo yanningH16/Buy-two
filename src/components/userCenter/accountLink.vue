@@ -17,7 +17,7 @@
         <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
         <span class="contText Awaiting">审核中</span>
       </mt-cell>
-      <mt-cell v-if="userObj.isJdPassCheck==3" class="title" is-link>
+      <mt-cell v-if="userObj.isJdPassCheck==3" class="title" is-link to="bindJdAccount">
         <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
         <span class="contText Aerror">未通过审核</span>
       </mt-cell>
