@@ -9,18 +9,22 @@
       </mt-cell>
     </li>
     <li>
-      <mt-cell v-if="userObj.isJdPassCheck==0" class="title" is-link to="bindJdAccount">
-        <span slot="title">绑定京东买号</span>
-        <span class="contText">未绑定</span>
-      </mt-cell>
+      <div v-if="userObj.isJdPassCheck==0" @click="toBindJd">
+        <mt-cell class="title" is-link>
+          <span slot="title">绑定京东买号</span>
+          <span class="contText">未绑定</span>
+        </mt-cell>
+      </div>
       <mt-cell v-if="userObj.isJdPassCheck==2" class="title">
         <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
         <span class="contText Awaiting">审核中</span>
       </mt-cell>
-      <mt-cell v-if="userObj.isJdPassCheck==3" class="title" is-link to="bindJdAccount">
-        <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
-        <span class="contText Aerror">未通过审核</span>
-      </mt-cell>
+      <div v-if="userObj.isJdPassCheck==3" @click="toBindJd">
+        <mt-cell class="title" is-link>
+          <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
+          <span class="contText Aerror">未通过审核</span>
+        </mt-cell>
+      </div>
       <mt-cell v-if="userObj.isJdPassCheck==1" class="title">
         <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
         <span class="contText Asuccess">已通过审核</span>
@@ -59,6 +63,9 @@ export default {
       }).catch((err) => {
         console.error(err)
       })
+    },
+    toBindJd () {
+      this.$router.push({ name: 'bindJdAccount', query: { buyerAccountId: this.userInfo.buyerUserAccountId } })
     }
   },
   mounted () {
