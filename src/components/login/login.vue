@@ -36,6 +36,7 @@ export default {
         if (data.data.code === '200') {
           this.setUserInfo(data.data.data)
           this.setUserToken(data.headers.accesstoken)
+          localStorage.setItem('__userAccount__', this.phone + '&&' + this.password)
           this.$router.push({ name: 'userCenter' })
         } else {
           Toast({
@@ -62,6 +63,11 @@ export default {
   },
   mounted () {
     this.isInput()
+    if (localStorage.getItem('__userAccount__')) {
+      let account = localStorage.getItem('__userAccount__')
+      this.phone = account.split('&&')[0]
+      this.password = account.split('&&')[1]
+    }
   }
 }
 </script>

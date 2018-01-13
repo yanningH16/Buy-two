@@ -1,5 +1,8 @@
 <template>
   <div class="bindJdAccount">
+    <div class="reject" v-if="$route.query.returnBack">
+      <p>驳回原因：{{ userInfo.jdRejectComment || '' }}</p>
+    </div>
     <h2>
       <i class="jdIcon"></i>
       绑定京东帐号
@@ -11,14 +14,6 @@
           <img @click="show(helpImg)" :src="helpImg" alt="">
           <!-- <p>帐号截图</p> -->
         </li>
-        <!-- <li>
-          <img @click="show(accountImg)" :src="accountSetImg" alt="">
-          <p>帐号截图</p>
-        </li>
-        <li>
-          <img @click="show(accountImg)" :src="plusImg" alt="">
-          <p>帐号截图</p>
-        </li> -->
       </ul>
     </div>
     <div @click="showImg=false" class="imgLook" v-if="showImg">
@@ -42,7 +37,9 @@
       </ul>
     </div>
     <div class="buttons">
-      <span class="btn" @click="bindAccount">提交</span>
+      <!-- <span class="btnDouble" @click="$router.push({ name: 'addWechat', query: { weChatObj: 1 } })">没帐号,先跳过</span> -->
+      <span class="btn" @click="bindAccount">确认提交</span>
+      <p v-if="!($route.query.returnBack||$route.query.login)" @click="$router.push({ name: 'addWechat', query: { weChatObj: 1 } })">没帐号,先跳过</p>
     </div>
   </div>
 </template>
@@ -66,7 +63,7 @@ export default {
       img2: [],
       img3: [],
       showUrl: '',
-      helpImg: require('./img/help.png'),
+      helpImg: require('./img/tb3.png'),
       showImg: false
     }
   },
@@ -89,8 +86,12 @@ export default {
           buyerAccountId: this.$route.query.buyerAccountId
         }).then((data) => {
           if (data.data.code === '200') {
-            sessionStorage.setItem('bindJdAccountObj', JSON.stringify(data.data.data))
-            this.$router.push({ name: 'addWechat', query: { weChatObj: 1 } })
+            if (this.$route.query.returnBack || this.$route.query.login) {
+              this.$router.push({ name: 'accountLink' })
+            } else {
+              sessionStorage.setItem('bindJdAccountObj', JSON.stringify(data.data.data))
+              this.$router.push({ name: 'addWechat', query: { weChatObj: 1 } })
+            }
           } else {
             Toast({
               message: data.data.message,
@@ -102,6 +103,13 @@ export default {
         })
       }
     }
+  },
+  mounted () {
+    if (this.$route.query.returnBack) {
+      this.img1 = [this.userInfo.jdAccountPicUrl || '']
+      this.img2 = [this.userInfo.jdAccountSettingPicUrl || '']
+      this.img3 = [this.userInfo.jdPlusPicId || '']
+    }
   }
 }
 </script>
@@ -111,6 +119,14 @@ export default {
   height 100%
   overflow auto
   background #EFF0F2
+  .reject
+    padding 1.2rem 1.6rem
+    background #FFEAEB
+    >p
+      font-size 1.2rem
+      line-height 1.6rem
+      color #FF3341
+      vertical-align top
   h2
     font-size 2rem
     color #08090A
@@ -147,6 +163,8 @@ export default {
           margin-top 1rem
     .uploadShot
       margin-top 1.6rem
+      li
+        margin-right 4rem
       p
         font-size 1.2rem
         color #666666
@@ -164,10 +182,12 @@ export default {
       position absolute
       top 0
       left 0
-      right 0
-      bottom 0
-      margin auto
       max-width 100%
   .buttons
     padding 2rem
+    p
+      text-align center
+      line-height 1
+      font-size 1.4rem
+      margin-top 2rem
 </style>

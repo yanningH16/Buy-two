@@ -9,6 +9,28 @@
       </mt-cell>
     </li>
     <li>
+      <div v-if="userObj.isTaobaoPassCheck==0" @click="toBindTb">
+        <mt-cell class="title" is-link>
+          <span slot="title">绑定淘宝买号</span>
+          <span class="contText">未绑定</span>
+        </mt-cell>
+      </div>
+      <mt-cell v-if="userObj.isTaobaoPassCheck==2" class="title">
+        <span slot="title">绑定淘宝买号：{{ userObj.taobaoWangNickName }}</span>
+        <span class="contText Awaiting">审核中</span>
+      </mt-cell>
+      <div v-if="userObj.isTaobaoPassCheck==3" @click="toBindTb(1)">
+        <mt-cell class="title" is-link>
+          <span slot="title">绑定淘宝买号：{{ userObj.taobaoWangNickName }}</span>
+          <span class="contText Aerror">未通过审核</span>
+        </mt-cell>
+      </div>
+      <mt-cell v-if="userObj.isTaobaoPassCheck==1" class="title">
+        <span slot="title">绑定淘宝买号：{{ userObj.taobaoWangNickName }}</span>
+        <span class="contText Asuccess">已通过审核</span>
+      </mt-cell>
+    </li>
+    <li>
       <div v-if="userObj.isJdPassCheck==0" @click="toBindJd">
         <mt-cell class="title" is-link>
           <span slot="title">绑定京东买号</span>
@@ -19,7 +41,7 @@
         <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
         <span class="contText Awaiting">审核中</span>
       </mt-cell>
-      <div v-if="userObj.isJdPassCheck==3" @click="toBindJd">
+      <div v-if="userObj.isJdPassCheck==3" @click="toBindJd(1)">
         <mt-cell class="title" is-link>
           <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
           <span class="contText Aerror">未通过审核</span>
@@ -29,6 +51,9 @@
         <span slot="title">绑定京东买号：{{ userObj.jdNickName }}</span>
         <span class="contText Asuccess">已通过审核</span>
       </mt-cell>
+    </li>
+    <li class="button">
+      <span class="btn" @click="$router.push({name: 'userCenter'})">返回至个人中心</span>
     </li>
   </ul>
 </template>
@@ -64,8 +89,19 @@ export default {
         console.error(err)
       })
     },
-    toBindJd () {
-      this.$router.push({ name: 'bindJdAccount', query: { buyerAccountId: this.userInfo.buyerUserAccountId } })
+    toBindJd (type) {
+      if (type === 1) {
+        this.$router.push({ name: 'bindJdAccount', query: { buyerAccountId: this.userInfo.buyerUserAccountId, returnBack: 1 } })
+      } else {
+        this.$router.push({ name: 'bindJdAccount', query: { buyerAccountId: this.userInfo.buyerUserAccountId, login: 1 } })
+      }
+    },
+    toBindTb (type) {
+      if (type === 1) {
+        this.$router.push({ name: 'bindTbAccount', query: { buyerAccountId: this.userInfo.buyerUserAccountId, returnBack: 1 } })
+      } else {
+        this.$router.push({ name: 'bindTbAccount', query: { buyerAccountId: this.userInfo.buyerUserAccountId, login: 1 } })
+      }
     }
   },
   mounted () {
@@ -96,4 +132,8 @@ export default {
       color #08090A
       min-height 5rem
       font-size 1.4rem
+  .button
+    padding 1.2rem
+    margin-top 2rem
+    background none
 </style>

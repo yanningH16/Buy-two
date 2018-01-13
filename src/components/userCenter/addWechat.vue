@@ -76,7 +76,7 @@ export default {
   },
   mounted () {
     if (this.$route.query.weChatObj) {
-      let obj = JSON.parse(sessionStorage.getItem('bindJdAccountObj'))
+      let obj = JSON.parse(sessionStorage.getItem('bindJdAccountObj')) || JSON.parse(sessionStorage.getItem('bindTbAccountObj'))
       this.weChatObj = obj
       this.weChatObj.memo = obj.name
       this.weChatObj.wechatPicId = obj.wechatUrl

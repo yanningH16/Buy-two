@@ -13,6 +13,11 @@ const AccountLink = (resolve) => {
     resolve(module)
   })
 }
+const bindTbAccount = (resolve) => {
+  import('@/components/userCenter/bindTbAccount').then((module) => {
+    resolve(module)
+  })
+}
 const bindJdAccount = (resolve) => {
   import('@/components/userCenter/bindJdAccount').then((module) => {
     resolve(module)
@@ -59,6 +64,11 @@ const userCenter = [{
   component: AccountLink,
   name: 'accountLink',
   meta: { title: '帐号绑定' }
+}, {
+  path: '/bindTbAccount',
+  component: bindTbAccount,
+  name: 'bindTbAccount',
+  meta: { title: '绑定淘宝帐号' }
 }, {
   path: '/bindJdAccount',
   component: bindJdAccount,

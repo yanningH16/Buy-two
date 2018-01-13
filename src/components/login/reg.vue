@@ -22,7 +22,7 @@
     <div class="buttons">
       <span class="btn" :class="{'btn-gray': !isOk}" @click="sureToReg">注册</span>
     </div>
-    <p class="toLogin" @click="$router.push({name: 'login'})">去登录</p>
+    <!-- <p class="toLogin" @click="$router.push({name: 'login'})">去登录</p> -->
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -57,7 +57,7 @@ export default {
             message: '注册成功!',
             position: 'bottom'
           })
-          this.$router.push({ name: 'bindJdAccount', query: { buyerAccountId: data.data.data.buyerAccountId } })
+          this.$router.push({ name: 'bindTbAccount', query: { buyerAccountId: data.data.data.buyerAccountId } })
         } else if (data.data.code === '1005') {
           Toast({
             message: '该用户已经注册',
