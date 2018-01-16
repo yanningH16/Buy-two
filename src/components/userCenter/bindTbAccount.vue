@@ -114,8 +114,8 @@ export default {
         name: '填写地址'
       },
       type: '',
-      tb1Img: require('./img/tb1.png'),
-      tb2Img: require('./img/tb2.png'),
+      tb1Img: require('./img/t1.png'),
+      tb2Img: require('./img/t2.png'),
       // tb3Img: require('./img/tb3.png'),
       showImg: false,
       slots: [

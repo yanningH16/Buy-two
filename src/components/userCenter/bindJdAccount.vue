@@ -63,7 +63,7 @@ export default {
       img2: [],
       img3: [],
       showUrl: '',
-      helpImg: require('./img/tb3.png'),
+      helpImg: require('./img/t3.png'),
       showImg: false
     }
   },
