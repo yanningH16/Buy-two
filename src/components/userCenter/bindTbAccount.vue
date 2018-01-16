@@ -34,11 +34,11 @@
       </ul>
       <ul class="chooseArea">
         <li class="border-bottom-1px" @click="showChoose(1)">
-          {{ ageRound.name }}
+          {{ ageRound ? ageRound.name : '年龄段' }}
           <i></i>
         </li>
         <li @click="showChoose(2)">
-          {{ address.name }}
+          {{ address ? address.name : '填写地址' }}
           <i></i>
         </li>
       </ul>
@@ -87,15 +87,12 @@ import Upload from '../../base/taskStep/upload'
 import { Toast, Radio, Picker } from 'mint-ui'
 import { mapGetters } from 'vuex'
 Vue.component(Radio.name, Radio, Picker)
+/* global BMap */
+/* eslint no-undef: "error" */
 export default {
   name: 'bindTbAccount',
   components: {
     Upload
-  },
-  computed: {
-    ...mapGetters([
-      'userInfo'
-    ])
   },
   data () {
     return {
@@ -106,11 +103,11 @@ export default {
       isOpenHuabei: '是',
       showAddress: false,
       ageRound: {
-        code: -1,
+        code: '-1',
         name: '年龄段'
       },
       address: {
-        code: -1,
+        code: '-1',
         name: '填写地址'
       },
       type: '',
@@ -127,6 +124,11 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   },
   methods: {
     show (imgUrl) {
@@ -234,6 +236,47 @@ export default {
       }).catch((err) => {
         console.error(err)
       })
+    },
+    setAddress (point) {
+      let x = point.split(',')[0]
+      let y = point.split(',')[1]
+      let myGeo = new BMap.Geocoder()
+      myGeo.getLocation(new BMap.Point(x, y), (result) => {
+        if (result) {
+          console.log(result)
+          this.address = {
+            code: '111',
+            name: result.address
+          }
+        }
+      })
+    },
+    onSuccess (position) {
+      let myGeo = new BMap.Geocoder()
+      myGeo.getLocation(new BMap.Point(position.coords.longitude.toFixed(2), position.coords.latitude.toFixed(2)), (result) => {
+        if (result) {
+          this.address = {
+            code: '',
+            name: result.address
+          }
+        }
+      })
+    },
+    onError (error) {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          alert('您拒绝对获取地理位置的请求')
+          break
+        case error.POSITION_UNAVAILABLE:
+          alert('位置信息是不可用的')
+          break
+        case error.TIMEOUT:
+          alert('请求您的地理位置超时')
+          break
+        case error.UNKNOWN_ERROR:
+          alert('未知错误')
+          break
+      }
     }
   },
   mounted () {
@@ -263,6 +306,11 @@ export default {
         name: '年龄段'
       }))
       this.isOpenHuabei = (parseInt(this.userInfo.isTbHuabei) === 1 ? '是' : '否')
+    } else {
+      // if (sessionStorage.getItem('__position__')) {
+      //   let point = sessionStorage.getItem('__position__')
+      //   this.setAddress(point)
+      // }
     }
   }
 }
