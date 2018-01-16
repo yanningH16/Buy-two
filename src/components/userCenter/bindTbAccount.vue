@@ -251,31 +251,11 @@ export default {
         }
       })
     },
-    onSuccess (position) {
-      let myGeo = new BMap.Geocoder()
-      myGeo.getLocation(new BMap.Point(position.coords.longitude.toFixed(2), position.coords.latitude.toFixed(2)), (result) => {
-        if (result) {
-          this.address = {
-            code: '',
-            name: result.address
-          }
-        }
-      })
-    },
-    onError (error) {
-      switch (error.code) {
-        case error.PERMISSION_DENIED:
-          alert('您拒绝对获取地理位置的请求')
-          break
-        case error.POSITION_UNAVAILABLE:
-          alert('位置信息是不可用的')
-          break
-        case error.TIMEOUT:
-          alert('请求您的地理位置超时')
-          break
-        case error.UNKNOWN_ERROR:
-          alert('未知错误')
-          break
+    localMyCity (result) {
+      let city = result.name
+      this.address = {
+        code: '111',
+        name: city
       }
     }
   },
@@ -307,10 +287,8 @@ export default {
       }))
       this.isOpenHuabei = (parseInt(this.userInfo.isTbHuabei) === 1 ? '是' : '否')
     } else {
-      // if (sessionStorage.getItem('__position__')) {
-      //   let point = sessionStorage.getItem('__position__')
-      //   this.setAddress(point)
-      // }
+      let myCity = new BMap.LocalCity()
+      myCity.get(this.localMyCity)
     }
   }
 }

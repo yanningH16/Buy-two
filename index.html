@@ -19,7 +19,7 @@
   <!-- 百度图片上传获取参数的文件 -->
   <!-- <script src="./src/assets/js/baidubce-sdk.bundle.min.js"></script> -->
   <script src="http://182.61.15.128:8012/static/js/baidubce-sdk.bundle.min.js"></script>
-  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=g3hNjcv4HxCWQx1uZ258dZ339G7LyCGt"></script>
   <script>
     (function(doc, win) {
       var _root = doc.documentElement,
@@ -53,39 +53,5 @@
 <body>
   <div id="app"></div>
 </body>
-<script>
-  // window.onload = function() {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(onSuccess, onError)
-  //   } else {
-  //     alert('您的浏览器不支持使用HTML 5来获取地理位置服务')
-  //   }
-  // }
-
-  // function onSuccess(position) {
-  //   let pointX = position.coords.longitude.toFixed(2)
-  //   let pointY = position.coords.latitude.toFixed(2)
-  //   let point = pointX + ',' + pointY
-  //   sessionStorage.setItem('__position__', point)
-  // }
-
-  // function onError(error) {
-  //   console.log(error)
-  //   switch (error.code) {
-  //     case error.PERMISSION_DENIED:
-  //       alert('您拒绝对获取地理位置的请求')
-  //       break
-  //     case error.POSITION_UNAVAILABLE:
-  //       alert('位置信息是不可用的')
-  //       break
-  //     case error.TIMEOUT:
-  //       alert('请求您的地理位置超时')
-  //       break
-  //     case error.UNKNOWN_ERROR:
-  //       alert('未知错误')
-  //       break
-  //   }
-  // }
-</script>
 
 </html>
