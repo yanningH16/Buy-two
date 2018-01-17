@@ -7,8 +7,11 @@
     <div class='finish_room'>
       <div class='finish_room2'>
         <div v-for='(item ,index ) in imgs' class='room_img' :key="index">
-          <img :src="item">
-          <span @click='delete_img(index)' class="removeImg"><img src="../../assets/images/delete.svg" ref="deleteBox"></span>
+          <img v-show="item" :src="item">
+          <span v-show="item" @click='delete_img(index)' class="removeImg"><img src="../../assets/images/delete.svg" ref="deleteBox"></span>
+          <div class="juhua" v-show="!item">
+            <img src="../../assets/images/loading.gif" alt="">
+          </div>
         </div>
         <div class='room_add_img' v-show="isMax">
           <span><img src="./imgs/add_img.png"></span>
@@ -91,8 +94,10 @@ export default {
     uploadImg (img) {
       uploadPromise.then((res) => {
         if (res.statusText === 'OK') {
+          let url = ''
+          this.imgs.push(url)
           uploadFile(res.data, img).then((res) => {
-            this.imgs.push(res)
+            this.imgs.splice(-1, 1, res)
           }).catch((err) => {
             console.log(err)
             Toast({
@@ -150,6 +155,20 @@ export default {
     margin-top 1.2rem
     position relative
     border-radius 2px
+    .juhua
+      width 100%
+      height 100%
+      position relative
+      background rgba(255, 255, 225, 0.6)
+      img
+        width 3rem
+        height 3rem
+        position absolute
+        top 0
+        left 0
+        right 0
+        bottom 0
+        margin auto
     /* overflow: hidden; */
   .finish_room2 .room_img img
     border-radius 2px
