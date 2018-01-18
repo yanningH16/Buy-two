@@ -22,7 +22,7 @@
     <div class="buttons">
       <span class="btn" :class="{'btn-gray': !isOk}" @click="sureToReg">注册</span>
     </div>
-    <!-- <p class="toLogin" @click="$router.push({name: 'bindTbAccount', query: {buyerAccountId:'UN201801165398057447'}})">去登录</p> -->
+    <p class="toLogin" @click="$router.push({name: 'login'})">去登录</p>
   </div>
 </template>
 <script type="text/ecmascript-6">
