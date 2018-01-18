@@ -8,7 +8,7 @@ import OperateTask from './operateTask/operateTask'
 import UserCenter from './userCenter/userCenter'
 import MoneyAdmin from './moneyAdmin/moneyAdmin'
 import YongMoney from './yongMoney/yongMoney'
-
+import GetOrder from './getOrder/getOrder'
 Vue.use(Router)
 
 const defaultRouter = [{
@@ -17,7 +17,7 @@ const defaultRouter = [{
     name: 'login'
   }
 }]
-const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter, ...MoneyAdmin, ...YongMoney]
+const routes = [...defaultRouter, ...Evalute, ...Login, ...MyTask, ...OperateTask, ...UserCenter, ...MoneyAdmin, ...YongMoney, ...GetOrder]
 let router = new Router({
   routes,
   mode: 'history'

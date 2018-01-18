@@ -60,10 +60,12 @@
           <p>我的任务</p>
           <b v-if="taskNumObj.needOperateOrderCount!==0"></b>
         </li>
-        <li class="c">
-          <span class="userCenterIcon"></span>
-          <p>个人中心</p>
-        </li>
+        <router-link :to="{name:'getOrder'}">
+          <li class="c">
+            <span class="userCenterIcon"></span>
+            <p>个人中心</p>
+          </li>
+        </router-link>
       </ul>
     </div>
   </div>
