@@ -43,8 +43,12 @@
       </ul>
     </div>
     <!-- 第二种未点亮的状态 -->
-    <div>
-
+    <div class="bottom text">
+      <div class="text_1">
+        <p>哎呦,不错呦!</p>
+        <p>点亮自己告诉平台我要做活动</p>
+      </div>
+      <button class="btn">点亮自己</button>
     </div>
   </div>
 </template>
@@ -244,4 +248,12 @@ export default {
         border-bottom-right-radius 3.2rem
         color white
         font-size 1.4rem
+  .text
+    text-align center
+    color #666
+    font-size 1.4rem
+    line-height 2rem
+    padding-left 0rem
+    .text_1
+      margin-top 11.5rem
 </style>
