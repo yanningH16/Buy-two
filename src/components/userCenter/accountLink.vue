@@ -9,12 +9,6 @@
       </mt-cell>
     </li>
     <li>
-      <div v-if="userObj.isTaobaoPassCheck==0" @click="toBindTb">
-        <mt-cell class="title" is-link>
-          <span slot="title">绑定淘宝买号</span>
-          <span class="contText">未绑定</span>
-        </mt-cell>
-      </div>
       <mt-cell v-if="userObj.isTaobaoPassCheck==2" class="title">
         <span slot="title">绑定淘宝买号：{{ userObj.taobaoWangNickName }}</span>
         <span class="contText Awaiting">审核中</span>
@@ -29,6 +23,12 @@
         <span slot="title">绑定淘宝买号：{{ userObj.taobaoWangNickName }}</span>
         <span class="contText Asuccess">已通过审核</span>
       </mt-cell>
+      <div v-else @click="toBindTb">
+        <mt-cell class="title" is-link>
+          <span slot="title">绑定淘宝买号</span>
+          <span class="contText">未绑定</span>
+        </mt-cell>
+      </div>
     </li>
     <li>
       <div v-if="userObj.isJdPassCheck==0" @click="toBindJd">
