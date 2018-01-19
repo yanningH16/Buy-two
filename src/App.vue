@@ -2,22 +2,28 @@
   <div id="app">
     <router-view class="top" />
     <ul class="bottomNav" v-if="bottomNav">
-      <li>
-        <img src="./assets/images/bg_account.png" alt="">
-        <p>接单</p>
-      </li>
+      <router-link :to="{name:'getOrder'}">
+        <li>
+          <img src="./assets/images/bg_account.png" alt="">
+          <p>接单</p>
+        </li>
+      </router-link>
       <li>
         <img src="./assets/images/bg_account.png" alt="">
         <p>淘宝</p>
       </li>
-      <li>
-        <img src="./assets/images/bg_account.png" alt="">
-        <p>京东</p>
-      </li>
-      <li>
-        <img src="./assets/images/bg_account.png" alt="">
-        <p>我的</p>
-      </li>
+      <router-link :to="{name:'myTask'}">
+        <li>
+          <img src="./assets/images/bg_account.png" alt="">
+          <p>京东</p>
+        </li>
+      </router-link>
+      <router-link :to="{name:'userCenter'}">
+        <li>
+          <img src="./assets/images/bg_account.png" alt="">
+          <p>我的</p>
+        </li>
+      </router-link>
     </ul>
   </div>
 </template>
@@ -32,7 +38,7 @@ export default {
   computed: {
     bottomNav: function () {
       let bottom = false
-      if (this.$route.name === 'getOrder' || this.$route.name === 'userCenter') {
+      if (this.$route.name === 'getOrder' || this.$route.name === 'userCenter' || this.$route.nam === 'myTask') {
         bottom = true
       }
       return bottom

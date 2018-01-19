@@ -1,11 +1,14 @@
 <template>
   <div class="wrap">
     <div class="submit">
-      <img :src='imgPic' alt="" v-if="$route.query.state==1 || $route.query.addWechat==1 || $route.query.bindAccount==1" class="pic">
+      <img :src='imgPic' alt="" v-if="$route.query.state==1 ||$route.query.state==4|| $route.query.addWechat==1 || $route.query.bindAccount==1||$route.query.state==3" class="pic">
       <img :src='imgPic1' alt="" v-if="$route.query.state==2" class="pic">
-      <h2 v-if="$route.query.state==1 || $route.query.bindAccount==1">提交成功</h2>
+      <h2 v-if="$route.query.state==1 || $route.query.bindAccount==1||$route.query.state==4">提交成功</h2>
+      <h2 v-if="$route.query.state==3">取消成功</h2>
       <h2 v-if="$route.query.state==2">提交失败</h2>
       <h2 v-if="$route.query.addWechat==1">您已获得参与活动资质</h2>
+      <h2 v-if="$route.query.state==3">您已取消今日任务</h2>
+      <h2 v-if="$route.query.state==4">您已成功申请垫付，我们的运营人员会尽快联系您</h2>
       <p v-if="$route.query.addWechat==1">平台将在2个工作日内微信与您联系, 请耐心等待</p>
       <p v-if="$route.query.state==1">我们会在1-2个工作日内处理</p>
       <p v-if="$route.query.state==2" style="color:#ff3341">失败原因:系统繁忙,请稍后再试</p>
