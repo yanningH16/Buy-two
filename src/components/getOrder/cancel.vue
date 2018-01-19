@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="wrap_bg">
       <h2>亲，为什么要取消我们的任务呢?</h2>
-      <mt-checklist align="right" v-model="value" :options="options">
+      <mt-checklist align="right" v-model="arr" :options="options">
       </mt-checklist>
     </div>
   </div>
@@ -15,7 +15,7 @@ export default {
   name: 'cancel',
   data () {
     return {
-      value: '',
+      arr: [],
       options: [
         {
           label: '1.时间冲突，现在没时间',
