@@ -9,7 +9,7 @@
         <span>京东</span>
       </li>
     </ul>
-    <div class="bottom" v-show="flase">
+    <div class="bottom" v-show="true">
       <h3>你有一个新的任务包</h3>
       <ul class="boxContent">
         <li class="first">
@@ -43,12 +43,13 @@
       </ul>
     </div>
     <!-- 第二种未点亮的状态 -->
-    <div class="bottom text">
+    <div class="bottom text" v-show="false">
       <div class="text_1">
         <p>哎呦,不错呦!</p>
         <p>点亮自己告诉平台我要做活动</p>
       </div>
-      <button class="btn">点亮自己</button>
+      <button class="btnss" @click="light">点亮自己</button>
+      <!-- <button class="btnss">已点亮</button> -->
     </div>
   </div>
 </template>
@@ -75,23 +76,14 @@ export default {
           this.$router.push({ name: 'myTask' })
           break
         case 'yongjin':
-          this.$router.push({ name: 'yongMoney' })
-          break
-        case 'benjin':
-          this.$router.push({ name: 'moneyAdmin' })
-          break
-        case 'bindAccount':
-          this.$router.push({ name: 'accountLink' })
-          break
-        case 'setting':
-          this.$router.push({ name: 'userSet' })
-          break
-        case 'myPush':
-          this.$router.push({ name: 'myPush' })
+          this.$router.push({ name: 'cancel' })
           break
         default:
           break
       }
+    },
+    light () {
+      Toast('操作成功')
     },
     getMoney () {
       this.$ajax.post('/api/userFund/getBuyerUserFund', {
@@ -208,8 +200,8 @@ export default {
       position absolute
       display flex
       background #ffffff
-      bottom 14rem
-      left 0
+      bottom 10rem
+      left -2rem
       right 0
       width 20rem
       height 3.6rem
