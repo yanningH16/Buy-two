@@ -8,6 +8,11 @@ const Cancel = (resolve) => {
     resolve(module)
   })
 }
+const NeedTask = (resolve) => {
+  import('@/components/getOrder/needTask').then((module) => {
+    resolve(module)
+  })
+}
 const getOrder = [{
   path: '/getOrder',
   component: GetOrder,
@@ -19,6 +24,11 @@ const getOrder = [{
   component: Cancel,
   name: 'cancel',
   meta: { title: '取消接单' }
+}, {
+  path: '/needTask',
+  component: NeedTask,
+  name: 'needTask',
+  meta: { title: '我要报名' }
 }]
 
 export default getOrder

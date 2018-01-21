@@ -3,25 +3,35 @@
     <router-view class="top" />
     <ul class="bottomNav" v-if="bottomNav">
       <router-link :to="{name:'getOrder'}">
-        <li>
-          <img src="./assets/images/bg_account.png" alt="">
-          <p>接单</p>
+        <li @click="first">
+          <img v-if="active==0" src="./assets/images/jidan-2.svg" alt="">
+          <img v-else src="./assets/images/jiedan.svg" alt="">
+          <p v-if="active==0" style="color:#FF3341">接单</p>
+          <p v-else>接单</p>
         </li>
       </router-link>
-      <li>
-        <img src="./assets/images/bg_account.png" alt="">
-        <p>淘宝</p>
-      </li>
+      <router-link :to="{name:'taobaoTask'}">
+        <li @click="two">
+          <img v-if="active==1" src="./assets/images/tao-2.svg" alt="">
+          <img v-else src="./assets/images/Group 5.svg" alt="">
+          <p v-if="active==1" style="color:#FF3341">淘宝</p>
+          <p v-else>淘宝</p>
+        </li>
+      </router-link>
       <router-link :to="{name:'myTask'}">
-        <li>
-          <img src="./assets/images/bg_account.png" alt="">
-          <p>京东</p>
+        <li @click="three">
+          <img v-if="active==2" src="./assets/images/jdIcon.svg" alt="">
+          <img v-else src="./assets/images/Group 6.svg" alt="">
+          <p v-if="active==2" style="color:#FF3341">京东</p>
+          <p v-else>京东</p>
         </li>
       </router-link>
       <router-link :to="{name:'userCenter'}">
-        <li>
-          <img src="./assets/images/bg_account.png" alt="">
-          <p>我的</p>
+        <li @click="four">
+          <img v-if="active==3" src="./assets/images/uesr_sel.svg" alt="">
+          <img v-else src="./assets/images/icon_user.svg" alt="">
+          <p v-if="active==3" style="color:#FF3341">我的</p>
+          <p v-else>我的</p>
         </li>
       </router-link>
     </ul>
@@ -33,15 +43,30 @@ export default {
   name: 'app',
   data () {
     return {
+      active: 0
     }
   },
   computed: {
     bottomNav: function () {
       let bottom = false
-      if (this.$route.name === 'getOrder' || this.$route.name === 'userCenter' || this.$route.nam === 'myTask') {
+      if (this.$route.name === 'getOrder' || this.$route.name === 'userCenter' || this.$route.name === 'myTask' || this.$route.name === 'taobaoTask') {
         bottom = true
       }
       return bottom
+    }
+  },
+  methods: {
+    first () {
+      this.active = 0
+    },
+    two () {
+      this.active = 1
+    },
+    three () {
+      this.active = 2
+    },
+    four () {
+      this.active = 3
     }
   }
 }
@@ -62,12 +87,14 @@ export default {
     display flex
     justify-content space-around
     box-sizing border-box
+    z-index 999
     li
       padding-bottom 0.65rem
       text-align center
+      margin-top 0.4rem
       img
-        width 3.7rem
-        height 3.7rem
-        p
-        font-size 1rem
+        width 2.5rem
+        height 2.5rem
+      p
+        margin-top 0.5rem
 </style>

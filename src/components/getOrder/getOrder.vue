@@ -48,8 +48,8 @@
         <p>哎呦,不错呦!</p>
         <p>点亮自己告诉平台我要做活动</p>
       </div>
-      <button class="btnss" @click="light">点亮自己</button>
-      <!-- <button class="btnss">已点亮</button> -->
+      <button class="btnss" @click="light" v-show="yes">点亮自己</button>
+      <button class="btngray" disabled v-show="no">已点亮</button>
     </div>
   </div>
 </template>
@@ -61,7 +61,9 @@ export default {
   data () {
     return {
       moneyObj: {},
-      taskNumObj: {}
+      taskNumObj: {},
+      yes: true,
+      no: false
     }
   },
   computed: {
@@ -75,15 +77,16 @@ export default {
         case 'task':
           this.$router.push({ name: 'myTask' })
           break
-        case 'yongjin':
-          this.$router.push({ name: 'cancel' })
+        case 'benjin':
+          this.$router.push({ name: 'needTask' })
           break
         default:
           break
       }
     },
     light () {
-      Toast('操作成功')
+      this.yes = false
+      this.no = true
     },
     getMoney () {
       this.$ajax.post('/api/userFund/getBuyerUserFund', {
