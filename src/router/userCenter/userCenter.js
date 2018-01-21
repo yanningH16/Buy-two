@@ -48,6 +48,21 @@ const AddWechat = (resolve) => {
     resolve(module)
   })
 }
+const help = (resolve) => {
+  import('@/components/userCenter/help').then((module) => {
+    resolve(module)
+  })
+}
+const bindAddress = (resolve) => {
+  import('@/components/userCenter/bindAddress').then((module) => {
+    resolve(module)
+  })
+}
+const bindCard = (resolve) => {
+  import('@/components/userCenter/bindCard').then((module) => {
+    resolve(module)
+  })
+}
 
 const userCenter = [{
   path: '/userCenter',
@@ -99,6 +114,21 @@ const userCenter = [{
   component: AddWechat,
   name: 'addWechat',
   meta: { title: '添加微信好友' }
+}, {
+  path: '/help',
+  component: help,
+  name: 'help',
+  meta: { title: '帮助与客服' }
+}, {
+  path: '/bindAddress',
+  component: bindAddress,
+  name: 'bindAddress',
+  meta: { title: '设置收货地址' }
+}, {
+  path: '/bindCard',
+  component: bindCard,
+  name: 'bindCard',
+  meta: { title: '绑定银行卡' }
 }]
 
 export default userCenter

@@ -1,9 +1,9 @@
 <template>
   <div class="upload">
-    <h2>{{ title }}
+    <h2 v-if="title">{{ title }}
       <i class="wanderIcon" @click="wander"></i>
     </h2>
-    <p>{{ tip }}</p>
+    <p v-if="tip">{{ tip }}</p>
     <div class='finish_room'>
       <div class='finish_room2'>
         <div v-for='(item ,index ) in imgs' class='room_img' :key="index">

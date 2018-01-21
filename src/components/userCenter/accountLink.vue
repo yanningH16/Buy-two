@@ -8,7 +8,7 @@
         <span class="contText Asuccess">已加好友</span>
       </mt-cell>
     </li>
-    <li>
+    <li class="border-bottom-1px">
       <mt-cell v-if="userObj.isTaobaoPassCheck==2" class="title">
         <span slot="title">绑定淘宝买号：{{ userObj.taobaoWangNickName }}</span>
         <span class="contText Awaiting">审核中</span>
@@ -30,7 +30,7 @@
         </mt-cell>
       </div>
     </li>
-    <li>
+    <li class="border-bottom-1px">
       <div v-if="userObj.isJdPassCheck==0" @click="toBindJd">
         <mt-cell class="title" is-link>
           <span slot="title">绑定京东买号</span>
@@ -52,7 +52,33 @@
         <span class="contText Asuccess">已通过审核</span>
       </mt-cell>
     </li>
+    <li class="border-bottom-1px">
+      <div @click="toBindCard">
+        <mt-cell class="title" is-link>
+          <span slot="title">绑定银行卡</span>
+          <span class="contText">未绑定</span>
+        </mt-cell>
+      </div>
+      <mt-cell v-if="0" class="title">
+        <span slot="title">绑定银行卡</span>
+        <span class="contText Asuccess">已绑定</span>
+      </mt-cell>
+    </li>
+    <li class="border-bottom-1px">
+      <div @click="toBindAddress">
+        <mt-cell class="title" is-link>
+          <span slot="title">收货地址</span>
+          <span class="contText">未绑定</span>
+        </mt-cell>
+      </div>
+      <mt-cell v-if="0" class="title">
+        <span slot="title">收货地址</span>
+        <span class="contText Asuccess">已绑定</span>
+      </mt-cell>
+    </li>
     <li class="button">
+      <p>温馨提示
+        <br />绑定更多，就会有更多的任务可以派发，赚取更多佣金</p>
       <span class="btn" @click="$router.push({name: 'userCenter'})">返回至个人中心</span>
     </li>
   </ul>
@@ -102,6 +128,12 @@ export default {
       } else {
         this.$router.push({ name: 'bindTbAccount', query: { buyerAccountId: this.userInfo.buyerUserAccountId, login: 1 } })
       }
+    },
+    toBindCard () {
+      this.$router.push({ name: 'bindCard', query: { buyerAccountId: this.userInfo.buyerUserAccountId } })
+    },
+    toBindAddress () {
+      this.$router.push({ name: 'bindAddress', query: { buyerAccountId: this.userInfo.buyerUserAccountId } })
     }
   },
   mounted () {
@@ -134,6 +166,10 @@ export default {
       font-size 1.4rem
   .button
     padding 1.2rem
-    margin-top 2rem
     background none
+    p
+      font-size 1.2rem
+      color #666666
+      line-height 1.8rem
+      margin-bottom 1rem
 </style>
