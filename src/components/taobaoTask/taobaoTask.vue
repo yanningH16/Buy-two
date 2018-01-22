@@ -40,7 +40,7 @@
       </div>
       <noCont v-if="tableData.length===0"></noCont>
     </div>
-    <div class="buttons" v-show="showCenter" @click="$router.push({name: 'userCenter'})">
+    <div class="buttons" v-show="showCenter" @click="$router.push({name: 'allegeAlert'})">
       <span class="userCenterIcon"></span>
     </div>
   </div>
@@ -266,14 +266,14 @@ export default {
   position relative
   .buttons
     position fixed
-    right 1rem
-    bottom 3rem
+    left 1rem
+    bottom 6rem
     background #ffffff
     border-radius 50%
     border 1px solid #dddddd
     box-shadow 0 6px 8px rgba(204, 204, 204, 0.3)
-    width 4rem
-    height 4rem
+    width 3.2rem
+    height 3.2rem
     text-align center
     opacity 0.8
     span

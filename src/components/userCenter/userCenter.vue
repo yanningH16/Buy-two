@@ -3,6 +3,8 @@
     <ul class="top">
       <li class="headImg">
         <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511957696669&di=5bbc3ea76a7b62eae7dc82073b12b0a6&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201504%2F16%2F20150416H4223_vG4eY.jpeg" alt="">
+        <b class="setI"><img src="../../assets/images/set.png" alt=""></b>
+        <span @click="toDo('task')">设置</span>
       </li>
       <li class="userPhone">
         <span>{{ userInfo.telephone ? userInfo.telephone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : '******' }}</span>
@@ -37,24 +39,24 @@
             <i></i>
           </strong>
         </li>
-        <!-- <li>
+        <li @click="toDo('help')">
           <b class="helpIcon"></b>
           <span>帮助与客服</span>
           <strong>
             <b v-if="0"></b>
             <i></i>
           </strong>
-        </li> -->
+        </li>
         <li @click="toDo('setting')">
-          <b class="setIcon"></b>
-          <span>设置</span>
+          <b class="complant"></b>
+          <span>申诉</span>
           <strong>
             <b v-if="0"></b>
             <i></i>
           </strong>
         </li>
       </ul>
-      <ul class="buttons">
+      <!-- <ul class="buttons">
         <li class="t" @click="toDo('task')">
           <span class="myTaskIcon"></span>
           <p>我的任务</p>
@@ -66,7 +68,7 @@
             <p>个人中心</p>
           </li>
         </router-link>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
@@ -90,7 +92,7 @@ export default {
     toDo (where) {
       switch (where) {
         case 'task':
-          this.$router.push({ name: 'myTask' })
+          this.$router.push({ name: 'userSet' })
           break
         case 'yongjin':
           this.$router.push({ name: 'yongMoney' })
@@ -102,10 +104,13 @@ export default {
           this.$router.push({ name: 'accountLink' })
           break
         case 'setting':
-          this.$router.push({ name: 'userSet' })
+          this.$router.push({ name: 'allege' })
           break
         case 'myPush':
           this.$router.push({ name: 'myPush' })
+          break
+        case 'help':
+          this.$router.push({ name: 'help' })
           break
         default:
           break
@@ -175,6 +180,19 @@ export default {
         width 7rem
         height 7rem
         border-radius 50%
+      span
+        vertical-align top
+        position absolute
+        right 2rem
+        font-size 1rem
+        color #B7B9BF
+      .setI img
+        width 20px
+        height 20px
+        vertical-align top
+        position absolute
+        right 4.5rem
+        margin-top -0.5rem
     .userPhone
       padding 1.6rem 0
       font-size 1.6rem

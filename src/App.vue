@@ -91,10 +91,10 @@ export default {
     li
       padding-bottom 0.65rem
       text-align center
-      margin-top 0.4rem
+      margin-top 0.8rem
       img
-        width 2.5rem
-        height 2.5rem
+        width 2rem
+        height 2rem
       p
         margin-top 0.5rem
 </style>

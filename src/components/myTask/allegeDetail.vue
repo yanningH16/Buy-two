@@ -3,19 +3,19 @@
     <ul class="cont">
       <li class="border-bottom-1px">
         <span>处理状态</span>
-        <strong>待审核</strong>
+        <strong>{{this.$route.query.status}}</strong>
       </li>
-      <li class="border-bottom-1px">
+      <!-- <li class="border-bottom-1px">
         <span>订单编号</span>
         <strong>RFT23654789321</strong>
-      </li>
+      </li> -->
       <li class="border-bottom-1px">
         <span>申述时间</span>
-        <strong>2017-12-14</strong>
+        <strong>{{this.obj.applyTime}}</strong>
       </li>
       <li class="border-bottom-1px">
         <span>申述原因</span>
-        <strong>撒旦撒旦撒放沙</strong>
+        <strong>{{this.obj.complainReason}}</strong>
       </li>
     </ul>
   </div>
@@ -25,6 +25,29 @@ export default {
   name: 'allegeDetail',
   data () {
     return {
+      obj: {}
+    }
+  },
+  created () {
+    this.sureToPost()
+  },
+  methods: {
+    sureToPost () {
+      this.$ajax.post('/api/buyer/complain/getComplainDetail', {
+        messageComplainId: this.$route.query.id
+      }).then((data) => {
+        console.log(data)
+        if (data.data.code === '200') {
+          this.obj = {
+            applyTime: data.data.data.applyTime,
+            complainReason: data.data.data.complainReason
+          }
+        } else {
+          // Toast(data.data.message)
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 }
