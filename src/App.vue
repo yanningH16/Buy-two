@@ -3,34 +3,34 @@
     <router-view class="top" />
     <ul class="bottomNav" v-if="bottomNav">
       <router-link :to="{name:'getOrder'}">
-        <li @click="first">
-          <img v-if="active==0" src="./assets/images/jidan-2.svg" alt="">
+        <li>
+          <img v-if="$route.name=='getOrder'" src="./assets/images/jidan-2.svg" alt="">
           <img v-else src="./assets/images/jiedan.svg" alt="">
-          <p v-if="active==0" style="color:#FF3341">接单</p>
+          <p v-if="$route.name=='getOrder'" style="color:#FF3341">接单</p>
           <p v-else>接单</p>
         </li>
       </router-link>
       <router-link :to="{name:'taobaoTask'}">
-        <li @click="two">
-          <img v-if="active==1" src="./assets/images/tao-2.svg" alt="">
+        <li>
+          <img v-if="$route.name=='taobaoTask'" src="./assets/images/tao-2.svg" alt="">
           <img v-else src="./assets/images/Group 5.svg" alt="">
-          <p v-if="active==1" style="color:#FF3341">淘宝</p>
+          <p v-if="$route.name=='taobaoTask'" style="color:#FF3341">淘宝</p>
           <p v-else>淘宝</p>
         </li>
       </router-link>
       <router-link :to="{name:'myTask'}">
-        <li @click="three">
-          <img v-if="active==2" src="./assets/images/jdIcon.svg" alt="">
+        <li>
+          <img v-if="$route.name=='myTask'" src="./assets/images/jdIcon.svg" alt="">
           <img v-else src="./assets/images/Group 6.svg" alt="">
-          <p v-if="active==2" style="color:#FF3341">京东</p>
+          <p v-if="$route.name=='myTask'" style="color:#FF3341">京东</p>
           <p v-else>京东</p>
         </li>
       </router-link>
       <router-link :to="{name:'userCenter'}">
-        <li @click="four">
-          <img v-if="active==3" src="./assets/images/uesr_sel.svg" alt="">
+        <li>
+          <img v-if="$route.name=='userCenter'" src="./assets/images/uesr_sel.svg" alt="">
           <img v-else src="./assets/images/icon_user.svg" alt="">
-          <p v-if="active==3" style="color:#FF3341">我的</p>
+          <p v-if="$route.name=='userCenter'" style="color:#FF3341">我的</p>
           <p v-else>我的</p>
         </li>
       </router-link>
@@ -43,7 +43,6 @@ export default {
   name: 'app',
   data () {
     return {
-      active: 0
     }
   },
   computed: {
@@ -53,20 +52,6 @@ export default {
         bottom = true
       }
       return bottom
-    }
-  },
-  methods: {
-    first () {
-      this.active = 0
-    },
-    two () {
-      this.active = 1
-    },
-    three () {
-      this.active = 2
-    },
-    four () {
-      this.active = 3
     }
   }
 }

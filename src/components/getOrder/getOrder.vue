@@ -1,5 +1,5 @@
 <template>
-  <div class="userCenter userCenterBg">
+  <div class="getOrder getOrderBg">
     <ul class="top">
       <li>当前接单方案
         <span style="float:right;color:#FFFFFF;font-size:1rem">赚取更多</span>
@@ -9,7 +9,7 @@
         <span>京东</span>
       </li>
     </ul>
-    <div class="bottom" v-show="true">
+    <div class="bottom" v-if="userInfo.buyerIdentify">
       <h3>你有一个新的任务包</h3>
       <ul class="boxContent">
         <li class="first">
@@ -34,36 +34,35 @@
         </li>
       </ul>
       <ul class="title">
-        <li class="border-right-1px" @click="toDo('yongjin')" style="color:#666">
+        <li class="border-right-1px" @click="toDo('cancel')" style="color:#666">
           <span>取消</span>
         </li>
-        <li class="color" @click="toDo('benjin')" style="color:white">
+        <li class="color" @click="toDo('needTask')" style="color:white">
           <span>去做任务</span>
         </li>
       </ul>
     </div>
     <!-- 第二种未点亮的状态 -->
-    <div class="bottom text" v-show="false">
+    <div class="bottom text" v-if="!userInfo.buyerIdentify">
       <div class="text_1">
         <p>哎呦,不错呦!</p>
         <p>点亮自己告诉平台我要做活动</p>
       </div>
-      <button class="btnss" @click="light" v-show="yes">点亮自己</button>
-      <button class="btngray" disabled v-show="no">已点亮</button>
+      <button class="btnss" @click="toLightMe" v-show="yes">点亮自己</button>
+      <button class="btngray" disabled v-show="!yes">已点亮</button>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import { Toast } from 'mint-ui'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'userCenter',
+  name: 'getOrder',
   data () {
     return {
-      moneyObj: {},
+      packageObj: {},
       taskNumObj: {},
-      yes: true,
-      no: false
+      yes: true
     }
   },
   computed: {
@@ -74,26 +73,22 @@ export default {
   methods: {
     toDo (where) {
       switch (where) {
-        case 'task':
-          this.$router.push({ name: 'myTask' })
+        case 'cancel':
+          this.$router.push({ name: 'cancel' })
           break
-        case 'benjin':
+        case 'needTask':
           this.$router.push({ name: 'needTask' })
           break
         default:
           break
       }
     },
-    light () {
-      this.yes = false
-      this.no = true
-    },
-    getMoney () {
-      this.$ajax.post('/api/userFund/getBuyerUserFund', {
-        buyerUserAccountId: this.userInfo.buyerUserAccountId
+    getPackage () {
+      this.$ajax.post('/api/order/getBuyerRecivedPackage', {
+        assignedUserId: this.userInfo.buyerUserAccountId
       }).then((data) => {
         if (data.data.code === '200') {
-          this.moneyObj = data.data.data
+          this.packageObj = data.data.data
         } else {
           Toast({
             message: data.data.message,
@@ -101,7 +96,47 @@ export default {
           })
         }
       }).catch((err) => {
-        console.log(err)
+        Toast({
+          message: err,
+          position: 'bottom'
+        })
+      })
+    },
+    toLightMe () {
+      this.$ajax.post('/api/buyerAccount/changeIdentify', {
+        buyerAccountId: this.userInfo.buyerUserAccountId,
+        identify: 1
+      }).then((data) => {
+        if (data.data.code === '200') {
+          this.yes = false
+          this.refresh()
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        Toast({
+          message: err,
+          position: 'bottom'
+        })
+      })
+    },
+    // 刷新用户信息
+    refresh () {
+      this.$ajax.post('/api/buyerAccount/refresh', {
+        telephone: this.userInfo.telephone
+      }).then((data) => {
+        if (data.data.code === '200') {
+          this.setUserInfo(data.data.data)
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
         Toast({
           message: err,
           position: 'bottom'
@@ -121,22 +156,24 @@ export default {
           })
         }
       }).catch((err) => {
-        console.log(err)
         Toast({
           message: err,
           position: 'bottom'
         })
       })
-    }
+    },
+    ...mapActions([
+      'setUserInfo'
+    ])
   },
   mounted () {
-    this.getMoney()
-    this.getTaskNum()
+    this.getPackage()
+    // this.getTaskNum()
   }
 }
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.userCenter
+.getOrder
   width 100%
   height 100%
   overflow hidden
