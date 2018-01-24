@@ -9,7 +9,7 @@
         <span>京东</span>
       </li>
     </ul>
-    <div class="bottom" v-if="userInfo.buyerIdentify">
+    <div class="bottom" v-if="packageObj.actualLeftNum!=0">
       <h3>你有一个新的任务包</h3>
       <ul class="boxContent">
         <li class="first">
@@ -47,7 +47,7 @@
       </ul>
     </div>
     <!-- 第二种未点亮的状态 -->
-    <div class="bottom text" v-if="packageObj=={}">
+    <div class="bottom text" v-if="packageObj.actualLeftNum==0">
       <div class="text_1">
         <p>哎呦,不错呦!</p>
         <p>点亮自己告诉平台我要做活动</p>
@@ -106,6 +106,7 @@ export default {
             message: data.data.message,
             position: 'bottom'
           })
+          this.$router.push({ name: 'needTask' })
         }
       }).catch((err) => {
         Toast({

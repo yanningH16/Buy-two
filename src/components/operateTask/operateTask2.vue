@@ -52,7 +52,8 @@ export default {
         step10Title: '八、上传订单详情截图',
         step10Arr: []
       },
-      rbObj: {}
+      rbObj: {},
+      isTaobao: 0
     }
   },
   methods: {
@@ -80,7 +81,11 @@ export default {
           Toast({
             message: '提交成功!'
           })
-          this.$router.push({ name: 'myTask' })
+          if (this.isTaobao) {
+            this.$router.push({ name: 'taobaoTask' })
+          } else {
+            this.$router.push({ name: 'myTask' })
+          }
         } else {
           Toast({
             message: data.data.message
@@ -101,7 +106,16 @@ export default {
       }).then((data) => {
         if (data.data.code === '200') {
           let res = data.data.data
-          this.stpesObj.step8Arr = [parseInt(res.isSupportBlankNote), parseInt(res.isSupprotCreditCard), parseInt(res.isSupportTicket)]
+          if (parseInt(res.taskSubType) === 3) {
+            this.isTaobao = 1
+          } else {
+            this.isTaobao = 0
+          }
+          if (parseInt(res.taskSubType) === 3) { // 淘宝任务
+            this.stpesObj.step8Arr = [parseInt(res.isSupportBlankNote), parseInt(res.isSupprotCreditCard), parseInt(res.isSupportTicket), 1]
+          } else {
+            this.stpesObj.step8Arr = [parseInt(res.isSupportBlankNote), parseInt(res.isSupprotCreditCard), parseInt(res.isSupportTicket)]
+          }
         } else {
           Toast({
             message: data.data.message

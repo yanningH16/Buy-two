@@ -3,7 +3,7 @@
     <div class="wrap" v-for="(item,index) in datas" :key="index">
       <div class="header border-bottom-1px">
         <p>
-          <em class="jdIcon img"></em>
+          <em :class="[{'jdIcon': item.shopType==0, 'taobaoIcon': item.shopType==1, 'tianmaoIcon': item.shopType==2 }, 'img']"></em>
           <span class="jd">{{item.jdTask}}</span>
         </p>
         <p class="slot" v-if="item.slot==='1'">待下单</p>

@@ -1,7 +1,10 @@
 <template>
   <div class="pay">
     <h2>{{ title }}</h2>
-    <p :class="{'active': allowArr[0]}">
+    <p v-if="allowArr[3]" :class="{'active': allowArr[0]}">
+      <span v-if="!allowArr[0]">不</span>允许使用花呗付款
+    </p>
+    <p v-else :class="{'active': allowArr[0]}">
       <span v-if="!allowArr[0]">不</span>允许使用京东白条付款
     </p>
     <p :class="{'active': allowArr[1]}">

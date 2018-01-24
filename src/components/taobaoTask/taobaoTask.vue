@@ -196,6 +196,7 @@ export default {
               jdTask: word.taskTypeDetail || '暂无数据',
               slot: word.status || '暂无数据',
               shopName: word.productName || '暂无数据',
+              shopType: word.shopType || '',
               wchat: word.wechatNum || '暂无数据',
               imgSrc: word.productPicUrl || '暂无数据',
               myMoney: word.payment || '暂无数据',

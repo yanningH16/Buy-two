@@ -6,7 +6,7 @@
         <span>排序方式</span>
         <p>{{ condition[0] }}</p>
       </li>
-      <li>
+      <li v-if="condition[1]!=-1">
         <span>品牌</span>
         <p>{{ condition[1] }}</p>
       </li>
@@ -18,11 +18,15 @@
         <span>发货地</span>
         <p>{{ condition[3] }}</p>
       </li>
-      <li>
+      <li v-if="condition[4]!=-1">
         <span>评价数</span>
         <p>{{ condition[4] }}</p>
       </li>
-      <li>
+      <li v-if="condition[6]==1">
+        <span>付款人数</span>
+        <p>{{ condition[5] }}</p>
+      </li>
+      <li v-else>
         <span>预计翻页数</span>
         <p>{{ condition[5] }}</p>
       </li>

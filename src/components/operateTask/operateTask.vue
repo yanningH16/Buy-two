@@ -138,7 +138,11 @@ export default {
       let index = Math.floor(Math.random() * (num))
       let thisKeyObj = keyList[index]
       this.stpesObj.step1Key = thisKeyObj.keyword || '暂无'
-      this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', thisKeyObj.brand || '暂无', thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation, thisKeyObj.favorNum || '暂无', thisKeyObj.pageNum || '暂无']
+      if (parseInt(this.taskInfoObj.taskSubType) === 3) {
+        this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', -1, thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation, -1, thisKeyObj.pageNum || '暂无', 1]
+      } else {
+        this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', thisKeyObj.brand || '暂无', thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation, thisKeyObj.favorNum || '暂无', thisKeyObj.pageNum || '暂无']
+      }
     },
     // 获取商品信息详情
     getTaskInfo () {
