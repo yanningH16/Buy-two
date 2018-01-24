@@ -149,7 +149,8 @@ export default {
     },
     pointNum () {
       this.$ajax.post('/api/buyer/task/getTodoNumList', {
-        buyerUserId: this.userInfo.buyerUserAccountId
+        buyerUserId: this.userInfo.buyerUserAccountId,
+        shopType: '0'
       }).then((data) => {
         let res = data.data
         if (res.code === '200') {
@@ -184,7 +185,8 @@ export default {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
         status: this.selected,
-        buyerUserId: this.userInfo.buyerUserAccountId
+        buyerUserId: this.userInfo.buyerUserAccountId,
+        shopType: '0'
       }).then((data) => {
         let res = data.data
         if (res.code === '200') {
