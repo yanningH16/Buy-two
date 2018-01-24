@@ -14,7 +14,7 @@
       <ul class="boxContent">
         <li class="first">
           <div class="imgWrap">
-            <img v-for="(item, index) in (packageObj ? JSON.parse(packageObj.imageUrls) : [])" :style="{ 'top': 5*index+'px', 'left': 5*index+'px' }" :src="item" :key="index" alt="">
+            <img v-for="(item, index) in (packageObj.imageUrls ? JSON.parse(packageObj.imageUrls) : [])" :style="{ 'top': 5*index+'px', 'left': 5*index+'px' }" :src="item" :key="index" alt="">
           </div>
           <div>
             <h6>任务类型:</h6>

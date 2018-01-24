@@ -1,7 +1,7 @@
 <template>
   <div class="inputArea">
     <h2>{{ title }}</h2>
-    <p>前去京东输入评价内容，长按复制粘贴</p>
+    <p>前去APP平台输入评价内容，长按复制粘贴</p>
     <div class="textarea">
       <!-- <textarea v-model="text" placeholder="商家给出的评价内容"></textarea> -->
       <p class="border-1px">{{ text }}</p>

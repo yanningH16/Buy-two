@@ -95,6 +95,10 @@ export default {
           } else if (this.evaluateObj.step5Arr.length === 0) { // 文字好评
             this.evaluateObj.step6Title = '五、上传评价页面截图'
           }
+          if (parseInt(obj.taskSubType) === 3) {
+            this.evaluateObj.step4Title = '四、将以下评价内容打字到手机淘宝'
+            this.evaluateObj.step5Title = '五、将以下图片上传到手机京东'
+          }
         } else {
           Toast({
             message: data.data.message
@@ -123,7 +127,11 @@ export default {
             Toast({
               message: '提交成功!'
             })
-            this.$router.push({ name: 'myTask' })
+            if (parseInt(this.infoObj.taskSubType) === 3) {
+              this.$router.push({ name: 'taobaoTask' })
+            } else {
+              this.$router.push({ name: 'myTask' })
+            }
           } else {
             Toast({
               message: data.data.message
