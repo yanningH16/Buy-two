@@ -1,6 +1,6 @@
 <template>
   <ul class="accountLink">
-    <li class="border-bottom-1px">
+    <li v-show="!$route.query.getMore" class="border-bottom-1px">
       <mt-cell v-if="userObj.isAddManagerWechat==0" title="加微信好友" class="title" is-link to="addWechat">
         <span class="contText">未加好友</span>
       </mt-cell>
@@ -23,7 +23,7 @@
         <span slot="title">绑定淘宝买号：{{ userObj.taobaoWangNickName }}</span>
         <span class="contText Asuccess">已通过审核</span>
       </mt-cell>
-      <div v-if="userObj.isTaobaoPassCheck==0" @click="toBindTb">
+      <div v-if="userObj.isTaobaoPassCheck==0 || !userObj.isTaobaoPassCheck" @click="toBindTb">
         <mt-cell class="title" is-link>
           <span slot="title">绑定淘宝买号</span>
           <span class="contText">未绑定</span>

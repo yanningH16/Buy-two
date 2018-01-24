@@ -2,7 +2,7 @@
   <div class="getOrder getOrderBg">
     <ul class="top">
       <li>当前接单方案
-        <span style="float:right;color:#FFFFFF;font-size:1rem">赚取更多</span>
+        <span @click="$router.push({name: 'accountLink',query: {getMore: 1}})" style="float:right;color:#FFFFFF;font-size:1rem">赚取更多</span>
       </li>
       <li class="point">
         <span>淘宝/天猫</span>
@@ -13,23 +13,27 @@
       <h3>你有一个新的任务包</h3>
       <ul class="boxContent">
         <li class="first">
-          <div><img src="../../assets/images/bg_account.png" alt="" width="80px" height="80px"></div>
+          <div class="imgWrap">
+            <img v-for="(item, index) in (packageObj ? JSON.parse(packageObj.imageUrls) : [])" :style="{ 'top': 5*index+'px', 'left': 5*index+'px' }" :src="item" :key="index" alt="">
+          </div>
           <div>
             <h6>任务类型:</h6>
-            <p>
-              <i>猫</i> 天猫垫付X3</p>
-            <p>
-              <i>JD</i> 京东垫付X3</p>
+            <p v-if="packageObj.jdNum">
+              <i class="jdIcon"></i> 京东垫付X{{ packageObj.jdNum }}</p>
+            <p v-if="packageObj.taobaoNum">
+              <i class="taobaoIcon"></i> 淘宝垫付X{{ packageObj.taobaoNum }}</p>
+            <p v-if="packageObj.tianmaoNum">
+              <i class="tianmaoIcon"></i> 天猫垫付X{{ packageObj.tianmaoNum }}</p>
           </div>
         </li>
         <li class="first two">
           <div class="line">
-            <p>佣金收益</p>
-            <p class="money">23.00</p>
+            <p>佣金收益(元)</p>
+            <p class="money">{{ packageObj.totalCommission }}</p>
           </div>
           <div>
-            <p>佣金收益</p>
-            <p class="money">23.00</p>
+            <p>垫付本金(元)</p>
+            <p class="money">{{ packageObj.totalCapital }}</p>
           </div>
         </li>
       </ul>
@@ -37,19 +41,19 @@
         <li class="border-right-1px" @click="toDo('cancel')" style="color:#666">
           <span>取消</span>
         </li>
-        <li class="color" @click="toDo('needTask')" style="color:white">
+        <li class="color" @click="toDo('toDoTask')" style="color:white">
           <span>去做任务</span>
         </li>
       </ul>
     </div>
     <!-- 第二种未点亮的状态 -->
-    <div class="bottom text" v-if="!userInfo.buyerIdentify">
+    <div class="bottom text" v-if="packageObj=={}">
       <div class="text_1">
         <p>哎呦,不错呦!</p>
         <p>点亮自己告诉平台我要做活动</p>
       </div>
-      <button class="btnss" @click="toLightMe" v-show="yes">点亮自己</button>
-      <button class="btngray" disabled v-show="!yes">已点亮</button>
+      <button class="btnss" @click="toLightMe" v-show="!userInfo.buyerIdentify">点亮自己</button>
+      <button class="btngray" disabled v-show="userInfo.buyerIdentify">已点亮</button>
     </div>
   </div>
 </template>
@@ -61,8 +65,7 @@ export default {
   data () {
     return {
       packageObj: {},
-      taskNumObj: {},
-      yes: true
+      taskNumObj: {}
     }
   },
   computed: {
@@ -79,16 +82,48 @@ export default {
         case 'needTask':
           this.$router.push({ name: 'needTask' })
           break
+        case 'toDoTask':
+          this.toGetPackage()
+          break
         default:
           break
       }
+    },
+    // 领取该任务包
+    toGetPackage () {
+      this.$ajax.post('/api/order/buyerAcceptPackage', {
+        assignedUserId: this.userInfo.buyerUserAccountId,
+        platformPackageId: this.packageObj.platformPackageId
+      }).then((data) => {
+        if (data.data.code === '200') {
+          if (this.packageObj.taobaoNum || this.packageObj.tianmaoNum) {
+            this.$router.push({ name: 'taobaoTask' })
+          } else {
+            this.$router.push({ name: 'myTask' })
+          }
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        Toast({
+          message: err,
+          position: 'bottom'
+        })
+      })
     },
     getPackage () {
       this.$ajax.post('/api/order/getBuyerRecivedPackage', {
         assignedUserId: this.userInfo.buyerUserAccountId
       }).then((data) => {
         if (data.data.code === '200') {
-          this.packageObj = data.data.data
+          if (data.data.data) {
+            this.packageObj = data.data.data
+          } else {
+            this.packageObj = {}
+          }
         } else {
           Toast({
             message: data.data.message,
@@ -224,9 +259,10 @@ export default {
         p
           line-height 2.35rem
         i
-          background #ff3341
-          color white
-          padding 2px
+          display inline-block
+          vertical-align middle
+          width 1.4rem
+          height 1.4rem
       .two
         margin-top -5rem
         color #666
@@ -288,4 +324,13 @@ export default {
     padding-left 0rem
     .text_1
       margin-top 11.5rem
+  .imgWrap
+    position relative
+    width 8rem
+    height 8rem
+    overflow hidden
+    img
+      position absolute
+      width 100%
+      height 100%
 </style>
