@@ -108,7 +108,24 @@ export default {
       })
     },
     applyDF () {
-      this.$router.push({ name: 'submit', query: { state: 4 } })
+      this.$ajax.post('/api/advanceApply/apply', {
+        buyerAccountId: this.userInfo.buyerUserAccountId,
+        packageId: this.$route.query.platformPackageId,
+        operateUserId: this.userInfo.buyerUserAccountId
+      }).then((data) => {
+        if (data.data.code === '200') {
+          this.$router.push({ name: 'submit', query: { state: 4 } })
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        Toast({
+          message: err,
+          position: 'bottom'
+        })
+      })
     }
   }
 }
