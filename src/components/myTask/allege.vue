@@ -17,9 +17,9 @@
           <mt-spinner type="fading-circle" color="rgba(0,0,0,0.8)" :size="20"></mt-spinner>
         </div>
       </div>
-      <!-- <div class="nocont">
-        <noCont v-if="tableData.length===0"></noCont>
-      </div> -->
+      <div class="nocont">
+        <noCont style="height: auto" v-if="tableData.length===0"></noCont>
+      </div>
     </ul>
     <div class="buttons">
       <span class="btn" @click="$router.push({name: 'allegeAlert'})">我要申述</span>

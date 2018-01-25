@@ -14,9 +14,9 @@
       <li>
         <payOrder :title="stpesObj.step9Title" :orderInfo="stpesObj.step9Arr"></payOrder>
       </li>
-      <!-- <li>
+      <li>
         <upload :title="stpesObj.step10Title" :myimgs="stpesObj.step10Arr" :max="1" :isShow="false"></upload>
-      </li> -->
+      </li>
     </ul>
     <div class="footer">
       <p>提示：<br />商家将在72小时内操作发货，请耐心等待，不要找客 服催商家</p>

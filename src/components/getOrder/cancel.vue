@@ -24,47 +24,54 @@
 </template>
 <script type="text/ecmascript-6">
 import Vue from 'vue'
-import { Radio, MessageBox, Picker } from 'mint-ui'
+import { mapGetters } from 'vuex'
+import { Radio, MessageBox, Picker, Toast } from 'mint-ui'
 Vue.component(Radio.name, Radio, Picker)
 export default {
   name: 'cancel',
   data () {
     return {
       value: '',
+      firstValue: '',
       apply: false,
       showAddress: false,
       slots: [{
         flex: 1,
-        values: [],
+        values: ['上午可以考虑再接单做', '下午可以考虑再接单做', '晚上可以考虑再接单做', '今天都没时间做了'],
         className: 'slot',
         textAlign: 'center'
       }],
       options: [
         {
           label: '1.时间冲突，现在没时间',
-          value: 'first'
+          value: '时间冲突，现在没时间'
         },
         {
           label: '2.任性，现在就是不想做',
-          value: 'two'
+          value: '任性，现在就是不想做'
         },
         {
           label: '3.贫穷限制我做单热情(本金不够)',
-          value: 'three'
+          value: '贫穷限制我做单热情(本金不够)'
         }
       ]
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
   watch: {
     value () {
-      if (this.value === 'first') {
-        this.slots[0].values = ['上午可以考虑再接单做', '下午可以考虑再接单做', '晚上可以考虑再接单做', '今天都没时间做了']
+      if (this.value === '时间冲突，现在没时间') {
+        // this.slots[0].values = []
         this.showAddress = true
         this.apply = false
-      } else if (this.value === 'two') {
+      } else if (this.value === '任性，现在就是不想做') {
         MessageBox('提示', '任性，那咱今天就不做了')
         this.apply = false
-      } else if (this.value === 'three') {
+      } else if (this.value === '贫穷限制我做单热情(本金不够)') {
         MessageBox('提示', '本金不够，可以先申请垫付')
         this.apply = true
       }
@@ -73,13 +80,32 @@ export default {
   methods: {
     setSlotValue (picker, values) {
       console.log(picker, values)
+      this.firstValue = values[0]
     },
     sureCancel () {
       if (this.value === '') {
         alert('请选择原因')
         return false
       }
-      this.$router.push({ name: 'submit', query: { state: 3 } })
+      this.$ajax.post('/api/order/buyerRejectPackage', {
+        assignedUserId: this.userInfo.buyerUserAccountId,
+        platformPackageId: this.$route.query.platformPackageId,
+        memo: this.value === '时间冲突，现在没时间' ? this.firstValue : this.value
+      }).then((data) => {
+        if (data.data.code === '200') {
+          this.$router.push({ name: 'submit', query: { state: 3 } })
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        Toast({
+          message: err,
+          position: 'bottom'
+        })
+      })
     },
     applyDF () {
       this.$router.push({ name: 'submit', query: { state: 4 } })

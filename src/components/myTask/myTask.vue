@@ -208,7 +208,8 @@ export default {
               prom: word.status || '--',
               buyerTaskId: word.buyerTaskId,
               rejectReason: word.rejectReason || '暂未填写驳回原因',
-              solution: word.solution || '暂未填写解决方案'
+              solution: word.solution || '暂未填写解决方案',
+              shopType: word.shopType || ''
             }
             arr.push(obj)
           }

@@ -9,7 +9,7 @@
         <span>京东</span>
       </li>
     </ul>
-    <div class="bottom" v-if="packageObj.actualLeftNum!=0">
+    <div class="bottom" v-if="packageObj.actualLeftNum">
       <h3>你有一个新的任务包</h3>
       <ul class="boxContent">
         <li class="first">
@@ -47,7 +47,7 @@
       </ul>
     </div>
     <!-- 第二种未点亮的状态 -->
-    <div class="bottom text" v-if="packageObj.actualLeftNum==0">
+    <div class="bottom text" v-if="!(packageObj.actualLeftNum)">
       <div class="text_1">
         <p>哎呦,不错呦!</p>
         <p>点亮自己告诉平台我要做活动</p>
@@ -77,7 +77,7 @@ export default {
     toDo (where) {
       switch (where) {
         case 'cancel':
-          this.$router.push({ name: 'cancel' })
+          this.$router.push({ name: 'cancel', query: { platformPackageId: this.packageObj.platformPackageId } })
           break
         case 'needTask':
           this.$router.push({ name: 'needTask' })
@@ -125,6 +125,7 @@ export default {
           } else {
             this.packageObj = {}
           }
+          console.log(data.data)
         } else {
           Toast({
             message: data.data.message,
