@@ -53,28 +53,32 @@
       </mt-cell>
     </li>
     <li class="border-bottom-1px">
-      <div @click="toBindCard">
+      <div v-if="!userObj.bankCardNo" @click="toBindCard">
         <mt-cell class="title" is-link>
           <span slot="title">绑定银行卡</span>
           <span class="contText">未绑定</span>
         </mt-cell>
       </div>
-      <mt-cell v-if="0" class="title">
-        <span slot="title">绑定银行卡</span>
-        <span class="contText Asuccess">已绑定</span>
-      </mt-cell>
+      <div v-if="userObj.bankCardNo" @click="toBindCard">
+        <mt-cell class="title">
+          <span slot="title">绑定银行卡</span>
+          <span class="contText Asuccess">已绑定</span>
+        </mt-cell>
+      </div>
     </li>
     <li class="border-bottom-1px">
-      <div @click="toBindAddress">
+      <div v-if="!(userObj.postProvince || userObj.postCity || userObj.postRegion)" @click="toBindAddress">
         <mt-cell class="title" is-link>
           <span slot="title">收货地址</span>
           <span class="contText">未绑定</span>
         </mt-cell>
       </div>
-      <mt-cell v-if="0" class="title">
-        <span slot="title">收货地址</span>
-        <span class="contText Asuccess">已绑定</span>
-      </mt-cell>
+      <div v-if="(userObj.postProvince || userObj.postCity || userObj.postRegion)" @click="toBindAddress">
+        <mt-cell class="title">
+          <span slot="title">收货地址</span>
+          <span class="contText Asuccess">已绑定</span>
+        </mt-cell>
+      </div>
     </li>
     <li class="button">
       <p>温馨提示
@@ -85,7 +89,7 @@
 </template>
 <script type="text/ecmascript-6">
 import { Toast } from 'mint-ui'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'accountLink',
   data () {
@@ -105,6 +109,7 @@ export default {
       }).then((data) => {
         if (data.data.code === '200') {
           this.userObj = data.data.data
+          this.setUserInfo(data.data.data)
         } else {
           Toast({
             message: data.data.message,
@@ -134,7 +139,10 @@ export default {
     },
     toBindAddress () {
       this.$router.push({ name: 'bindAddress', query: { buyerAccountId: this.userInfo.buyerUserAccountId } })
-    }
+    },
+    ...mapActions([
+      'setUserInfo'
+    ])
   },
   mounted () {
     this.getInfo()

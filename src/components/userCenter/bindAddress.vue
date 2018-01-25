@@ -1,12 +1,12 @@
 <template>
   <div class="bindAddress">
     <ul class="cont">
-      <li class="border-bottom-1px">
+      <!-- <li class="border-bottom-1px">
         <input type="text" v-model="getName" placeholder="收货人姓名">
       </li>
       <li class="border-bottom-1px">
         <input type="number" v-model="phoneNum" placeholder="手机号">
-      </li>
+      </li> -->
       <li class="border-bottom-1px" @click="chooseAddress">
         <input type="text" v-model="pcName" style="width:80%" readonly placeholder="省份、城市、区县">
         <i></i>
@@ -157,11 +157,22 @@ export default {
       this.pcName = (this.addressArr[0].name) + (this.addressArr[1] ? this.addressArr[1].name : '') + (this.addressArr[2] ? this.addressArr[2].name : '')
     },
     doNext () {
-      this.$ajax.post('', {
-        buyerUserAccountId: this.userInfo.buyerUserAccountId
+      this.$ajax.post('/api/buyerAccount/fixPostLoaction', {
+        buyerAccountId: this.userInfo.buyerUserAccountId,
+        province: this.addressArr[0].name || '',
+        provinceCode: this.addressArr[0].code || '',
+        city: this.addressArr[1].name || '',
+        cityCode: this.addressArr[1].code || '',
+        region: this.addressArr[2].name || '',
+        regionCode: this.addressArr[2].code || '',
+        address: this.addressDetail || ''
       }).then((data) => {
         if (data.data.code === '200') {
-          this.$router.push({ name: 'withdrawSet2' })
+          Toast({
+            message: '绑定成功!',
+            position: 'bottom'
+          })
+          this.$router.push({ name: 'accountLink' })
         } else {
           Toast({
             message: data.data.message,
@@ -171,6 +182,11 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
+    }
+  },
+  mounted () {
+    if (this.userInfo.postProvince) {
+      this.pcName = (this.userInfo.postProvince || '') + (this.userInfo.postCity || '') + (this.userInfo.postRegion || '')
     }
   }
 }

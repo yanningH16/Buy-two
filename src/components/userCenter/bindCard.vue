@@ -25,12 +25,13 @@
       </div>
     </div>
     <div class="sureBtn">
-      <span class="btn">确认</span>
+      <span class="btn" @click="sureToBindCard">确认</span>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 import { Picker, Toast } from 'mint-ui'
 Vue.component(Picker.name, Picker)
 export default {
@@ -52,6 +53,11 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
   },
   methods: {
     onValuesChange (picker, values) {
@@ -82,6 +88,40 @@ export default {
     sureBank () {
       this.showBank = false
       this.bank = this.checkBank.bankName
+    },
+    sureToBindCard () {
+      this.$ajax.post('/api/buyerAccount/bindBankCard', {
+        buyerUserAccountId: this.userInfo.buyerUserAccountId,
+        bankName: this.bank,
+        bankUserName: this.name,
+        bankCardNo: this.bankNum
+      }).then((data) => {
+        if (data.data.code === '200') {
+          Toast({
+            message: '绑定成功!',
+            position: 'bottom'
+          })
+          this.$router.push({ name: 'accountLink' })
+        } else {
+          Toast({
+            message: data.data.message,
+            position: 'bottom'
+          })
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    if (this.userInfo.bankUserName) {
+      this.name = this.userInfo.bankUserName
+    }
+    if (this.userInfo.bankName) {
+      this.bank = this.userInfo.bankName
+    }
+    if (this.userInfo.bankCardNo) {
+      this.bankNum = this.userInfo.bankCardNo
     }
   }
 }
