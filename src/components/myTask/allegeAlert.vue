@@ -2,11 +2,11 @@
   <div class="allegeAlert">
     <ul class="cont">
       <li class="border-bottom-1px">
-        <input type="text" placeholder="申述原因" v-model="taskNumber">
+        <input type="text" placeholder="订单编号" v-model="taskNumber">
       </li>
-      <!-- <li class="border-bottom-1px">
-        <input type="text" placeholder="申述原因">
-      </li> -->
+      <li class="border-bottom-1px">
+        <input type="text" placeholder="申述原因" v-model="reason">
+      </li>
       <li>
         <h2>申述截图</h2>
         <upload :myimgs='imgArr' :max='3' :isShow='false'></upload>
@@ -29,7 +29,8 @@ export default {
   data () {
     return {
       imgArr: [],
-      taskNumber: ''
+      taskNumber: '',
+      reason: ''
     }
   },
   computed: {
@@ -46,10 +47,11 @@ export default {
       }
       Indicator.open('申诉提交中...')
       this.$ajax.post('/api/buyer/complain/complainSeller', {
-        complainReason: this.taskNumber,
+        complainReason: this.reason,
         picUrls: this.imgArr,
         complainPhone: this.userInfo.telephone,
-        complainId: this.userInfo.buyerUserAccountId
+        complainId: this.userInfo.buyerUserAccountId,
+        orderId: this.taskNumber
       }).then((data) => {
         if (data.data.code === '200') {
           Indicator.close()

@@ -108,17 +108,40 @@ export default {
       })
     },
     applyDF () {
-      this.$ajax.post('/api/advanceApply/apply', {
-        buyerAccountId: this.userInfo.buyerUserAccountId,
-        packageId: this.$route.query.platformPackageId,
-        operateUserId: this.userInfo.buyerUserAccountId
+      this.$ajax.post('/api/order/buyerAcceptPackage', {
+        assignedUserId: this.userInfo.buyerUserAccountId,
+        platformPackageId: this.$route.query.platformPackageId
       }).then((data) => {
         if (data.data.code === '200') {
-          this.$router.push({ name: 'submit', query: { state: 4 } })
+          this.$ajax.post('/api/advanceApply/apply', {
+            buyerAccountId: this.userInfo.buyerUserAccountId,
+            packageId: this.$route.query.platformPackageId,
+            operateUserId: this.userInfo.buyerUserAccountId
+          }).then((data) => {
+            if (data.data.code === '200') {
+              this.$router.push({ name: 'submit', query: { state: 4 } })
+              Toast({
+                message: '申请成功',
+                position: 'bottom'
+              })
+            }
+          }).catch((err) => {
+            Toast({
+              message: err,
+              position: 'bottom'
+            })
+          })
+          // if (this.packageObj.taobaoNum || this.packageObj.tianmaoNum) {
+          //   this.$router.push({ name: 'taobaoTask' })
+          // } else {
+          //   this.$router.push({ name: 'myTask' })
+          // }
+        } else {
           Toast({
             message: data.data.message,
             position: 'bottom'
           })
+          this.$router.push({ name: 'needTask' })
         }
       }).catch((err) => {
         Toast({

@@ -71,7 +71,8 @@ export default {
           let arr = []
           for (let word of res.data.datas) {
             let obj = {
-              messageComplainId: word.messageComplainId,
+              messageComplainId: word.reason,
+              id: word.messageComplainId,
               time: word.time,
               status: word.status,
               statusDetail: word.statusDetail
@@ -108,7 +109,7 @@ export default {
     },
     deteli (val) {
       console.log(val)
-      this.$router.push({ name: 'allegeDetail', query: { id: val.messageComplainId, status: val.statusDetail } })
+      this.$router.push({ name: 'allegeDetail', query: { id: val.id, status: val.statusDetail } })
     }
 
   }
@@ -155,7 +156,7 @@ export default {
         min-width 6rem
         text-align right
         strong
-          font-size 2rem
+          font-size 1.5rem
         .green
           margin-top 0.6rem
           font-size 1.2rem

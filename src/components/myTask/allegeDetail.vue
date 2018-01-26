@@ -5,10 +5,10 @@
         <span>处理状态</span>
         <strong>{{this.$route.query.status}}</strong>
       </li>
-      <!-- <li class="border-bottom-1px">
+      <li class="border-bottom-1px">
         <span>订单编号</span>
-        <strong>RFT23654789321</strong>
-      </li> -->
+        <strong>{{this.obj.orderId}}</strong>
+      </li>
       <li class="border-bottom-1px">
         <span>申述时间</span>
         <strong>{{this.obj.applyTime}}</strong>
@@ -17,12 +17,26 @@
         <span>申述原因</span>
         <strong>{{this.obj.complainReason}}</strong>
       </li>
+      <!-- <li class="border-bottom-1px">
+        <span>对内意见</span>
+        <strong>{{this.obj.complainReason}}</strong>
+      </li> -->
+      <li>
+        <span>申诉截图</span>
+        <span v-for="(itemObj,index) in (this.obj.picUrls)" :key="index" class="allPic">
+          <img :src="itemObj" alt="投诉截图" width="80" height="80">
+        </span>
+      </li>
     </ul>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import Upload from '../../base/taskStep/upload'
 export default {
   name: 'allegeDetail',
+  components: {
+    Upload
+  },
   data () {
     return {
       obj: {}
@@ -40,7 +54,9 @@ export default {
         if (data.data.code === '200') {
           this.obj = {
             applyTime: data.data.data.applyTime,
-            complainReason: data.data.data.complainReason
+            complainReason: data.data.data.complainReason,
+            orderId: data.data.data.orderId,
+            picUrls: JSON.parse(data.data.data.picUrls)
           }
         } else {
           // Toast(data.data.message)
