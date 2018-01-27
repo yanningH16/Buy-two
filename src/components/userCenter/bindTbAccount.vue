@@ -176,12 +176,12 @@ export default {
           message: '请上传花呗截图',
           position: 'bottom'
         })
-      } else if (this.ageRound.code === -1) {
+      } else if (this.ageRound.code === '-1') {
         Toast({
           message: '请选择年龄段',
           position: 'bottom'
         })
-      } else if (this.address.code === -1) {
+      } else if (this.address.code === '-1') {
         Toast({
           message: '请选择常驻省份',
           position: 'bottom'

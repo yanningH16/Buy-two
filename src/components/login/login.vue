@@ -37,7 +37,7 @@ export default {
           this.setUserInfo(data.data.data)
           this.setUserToken(data.headers.accesstoken)
           localStorage.setItem('__userAccount__', this.phone + '&&' + this.password)
-          this.$router.push({ name: 'userCenter' })
+          this.$router.push({ name: 'getOrder' })
         } else {
           Toast({
             message: data.data.message,

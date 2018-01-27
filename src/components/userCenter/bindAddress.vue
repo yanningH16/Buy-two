@@ -187,6 +187,21 @@ export default {
   mounted () {
     if (this.userInfo.postProvince) {
       this.pcName = (this.userInfo.postProvince || '') + (this.userInfo.postCity || '') + (this.userInfo.postRegion || '')
+      this.addressArr[0] = {
+        code: this.userInfo.provinceCode,
+        name: this.userInfo.postProvince || ''
+      }
+      this.addressArr[1] = {
+        code: this.userInfo.cityCode,
+        name: this.userInfo.postCity || ''
+      }
+      this.addressArr[2] = {
+        code: this.userInfo.regionCode,
+        name: this.userInfo.postRegion || ''
+      }
+    }
+    if (this.userInfo.postAddress) {
+      this.addressDetail = this.userInfo.postAddress
     }
   }
 }

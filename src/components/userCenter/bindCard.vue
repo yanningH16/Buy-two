@@ -15,6 +15,11 @@
         <input type="text" v-model="bankNum" placeholder="银行卡号">
       </li>
     </ul>
+    <div class="tip" v-if="otherPage">
+      <p>
+        1. 只支持提现到借记卡（普通储蓄卡），不支持提现 到信用卡和农村信用社<br />2. 如果您填写的银行卡账户信息不正确，可能将无法 成功返款，平台不承担由此产生的一切费用<br/>3. 为确保您资金安全，绑定后支付宝信息、银行卡开 户名不可修改，即便帐号被盗，您帐号里的资金也不会 转移到他人的账户中
+      </p>
+    </div>
     <div class="addressWrap" v-show="showBank">
       <div class="address">
         <div class="buttons border-bottom-1px">
@@ -25,7 +30,8 @@
       </div>
     </div>
     <div class="sureBtn">
-      <span class="btn" @click="sureToBindCard">确认</span>
+      <span v-if="!otherPage" class="btn" @click="sureToBindCard">确认</span>
+      <span v-else class="btn" @click="sureToBindCard">下一步</span>
     </div>
   </div>
 </template>
@@ -36,6 +42,12 @@ import { Picker, Toast } from 'mint-ui'
 Vue.component(Picker.name, Picker)
 export default {
   name: 'bindCard',
+  props: {
+    otherPage: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       name: '',
@@ -101,7 +113,11 @@ export default {
             message: '绑定成功!',
             position: 'bottom'
           })
-          this.$router.push({ name: 'accountLink' })
+          if (this.otherPage) {
+            this.$router.push({ name: 'withdrawSet2' })
+          } else {
+            this.$router.push({ name: 'accountLink' })
+          }
         } else {
           Toast({
             message: data.data.message,
@@ -198,6 +214,13 @@ export default {
           line-height 3.2rem
           color #26a2ff
           text-align center
+  .tip
+    padding 0 1.6rem
+    p
+      font-size 1.2rem
+      color #75787F
+      line-height 2.4rem
+      margin-top 1.2rem
   .sureBtn
     padding 2rem 1.6rem
 </style>

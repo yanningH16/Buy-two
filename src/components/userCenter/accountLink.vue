@@ -60,7 +60,7 @@
         </mt-cell>
       </div>
       <div v-if="userObj.bankCardNo" @click="toBindCard">
-        <mt-cell class="title">
+        <mt-cell class="title" is-link>
           <span slot="title">绑定银行卡</span>
           <span class="contText Asuccess">已绑定</span>
         </mt-cell>
@@ -74,7 +74,7 @@
         </mt-cell>
       </div>
       <div v-if="(userObj.postProvince || userObj.postCity || userObj.postRegion)" @click="toBindAddress">
-        <mt-cell class="title">
+        <mt-cell class="title" is-link>
           <span slot="title">收货地址</span>
           <span class="contText Asuccess">已绑定</span>
         </mt-cell>
@@ -83,7 +83,7 @@
     <li class="button">
       <p>温馨提示
         <br />绑定更多，就会有更多的任务可以派发，赚取更多佣金</p>
-      <span class="btn" @click="$router.push({name: 'userCenter'})">返回至个人中心</span>
+      <span class="btn" @click="$router.push({name: 'userCenter'})">返回首页</span>
     </li>
   </ul>
 </template>

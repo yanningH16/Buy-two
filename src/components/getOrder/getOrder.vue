@@ -96,7 +96,7 @@ export default {
         platformPackageId: this.packageObj.platformPackageId
       }).then((data) => {
         if (data.data.code === '200') {
-          if (this.packageObj.taobaoNum || this.packageObj.tianmaoNum) {
+          if (((parseInt(this.packageObj.hasTaobao)) === 1) || ((parseInt(this.packageObj.hasTianmao))) === 1) {
             this.$router.push({ name: 'taobaoTask' })
           } else {
             this.$router.push({ name: 'myTask' })

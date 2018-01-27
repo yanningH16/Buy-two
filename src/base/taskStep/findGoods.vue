@@ -12,9 +12,14 @@
         <i class="refreshIcon" @click="refresh"></i>
       </li>
     </ul>
+    <div v-if="keyWordCopy" class="keyButton">
+      <span class="copy border-1px" @click="doCopy" :data-clipboard-text="value">复制</span>
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import Clipboard from 'clipboard'
+import { Toast } from 'mint-ui'
 export default {
   name: 'findGoods',
   data () {
@@ -24,6 +29,14 @@ export default {
   methods: {
     refresh () {
       this.$emit('refresh')
+    },
+    doCopy () {
+      var clipboard = new Clipboard('.copy')
+      clipboard.on('success', (e) => {
+        Toast({
+          message: '复制成功'
+        })
+      })
     }
   },
   props: {
@@ -36,6 +49,10 @@ export default {
       default: ''
     },
     onlyTitle: {
+      type: Boolean,
+      default: false
+    },
+    keyWordCopy: {
       type: Boolean,
       default: false
     }
@@ -75,4 +92,12 @@ export default {
         height 1.6rem
         font-size 1.6rem
         text-align center
+  .keyButton
+    text-align center
+    margin-top 0.4rem
+    span
+      display inline-block
+      border-radius 0.2rem
+      line-height 2.9rem
+      width 10.7rem
 </style>

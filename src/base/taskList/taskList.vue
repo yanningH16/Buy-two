@@ -35,7 +35,7 @@
       <div class="detail border-bottom-1px border-top-1px">
         <div class="detail_first">
           <p>
-            子任务编号
+            订单编号
             <span class="taskNumber">{{item.taskNumber}}</span>
           </p>
           <p class="copy border-1px" @click="doCopy" :data-clipboard-text='item.taskNumber'>复制</p>

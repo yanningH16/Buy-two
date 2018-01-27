@@ -200,7 +200,7 @@ export default {
               imgSrc: word.productPicUrl || '--',
               myMoney: word.payment || '--',
               yongMoney: word.commision || '--',
-              taskNumber: word.sellerTaskDayId || '--',
+              taskNumber: word.buyerTaskId || '--',
               city: word.postCity || '--',
               money: word.jdMonthIncome || '--',
               sellerUserId: word.buyerUserAccountId || '--',

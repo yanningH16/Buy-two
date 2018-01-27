@@ -11,9 +11,8 @@
       </p>
     </div>
     <ul class="cont">
-      <li class="border-bottom-1px">
+      <!-- <li class="border-bottom-1px">
         <span>常见问题</span>
-        <!-- <strong></strong> -->
       </li>
       <li class="border-bottom-1px" @click="$router.push({name: 'accountLink'})">
         <span>帐号绑定</span>
@@ -22,7 +21,7 @@
       <li class="border-bottom-1px" @click="$router.push({name: 'allege'})">
         <span>申述</span>
         <strong></strong>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

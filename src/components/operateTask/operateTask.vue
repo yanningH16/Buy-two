@@ -9,7 +9,7 @@
     </div>
     <ul class="cont">
       <li>
-        <findGoods :title="stpesObj.step1Title" @refresh="randomKey" :value="stpesObj.step1Key"></findGoods>
+        <findGoods :title="stpesObj.step1Title" @refresh="randomKey" :keyWordCopy='true' :value="stpesObj.step1Key"></findGoods>
       </li>
       <!-- <li>
         <upload :title="stpesObj.step2Title" :tip="stpesObj.step2Tip" :myimgs="stpesObj.step2ImgArr" :max="1" :isShow="false"></upload>
@@ -114,7 +114,11 @@ export default {
           Toast({
             message: '放弃任务成功!'
           })
-          this.$router.push({ name: 'myTask' })
+          if (parseInt(this.taskInfoObj.taskSubType) === 3) {
+            this.$router.push({ name: 'taobaoTask' })
+          } else {
+            this.$router.push({ name: 'myTask' })
+          }
         } else {
           Toast({
             message: data.data.message
@@ -139,6 +143,7 @@ export default {
       let thisKeyObj = keyList[index]
       this.stpesObj.step1Key = thisKeyObj.keyword || '暂无'
       if (parseInt(this.taskInfoObj.taskSubType) === 3) {
+        this.stpesObj.step1Title = '一、打开手机淘宝，查找商品'
         this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', -1, thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation, -1, thisKeyObj.pageNum || '暂无', 1]
       } else {
         this.stpesObj.step5Arr = [thisKeyObj.sortClass || '', thisKeyObj.brand || '暂无', thisKeyObj.priceLow + '-' + thisKeyObj.priceHigh + '元', thisKeyObj.postLocation, thisKeyObj.favorNum || '暂无', thisKeyObj.pageNum || '暂无']

@@ -62,7 +62,7 @@ export default {
         step2Title: '二、上传物流截图',
         step2Arr: [],
         step3Title: '三、五星好评',
-        step4Title: '四、将以下评价内容打字到手机京东',
+        step4Title: '四、将以下评价内容长按复制到手机京东',
         step4Text: '',
         step5Title: '五、将以下图片上传到手机京东',
         step5Arr: [],
@@ -96,8 +96,8 @@ export default {
             this.evaluateObj.step6Title = '五、上传评价页面截图'
           }
           if (parseInt(obj.taskSubType) === 3) {
-            this.evaluateObj.step4Title = '四、将以下评价内容打字到手机淘宝'
-            this.evaluateObj.step5Title = '五、将以下图片上传到手机京东'
+            this.evaluateObj.step4Title = '四、将以下评价内容长按复制淘宝'
+            this.evaluateObj.step5Title = '五、将以下图片上传到手机淘宝'
           }
         } else {
           Toast({
