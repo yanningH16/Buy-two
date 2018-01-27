@@ -14,7 +14,10 @@
       <li>
         <upload :title="evaluateObj.step2Title" :myimgs="evaluateObj.step2Arr" :max="1" :isShow="false"></upload>
       </li>
-      <li>
+      <li v-if="evaluateObj.step4Text===''">
+        <findGoods title="三、默认好评" :onlyTitle="true"></findGoods>
+      </li>
+      <li v-else>
         <findGoods :title="evaluateObj.step3Title" :onlyTitle="true"></findGoods>
       </li>
       <li v-if="evaluateObj.step4Text!==''">
@@ -23,7 +26,10 @@
       <li v-if="evaluateObj.step5Arr.length!==0">
         <upImgs :title="evaluateObj.step5Title" :imgsArr="evaluateObj.step5Arr"></upImgs>
       </li>
-      <li>
+      <li v-if="evaluateObj.step4Text===''">
+        <upload title="四、上传默认好评截图" :myimgs="evaluateObj.step6Arr" :max="1" :isShow="false"></upload>
+      </li>
+      <li v-else>
         <upload :title="evaluateObj.step6Title" :myimgs="evaluateObj.step6Arr" :max="1" :isShow="false"></upload>
       </li>
     </ul>
@@ -84,16 +90,19 @@ export default {
           this.evaluateObj.productUrl = obj.productPicUrl
           this.evaluateObj.infoArr = [obj.productName, obj.commision, obj.productOrderPrice, obj.taskDayId] || []
           this.evaluateObj.step1Arr = [obj.productName, obj.shopName, obj.numPerOrder, obj.productFormat, obj.productUnitPrice] || []
-          this.evaluateObj.step4Text = obj.sellerFavor
+          this.evaluateObj.step4Text = obj.sellerFavor || ''
           this.evaluateObj.step5Arr = JSON.parse(obj.sellerFavorPicUrl) || []
           if (this.$route.query.rbBuyerTaskId) {
             this.evaluateObj.step2Arr = JSON.parse(obj.logisticsPicId) || []
             this.evaluateObj.step6Arr = JSON.parse(obj.buyerFavorPicUrl) || []
           }
           if (this.evaluateObj.step4Text === '') { // 默认好评
-            this.evaluateObj.step6Title = '四、上传评价页面截图'
+            this.evaluateObj.step6Title = '四、上传默认好评截图'
           } else if (this.evaluateObj.step5Arr.length === 0) { // 文字好评
             this.evaluateObj.step6Title = '五、上传评价页面截图'
+          }
+          if (!obj.sellerFavor) {
+            this.evaluateObj.step6Title = '四、上传默认好评截图'
           }
           if (parseInt(obj.taskSubType) === 3) {
             this.evaluateObj.step4Title = '四、将以下评价内容长按复制淘宝'
@@ -143,7 +152,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.getInfo()
   }
 }
