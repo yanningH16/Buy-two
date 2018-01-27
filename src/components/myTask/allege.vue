@@ -8,7 +8,8 @@
         </div>
         <div class="right">
           <strong class="red" v-if="item.status==='0'">未处理</strong>
-          <strong class="success" v-if="item.status==='1'">已处理</strong>
+          <strong class="red" v-if="item.status==='1'">处理中</strong>
+          <strong class="success" v-if="item.status==='2'">已处理</strong>
           <p @click="deteli(item)">详情</p>
         </div>
       </li>

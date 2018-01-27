@@ -6,6 +6,10 @@
         <strong>{{this.$route.query.status}}</strong>
       </li>
       <li class="border-bottom-1px">
+        <span>对外备注</span>
+        <strong>{{this.obj.commit}}</strong>
+      </li>
+      <li class="border-bottom-1px">
         <span>订单编号</span>
         <strong>{{this.obj.orderId}}</strong>
       </li>
@@ -56,7 +60,8 @@ export default {
             applyTime: data.data.data.applyTime,
             complainReason: data.data.data.complainReason,
             orderId: data.data.data.orderId,
-            picUrls: JSON.parse(data.data.data.picUrls)
+            picUrls: JSON.parse(data.data.data.picUrls),
+            commit: data.data.data.dealComment
           }
         } else {
           // Toast(data.data.message)
