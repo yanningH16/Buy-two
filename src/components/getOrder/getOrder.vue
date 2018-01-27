@@ -47,7 +47,7 @@
       </ul>
     </div>
     <!-- 第二种未点亮的状态 -->
-    <div class="bottom text" v-if="packageObj==={}">
+    <div class="bottom text" v-if="typeof(packageObj)=='object'">
       <div class="text_1">
         <p>哎呦,不错呦!</p>
         <p>点亮自己告诉平台我要做活动</p>
@@ -121,6 +121,7 @@ export default {
       }).then((data) => {
         if (data.data.code === '200') {
           if (data.data.data) {
+            console.log(data.data.data)
             this.packageObj = data.data.data
           } else {
             this.packageObj = {}
