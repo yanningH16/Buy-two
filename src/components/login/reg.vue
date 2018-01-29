@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       timeout: '获取',
-      isOk: true,
+      isOk: false,
       userName: '',
       phone: '',
       keyNum: '',
@@ -74,7 +74,7 @@ export default {
       })
     },
     input () {
-      if ((/^1[34578]\d{9}$/).test(this.phone) && this.userName !== '' && this.password !== '' && this.weChat !== '') {
+      if ((/^1[34578]\d{9}$/).test(this.phone) && this.userName !== '' && this.keyNum !== '' && this.password !== '' && this.weChat !== '') {
         this.isOk = true
       } else {
         this.isOk = false
@@ -91,6 +91,11 @@ export default {
           message: '请输入姓名',
           position: 'bottom'
         })
+      } else if (this.keyNum === '') {
+        Toast({
+          message: '请输入验证码',
+          position: 'bottom'
+        })
       } else if (this.password === '') {
         Toast({
           message: '请输入密码',
@@ -102,10 +107,9 @@ export default {
           position: 'bottom'
         })
       } else {
-        this.showCanClick = true
         if (this.isOk) {
           // 验证可以修改
-          this.toReg()
+          this.testMessage()
         }
       }
     },
@@ -163,7 +167,7 @@ export default {
         if (left === 0) {
           clearInterval(timeset)
           this.timeout = '获取'
-          // this.showCanClick = false
+          this.showCanClick = false
         }
       }, 1000)
     }
