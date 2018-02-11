@@ -46,31 +46,8 @@ export default {
     }
   },
   created () {
-    this.$ajax.post('/api/buyer/task/getTodoNumList', {
-      buyerUserId: this.userInfo.buyerUserAccountId,
-      shopType: '0'
-    }).then((data) => {
-      let res = data.data
-      if (res.code === '200') {
-        // 待评价
-        this.totelNum = res.data.toFavorNum + res.data.toPlaceOrderNum
-      }
-    }).catch((err) => {
-      console.log(err)
-    })
-    this.$ajax.post('/api/buyer/task/getTodoNumList', {
-      buyerUserId: this.userInfo.buyerUserAccountId,
-      shopType: '1,2'
-    }).then((data) => {
-      let res = data.data
-      if (res.code === '200') {
-        // 待评价
-        this.totelNumTian = res.data.toFavorNum + res.data.toPlaceOrderNum
-        console.log(this.totelNumTian)
-      }
-    }).catch((err) => {
-      console.log(err)
-    })
+    this.jingdong()
+    this.taobao()
   },
   computed: {
     bottomNav: function () {
@@ -90,11 +67,49 @@ export default {
     },
     myTask () {
       this.$router.push({ name: 'myTask' })
+    },
+    jingdong () {
+      this.$ajax.post('/api/buyer/task/getTodoNumList', {
+        buyerUserId: this.userInfo.buyerUserAccountId,
+        shopType: '0'
+      }).then((data) => {
+        let res = data.data
+        if (res.code === '200') {
+          // 待评价
+          this.totelNum = res.data.toFavorNum + res.data.toPlaceOrderNum
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    taobao () {
+      this.$ajax.post('/api/buyer/task/getTodoNumList', {
+        buyerUserId: this.userInfo.buyerUserAccountId,
+        shopType: '1,2'
+      }).then((data) => {
+        let res = data.data
+        if (res.code === '200') {
+          // 待评价
+          this.totelNumTian = res.data.toFavorNum + res.data.toPlaceOrderNum
+          console.log(this.totelNumTian)
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {
+    if (this.$route.name === 'taobaoTask') {
+      this.taobao()
+      this.jingdong()
+    }
+    if (this.$route.name === 'myTask') {
+      this.taobao()
+      this.jingdong()
     }
   }
 }
 </script>
-
 <style lang="stylus" rel="stylesheet/stylus">
 #app
   width 100%
